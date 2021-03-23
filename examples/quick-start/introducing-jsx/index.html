@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Введение JSX</title>
+
+    <link rel="stylesheet" href="../../../css/header.css">
+    <link rel="stylesheet" href="../../../css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script src="../../../libraries/prism.js"></script>
+
+    <script type="text/babel" src="script.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../index.html">React.js</a>
+        <a href="../../../examples.html">Содержание</a>
+        <a href="../../../info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+    <p class="section">Знакомство с JSX</p>
+
+    <p>Взгляните на это объявление переменной:</p>
+    <pre><code class="language-js">
+        const element = &lt;h1&gtHello, world!&lt;/h1&gt;;
+    </code></pre>
+
+    <p>Этот забавный синтаксис не является ни строкой, ни HTML. Он называется JSX - это расширение для JavaScript.
+    Мы рекомендуем использовать его для работы с React, чтобы описать, что представляет собой пользовательский
+        интерфейс (User Interface, UI). Синтаксис JSX может показаться вам схожим с языком разметки HTML, но он
+        обладает всей функциональностью JavaScript.</p>
+    <p>JSX создает "элементы" React. В следующей главе мы изучим, как добавить их в DOM. Далее же, мы рассмотрим
+    основы JSX, необходимые для работы с ним.</p>
+
+    <p class="section">Почему именно JSX?</p>
+
+    <p>React подразумевает тот факт, что логика визуализации по своей природе связана с логикой UI: как
+        обрабатываются события, как меняется состояние во времени и как подготавливаются данные для отображения.</p>
+    <p>Чтобы искусственно не разделять технологии, добавляя разметку и логику в отдельные файлы, React решает это
+    с помощью слабо связанных единиц - "компонентов". Мы обязательно ознакомимся с ними в последующих главах. Если
+    же вы все ещё неуверенно делаете разметку в JS, то по ходу нашего курса вы будете делать это более комфортно.</p>
+    <p>JSX не обязателен при работе с React, но большинство пользователей считает его неплохой визуальной помощью,
+    при работе с UI в коде JavaScript. Он позволяет React указывать на более конкретные ошибки и предупреждения.
+    Итак, приступим!</p>
+
+    <p class="section">Внедрение выражений в JSX</p>
+
+    <p>В JSX вы можете поместить любое JavaScript выражение в фигурные скобки. Выражения в примере ниже являются
+    допустимыми:</p>
+    <pre><code class="language-js">
+        function formatName(user) {
+         return user.firstName + ' ' + user.lastName;
+        }
+
+        const user = {
+        firstName: 'Иван',
+        lastName: 'Иванов'
+        };
+
+        const element = (
+        &lt;h1&gt;
+         Привет, {formatName(user)}!
+        &lt;h1&gt;
+        );
+
+        ReactDOM.render(
+        element,
+        document.getElementById('root')
+        );
+    </code></pre>
+    <p>Выглядит результат следующим образом:</p>
+
+    <div class="example">
+        <div id="root"></div>
+    </div>
+
+    <p>Мы разбили JSX код на строки для более удобного чтения. Также, мы рекомендуем оборачивать его в круглые
+    скобки, чтобы избежать проблем из-за автоматической простановки точки с запятой.</p>
+
+    <p class="section">JSX тоже выражение!</p>
+
+    <p>После компиляции JSX выражения становятся постоянными объектами JavaScript. Это значит, что вы можете
+    использовать JSX внутри условного оператора <mark>if</mark> и циклического оператора
+        <mark>for</mark>, объявлять его как переменную, принимать как аргумент и возвращать его из
+    функций:</p>
+
+    <pre><code class="language-js">
+       function getGreeting(user) {
+            if (user) {
+             return &lt;h1&gt;Привет, {formatName(user)}!&lt;/h1&gt;;
+            }
+        return &lt;h1&gt;Привет, незнакомец!&lt;/h1&gt;;
+        }
+    </code></pre>
+
+
+    <p class="section">Определение атрибутов в JSX</p>
+
+    <p>Вы можете использовать угловые скобки для определения строковой величины в качестве атрибута:</p>
+
+    <pre><code class="language-js">
+       const element = &lt;div tabIndex="0"&gt;&lt;/div&gt;;
+    </code></pre>
+
+    <p>Также можно использовать фигурные скобки для вставки выражения JavaScript в атрибуте:</p>
+
+    <pre><code class="language-js">
+        const element = &lt;img src={user.avatarUrl}>&lt;/img&gt;;
+    </code></pre>
+
+    <p>Не обносите фигурные скобки угловыми при внесении JavaScript выражения в атрибут. Вы должны использовать
+    либо фигурные скобки (для строковых величин), либо угловые скобки (для выражений), но не и то, и другое в одном
+    атрибуте.</p>
+
+    <div class="warning">
+        <p><b>Обратите внимание:</b></p>
+        <p>Поскольку JSX ближе к JavaScript, чем к HTML, React DOM использует стиль написания <mark>camelCase,</mark>
+        а не атрибуты-имена как в HTML.</p>
+        <p>Например, <mark>class</mark> выглядит в JSX как <mark class="markJSX">className</mark>, и
+        <mark>tabindex</mark> - как <mark class="markJSX">tabIndex</mark>.</p>
+    </div>
+
+    <p class="section">Определение дочерних элементов в JSX</p>
+
+    <p>Если тэг пуст, вы можете закрыть его сразу с помощью <mark>/></mark> (также, как и в XML):</p>
+
+    <pre><code class="language-js">
+        const element = &lt;img src={user.avatarUrl} /&gt;;
+    </code></pre>
+
+    <p>Теги в JSX могут содержать дочерние элементы:</p>
+
+    <pre><code class="language-js">
+        const element = (
+         &lt;div&gt;
+            &lt;h1&gt;Hello!&lt;/h1&gt;
+            &lt;h2&gt;Good to see you here.&lt;/h2&gt;
+         &lt;/div&gt;
+        );
+    </code></pre>
+
+    <p class="section">JSX предотвращает инъекционные атаки</p>
+
+    <p>В JSX можно безопасно использовать пользовательский ввод:</p>
+
+    <pre><code class="language-js">
+        const title = response.potentiallyMaliciousInput;
+        // Это безоапасно:
+        const element = &lt;h1&gt;{title}&lt;/h1&gt;;
+    </code></pre>
+
+    <p>По умолчанию, React DOM экранирует любые значения, добавляемые в JSX, перед их обработкой. Таким образом
+    гарантируется, что вы никак не сможете получить что-то, что явно не прописано в вашем приложении. Все данные
+    преобразуются в строку перед их обработкой. Это помогает предотвратить XSS-атаки ("cross-site scripting"
+    - межсайтовый скриптинг).</p>
+
+    <p class="section">Представление объектов в JSX</p>
+
+    <p>Babel компилирует JSX в вызовах <mark>React.createElement()</mark>.</p>
+    <p>Эти два примера идентичны:</p>
+
+    <pre><code class="language-js">
+        const element = (
+            &lt;h1 className="greeting"&gt;
+             Hello, world!
+            &lt;/h1&gt;
+        );
+    </code></pre>
+
+    <pre><code class="language-js">
+        const element = React.createElement(
+            'h1',
+            {className: 'greeting'},
+            'Hello, world!'
+        );
+    </code></pre>
+
+    <p><mark>React.createElement()</mark> выполняет несколько проверок, чтобы помочь вам написать код без ошибок.
+    По существу - создает вот такой объект:</p>
+
+    <pre><code class="language-js">
+        // Note: Эта структура упрощена
+        const element = {
+            type: 'h1',
+            props: {
+             className: 'greeting',
+             children: 'Hello, world!'
+         }
+    };
+    </code></pre>
+
+    <p>Такие объекты называются "элементы React". Вы можете представить себе их как описание того, что вы видите
+    на экране. React читает эти объекты и использует их для построения и обновления DOM.</p>
+    <p>Мы рассмотрим создание React элементов в DOM в следующей главе.</p>
+
+    <div class="warning">
+        <p><b>Примечание:</b></p>
+        <p>Мы рекомендуем использовать в ваших проектах Babel, для более комфортной работы с ES6 и JSX.</p>
+    </div>
+
+    <div class="button">
+        <a href="../../quick-start/hello-world/">&laquo; Назад</a>
+        <a class="next" href="../../quick-start/rendering-elements/">Далее &raquo;</a>
+    </div>
+</div>
+
+
+</body>
+</html>

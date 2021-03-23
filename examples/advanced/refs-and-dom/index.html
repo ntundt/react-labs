@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ссылки Ref и DOM</title>
+
+    <link rel="stylesheet" href="../../../../web-page/css/header.css">
+    <link rel="stylesheet" href="../../../../web-page/css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script src="../../../libraries/prism.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../../web-page/index.html">React.js</a>
+        <a href="../../../../web-page/examples.html">Содержание</a>
+        <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+
+    <p class="section">Ссылки Ref и DOM</p>
+
+    <p>Ссылки предоставляют способ доступа к элементам DOM или React, созданным в методе отрисовки.</p>
+    <p>В типичном потоке данных React, свойства props – это единственный способ взаимодействия родительского компонента
+        с его потомком. Чтобы модифицировать потомка, вы перерисовываете его с новыми свойствами. Тем не менее, есть
+        несколько случаев, когда вам необходимо модифицировать потомок вне обычного потока данных. Потомок, подлежащий
+        модификации, может быть экземпляром React-компонента или DOM-элементом.</p>
+
+    <p class="section">Когда стоит использовать ссылки?</p>
+    <p>Ссылки следует использовать в следующих ситуациях:</p>
+    <ul>
+        <li><span>• </span>Управление фокусом, выделением текста или воспроизведением мультимедиа</li>
+        <li><span>• </span>Переключение необходимой анимации</li>
+        <li><span>• </span>Интеграция со сторонними DOM библиотеками</li>
+    </ul>
+
+    <p class="section">Создание ссылок</p>
+
+    <p>Ссылки создаются с использованием метода React.createRef() и присоединяются к элементам React с помощью атрибута
+        ref. Как правило, они назначаются свойствам экземпляра компонента, в то время как компонент сконструирован таким
+        образом, чтобы ссылки были доступны из любого места этого компонента.</p>
+
+    <pre><code class="language-js">
+        class MyComponent extends React.Component {
+          constructor(props) {
+            super(props);
+            this.myRef = React.createRef();
+          }
+          render() {
+            return &lt;div ref={this.myRef} />;
+          }
+        }
+    </code></pre>
+
+    <p class="section">Доступ к ссылкам</p>
+
+    <p>Ссылки создаются с использованием метода React.createRef() и присоединяются к элементам React с помощью атрибута
+        ref. Как правило, они назначаются свойствам экземпляра компонента, в то время как компонент сконструирован таким
+        образом, чтобы ссылки были доступны из любого места этого компонента.</p>
+
+    <pre><code class="language-js">
+        const node = this.myRef.current;
+    </code></pre>
+
+    <p>Значение ref отличается в зависимости от типа узла:</p>
+    <ul>
+        <li><span>• </span>Когда атрибут ref используется на HTML-элементе, объект ref, созданный в конструкторе с
+            помощью React.createRef(), в качестве значения своего свойства current получает нативный DOM элемент.
+        </li>
+        <li><span>• </span>Когда атрибут ref используется на пользовательском компоненте-классе, объект ref в качестве
+            значения своего свойства current получает закрепленный экземпляр компонента.
+        </li>
+        <li><span>• </span>Вы не можете использовать атрибут ref для компонентов-функций, так как они не имеют
+            экземпляров.
+        </li>
+    </ul>
+
+    <div class="button">
+        <a href="../../advanced/static-typechecking">&laquo; Назад</a>
+        <a class="next" href="../../advanced/uncontrolled-components">Далее &raquo;</a>
+    </div>
+
+</div>
+
+</body>
+</html>

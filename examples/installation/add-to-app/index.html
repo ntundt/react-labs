@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Добавьте React</title>
+
+  <link rel="stylesheet" href="../../../../web-page/css/header.css">
+  <link rel="stylesheet" href="../../../../web-page/css/content.css">
+  <link rel="stylesheet" href="../../../libraries/prism.css">
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+  <script src="../../../libraries/prism.js"></script>
+
+</head>
+
+<body>
+
+  <div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+      <a href="../../../../web-page/index.html">React.js</a>
+      <a href="../../../../web-page/examples.html">Содержание</a>
+      <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+  </div>
+  <div id="delimiter"></div>
+
+  <div class="content">
+    <p class="section">Как добавить React к приложению</p>
+    <p>
+      Мы рекомендуем добавлять React в небольшую часть вашего приложения, например отдельный виджет, чтобы вы могли понять, подходит ли он для вас.
+    </p>
+    <p>Хотя React и может быть использован <a href="../../advanced/react-without-jsx/index.html">без ES6 и JSX</a>, мы рекомендуем установить их для более комфортного процесса разработки. Современные инструменты включают в себя:</p>
+
+    <ul>
+      <li>
+        <span>• </span> Менеджер пакетов, например, <a href="https://yarnpkg.com/lang/en/">Yarn</a> или <a href="https://www.npmjs.com/">npm</a>. Это позволяет вам использовать обширную базу сторонних пакетов и легко устанавливать или обновлять их.
+      </li>
+      <li>
+        <span>• </span>Сборщик, такой как <a href="https://webpack.js.org/">webpack</a> или <a href="http://browserify.org/">Browserify</a>. Он позволяет писать модульный код и объединять его в небольшие пакеты для оптимизации времени загрузки.
+      </li>
+      <li>
+        <span>• </span>Компилятор, такой как <a href="http://babeljs.io/">Babel</a>. Он позволяет писать современный JavaScript-код, который по-прежнему работает в старых браузерах.
+      </li>
+    </ul>
+
+    <p class="section">
+      Установка React
+    </p>
+
+    <p>
+      Мы рекомендуем использовать <a href="https://yarnpkg.com/lang/en/">Yarn</a> или <a href="https://www.npmjs.com/">npm</a> для управления внешними зависимостями. Если вы новичок в менеджерах пакетов, то <a href="https://yarnpkg.com/en/docs/getting-started">Yarn-документация</a> - это хорошее место для начала изучения.
+    </p>
+
+    <p>
+      Для установки React с использованием Yarn:
+    </p>
+
+    <pre><code class="language-js">  yarn init
+  yarn add react react-dom</code></pre>
+
+    <p>
+      Для установки React с использованием npm:
+    </p>
+
+    <pre><code class="language-js">  npm init
+  npm install --save react react-dom</code></pre>
+
+    <p>
+      Оба менеджера загружают пакеты из реестра <a href="https://www.npmjs.com/">npm</a>.
+    </p>
+
+    <p class="section">
+      Подключение ES6 и JSX
+    </p>
+
+    <p>
+      Мы рекомендуем использовать React с <a href="http://babeljs.io/">Babel</a>, чтобы вы могли использовать ES6 и JSX в своем JavaScript-коде. ES6 - это набор современных функций JavaScript, которые упрощают разработку, а JSX является расширением языка JavaScript, который
+      отлично работает с React.
+    </p>
+
+    <p>
+      <a href="https://babeljs.io/docs/setup/">Инструкции по настройке Babel</a> объясняют, как настроить Babel во многих разных средах сборки. Убедитесь, что вы установили <a href="http://babeljs.io/docs/plugins/preset-react/#basic-setup-with-the-cli-">babel-preset-react</a> и <a href="http://babeljs.io/docs/plugins/preset-env/">babel-preset-env</a> и включаете их в конфигурацию <a href="http://babeljs.io/docs/usage/babelrc/">.babelrc</a>.
+    </p>
+
+    <p class="section">
+      "Hello, World!", с использованием ES6 и JSX
+    </p>
+
+    <p>
+      Самый маленький пример React выглядит так:
+    </p>
+
+    <pre><code class="language-js">  import React from 'react';
+  import ReactDOM from 'react-dom';
+
+  ReactDOM.render(
+    <h1>Hello, world!</h1>,
+    document.getElementById('root')
+  );</code></pre>
+
+    <p>
+      Этот код превращается в элемент DOM с идентификатором root,
+      поэтому вам нужно создать блок &lt;div id = "root"> &lt;/div> где-нибудь в вашем HTML-файле.
+    </p>
+
+    <p>
+      Аналогично, вы можете отобразить компонент React внутри элемента DOM где-то внутри вашего существующего приложения,
+      написанного с помощью любой другой библиотеки пользовательского интерфейса JavaScript.
+    </p>
+
+    <p>
+      <a href="../../advanced/integrating-with-lib/">Подробнее об интеграции React с существующим кодом</a>.
+    </p>
+
+    <p class="section">
+      Полный пример
+    </p>
+
+    <p>
+      Вы можете найти пошаговые инструкции, описывающие базовую реализацию с нуля, включая настройки Babel и Webpack <a href="https://blog.usejournal.com/creating-a-react-app-from-scratch-f3c693b84658">здесь</a>.
+    </p>
+
+    <p class="section">
+      Использование CDN
+    </p>
+
+    <p>
+      Если вы не хотите использовать npm для управления клиентскими пакетами,
+      пакеты npm для React и React-dom также предоставляют однофазные дистрибутивы в папках umd. См.
+      страницу для <a href="../cdn-links/index.html">CDN</a> ссылок.
+    </p>
+
+    <div class="button">
+      <a href="../../installation/new-app/">&laquo; Назад</a>
+      <a class="next" href="../../installation/cdn-links/">Далее &raquo;</a>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Передача ссылок подробнее</title>
+
+    <link rel="stylesheet" href="../../../../web-page/css/header.css">
+    <link rel="stylesheet" href="../../../../web-page/css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script src="../../../libraries/prism.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../../web-page/index.html">React.js</a>
+        <a href="../../../../web-page/examples.html">Содержание</a>
+        <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+    <p class="section">Передача ссылок</p>
+    <p>Передача ссылки - это метод для автоматической передачи ref через компонент к одному из его потомков. Обычно это не требуется для большинства компонентов приложения. Однако это может быть полезно для их некоторых видов, особенно в библиотеках компонентов для многоразового использования. Наиболее распространенные сценарии описаны ниже.</p>
+
+    <p class="section">Передача ссылок в компоненты DOM</p>
+    <p>Рассмотрим компонент FancyButton, который отображает нативный DOM элемент button:</p>
+    <pre><code class="language-js">
+  function FancyButton(props) {
+    return (
+      &lt;button className="FancyButton">
+        {props.children}
+      &lt;/button>
+    );
+  }
+  <CustomButton color="red"/>
+    </code></pre>
+    <p>Компоненты React скрывают свои детали реализации, включая результат отрисовки. Другие компоненты, использующие FancyButton, обычно не нуждаются в получении ссылки ref на внутренний DOM элемент button. Это хорошо, так как мешает компонентам слишком сильно полагаться на DOM структуру друг друга.</p>
+    <p>Хотя такая инкапсуляция и желательна для компонентов уровня приложения, таких как FeedStory или Comment, она может оказаться неудобной для часто переиспользуемых «листовых» компонентов(листья дерева компонентов), таких как FancyButton или MyTextInput. Эти компоненты, как правило, используются во всем приложении аналогичным образом, как и обычные DOM компоненты button и input, а доступ к их DOM узлам может быть неизбежным для управления фокусировкой, выбором(тег select) или анимацией.</p>
+    <p>Передача ссылок (ref forwarding) - это дополнительная функция, позволяющая компонентам передавать получаемую ссылку ref дальше своему потомку.</p>
+    <p>В приведенном ниже примере компонент FancyButton использует React.forwardRef для получения переданной ему ссылки ref и последующей передачи её DOM кнопке button, которую он отображает:</p>
+    <pre><code class="language-js">
+  const FancyButton = React.forwardRef((props, ref) => (
+    &lt;button ref={ref} className="FancyButton">
+      {props.children}
+    &lt;/button>
+  ));
+
+  // Теперь вы можете получить ссылку ref напрямую и передать ее DOM кнопке button:
+  const myRef = React.createRef();
+  &lt;FancyButton ref={myRef}>Click me!&lt;/FancyButton>;
+  <CustomButton color="red"/>
+    </code></pre>
+    <p>Таким образом, компоненты, использующие FancyButton, смогут получить ссылку ref на DOM узел button, а также, если это необходимо, и доступ к нему, как если бы они напрямую использовали button.</p>
+    <p>Приведем пошаговое объяснение того, что происходит в приведенном выше примере:</p>
+    <p>1.Мы создаем React ссылку вызывая React.createRef и присваиваем её переменной myRef.</p>
+    <p>2.Далее передаем нашу ссылку ниже в &lt;FancyButton ref={myRef}>, указывая её как JSX атрибут ref.</p>
+    <p>3.React передает ссылку в функцию (props, ref) => ... внутри forwardRef вторым аргументом.</p>
+    <p>4.Мы передаем данный аргумент ref ниже в &lt;button ref={ref}>, указывая его как JSX атрибут ref.</p>
+    <p>5.Когда ссылка будет присоединена, ref.current будет указывать на DOM узел &lt;button>.</p>
+
+    <p class="section">Передача ссылок в старшие компоненты</p>
+    <p>Также данный подход может быть особенно полезен для компонентов более высокого порядка (также известных как HOC). Начнем с примера HOC, который логирует свойства props компонента в консоли:</p>
+    <pre><code class="language-js">
+  function logProps(WrappedComponent) {
+    class LogProps extends React.Component {
+      componentDidUpdate(prevProps) {
+        console.log('old props:', prevProps);
+        console.log('new props:', this.props);
+      }
+
+      render() {
+        return &lt;WrappedComponent {...this.props} />;
+      }
+    }
+
+    return LogProps;
+  }
+  <CustomButton color="red"/>
+    </code></pre>
+    <pre><code class="language-js">
+  function FancyButton(props) {
+    return (
+      &lt;button className="FancyButton">
+        {props.children}
+      &lt;/button>
+    );
+  }
+  <CustomButton color="red"/>
+    </code></pre>
+    <p>Старший компонент LogProps передает все свойства props компоненту, который он оборачивает, поэтому отображаемый результат не изменится. Например, мы можем использовать этот HOC для логирования всех свойств, которые передаются нашему компоненту «fancy button»:</p>
+    <pre><code class="language-js">
+class FancyButton extends React.Component {
+    focus() {
+      // ...
+    }
+
+    // ...
+  }
+
+  // Вместо экспортирования FancyButton, мы экспортируем LogProps.
+  // Он по-прежнему будет отрисовывать FancyButton.
+  export default logProps(FancyButton);
+  <CustomButton color="red"/>
+    </code></pre>
+    <p>В приведенном выше примере есть один подводный камень: ссылки ref передаваться не будут. Это происходит потому, что ref не является свойством. Подобно ключу key, ссылка ref обрабатывается React-ом по-другому. Если вы добавите ссылку ref в HOC, она будет ссылаться на самый внешний компонент-контейнер, а не на обернуный компонент.</p>
+    <p>Это означает, что ссылки, предназначенные для нашего компонента FancyButton, будут на самом деле привязаны к компоненту LogProps:</p>
+    <pre><code class="language-js">
+  import FancyButton from './FancyButton';
+
+  const ref = React.createRef();
+
+  // Компонент FancyButton, который мы импортировали, является
+  // старшим компонентом LogProps. Даже если отрисованный результат
+  // будет прежним, наша ссылка ref будет указывать на LogProps,
+  // вместо вложенного компонента FancyButton! Это означает, что мы не
+  // можем вызвать, например ref.current.focus()
+  &lt;FancyButton
+          label="Click Me"
+          handleClick={handleClick}
+          ref={ref}
+  />;
+
+  <CustomButton color="red"/>
+    </code></pre>
+    <p>К счастью, мы можем явно передать ссылки на внутренний компонент FancyButton, используя API React.forwardRef. React.forwardRef принимает render-функцию (функцию отрисовки), которая получает параметры props и ref, и возвращает узел React. Например:</p>
+    <pre><code class="language-js">
+    function logProps(Component) {
+      class LogProps extends React.Component {
+        componentDidUpdate(prevProps) {
+          console.log('old props:', prevProps);
+          console.log('new props:', this.props);
+        }
+
+        render() {
+          const {forwardedRef, ...rest} = this.props;
+
+          // Передадим пользовательское свойство "forwardedRef" как ссылку ref
+          return <Component ref={forwardedRef} {...rest} />;
+        }
+      }
+
+      // Обратите внимание: второй параметр "ref" предоставлен React.forwardRef.
+      // Мы можем передать его дальше в LogProps как обычное свойство, например "forwardedRef"
+      // Затем ссылка может быть присоединена к Component.
+      return React.forwardRef((props, ref) => {
+         return <LogProps {...props} forwardedRef={ref} />;
+      });
+    }
+  <CustomButton color="red"/>
+    </code></pre>
+
+    <p class="section">Отображение пользовательского имени в DevTools</p>
+    <p>React.forwardRef принимает функцию отрисовки (рендеринга). React DevTools использует эту функцию, чтобы определить, что отображать для компонента, передающего ссылку.</p>
+    <p>Например, следующий компонент появится как «ForwardRef» в DevTools:</p>
+    <pre><code class="language-js">
+  const WrappedComponent = React.forwardRef((props, ref) => {
+    return <LogProps {...props} forwardedRef={ref} />;
+  });
+  <CustomButton color="red"/>
+    </code></pre>
+    <p>Если вы как-либо назовете функцию отрисовки, DevTools также добавит её имя (например, «ForwardRef(myFunction)»):</p>
+    <pre><code class="language-js">
+  const WrappedComponent = React.forwardRef(
+    function myFunction(props, ref) {
+      return <LogProps {...props} forwardedRef={ref} />;
+    }
+  );
+  <CustomButton color="red"/>
+    </code></pre>
+    <p>Вы даже можете указать свойство displayName для функции, чтобы добавить компонент, который вы оборачиваете:</p>
+    <pre><code class="language-js">
+  function logProps(Component) {
+    class LogProps extends React.Component {
+      // ...
+    }
+
+    function forwardRef(props, ref) {
+      return <LogProps {...props} forwardedRef={ref} />;
+    }
+
+    // Дайте этому компоненту полезное отображаемое имя name в DevTools.
+    // например "ForwardRef(logProps(MyComponent))"
+    const name = Component.displayName || Component.name;
+    forwardRef.displayName = `logProps(${name})`;
+
+    return React.forwardRef(forwardRef);
+  }
+  <CustomButton color="red"/>
+    </code></pre>
+  <div class="button">
+  <a href="../../advanced/higher-order-comp/">&laquo; Назад</a>
+  <a class="next" href="../../advanced/render-props/">Далее &raquo;</a>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Неконтролируемые компоненты</title>
+
+    <link rel="stylesheet" href="../../../../web-page/css/header.css">
+    <link rel="stylesheet" href="../../../../web-page/css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script src="../../../libraries/prism.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../../web-page/index.html">React.js</a>
+        <a href="../../../../web-page/examples.html">Содержание</a>
+        <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+
+    <p class="section">Неконтролируемые компоненты</p>
+
+    <p>В большинстве случаев рекомендуется использовать контролируемые компоненты при реализации форм. В контролируемом
+        компоненте данные формы обрабатываются компонентом React. Альтернативу представляют неконтролируемые компоненты,
+        где данные формы обрабатываются самим DOM.</p>
+
+    <p>Для создания неконтролируемого компонента, вместо написания обработчика события для каждого изменения
+        состояния, вы можете использовать ref, чтобы получать значения формы из DOM.</p>
+
+    <p>К примеру, данный код принимает только имя пользователя в неконтролируемом компоненте:</p>
+
+    <pre><code class="language-js">
+        class SearchUserForm extends React.Component {
+        constructor(props) {
+          super(props);
+          this.onSubmit = this.onSubmit.bind(this);
+        }
+
+        onSubmit(event) {
+          alert(`Имя пользователя: ${this.nameTextField.value}`);
+          event.preventDefault();
+        }
+
+        render() {
+          return (
+            &lt;form onSubmit={this.onSubmit}>
+              &lt;label>Имя пользователя:
+          &lt;input ref={(el) => this.nameTextField = el} name="name" type="text"/>&lt;/label>
+              &lt;input type="submit" value="Submit" />
+            &lt;/form>
+          );
+        }
+      }
+
+      ReactDOM.render(&lt;SearchUserForm />,  document.getElementById('root'));
+    </code></pre>
+
+    <p><a href="https://codepen.io/stzidane/pen/YQGxJG?editors=0010">Результат выполнения кода</a></p>
+
+    <p>Так как неконтролируемый компонент хранит источник истины в DOM, то иногда это упрощает интеграцию React и не
+        React кода, когда используются неконтролируемые компоненты. Также этот подход может слегка сократить ваш код,
+        если вы хотите написать что-то на скорую руку. В остальных случаях вы должны использовать только контролируемые
+        компоненты.</p>
+
+    <div class="button">
+        <a href="../../advanced/refs-and-dom">&laquo; Назад</a>
+        <a class="next" href="../../advanced/optimizing-perfomance">Далее &raquo;</a>
+    </div>
+
+</div>
+
+</body>
+</html>

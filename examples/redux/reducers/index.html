@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редюсеры</title>
+
+    <link rel="stylesheet" href="../../../../web-page/css/header.css">
+    <link rel="stylesheet" href="../../../../web-page/css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="../../../libraries/prism.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../../web-page/index.html">React.js</a>
+        <a href="../../../../web-page/examples.html">Содержание</a>
+        <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+    <p class="section">Редюсеры</p>
+
+    <p>Действия описывают тот факт, что что-то совершилось, но не определяют, как в ответ изменяется состояние
+    приложения. Это задача для редюсеров.</p>
+
+    <p class="section">Проектирование структуры состояния</p>
+
+    <p>В Redux все состояние приложения хранится в виде единственного объекта. Подумать о его структуре перед
+    написанием кода — довольно неплохая идея. Каково минимальное представление состояния Вашего приложения в виде
+    объекта? Для нашего todo-приложения мы хотим хранить две разные сущности: cостояние фильтра видимости и актуальный
+    список todo-задач. Часто вы будете понимать, что в дереве состояний нужно хранить какие-то данные, которые не совсем
+    относятся к состоянию UI. Это нормально, только старайтесь такие данные не смешивать с данными, которые описывают
+    состояние UI.</p>
+
+    <pre><code class="language-js">
+        {
+            visibilityFilter: 'Показать всё',
+            todos: [
+                {
+                    text: 'Рассмотреть использование Redux',
+                    completed: true,
+                },
+                {
+                    text: 'Хранить все состояния в дереве состояний',
+                    completed: false
+                }
+            ]
+        }
+    </code></pre>
+
+    <div class="warning">
+        <p><b>Примечание:</b></p>
+        <p>В более сложном приложении вы, скорее всего, будете иметь разные сущности, которые будут ссылаться друг на
+        друга. Мы советуем поддерживать состояние в настолько упорядоченном виде, насколько это возможно. Старайтесь не
+        допускать никакой вложенности. Держите каждую сущность в объекте, который хранится с ID в качестве ключа.
+        спользуйте этот ID в качестве ссылки из других сущностей или списков. Думайте о состоянии приложения, как о базе
+        данных. Например, в реальном приложении хранение хеша todo-сущностей <mark>todosById: { id -> todo }</mark> и
+        массива их ID <mark>todos: array &lt;id&gt;</mark> в состоянии было бы лучшей идеей, но мы оставим пример
+        простым.</p>
+    </div>
+
+    <p class="section">Обработка действий</p>
+
+    <p>Теперь, когда мы определились с тем, как должны выглядеть наши объекты состояния, мы готовы написать редюсер для
+    них. Редюсер — это чистая функция, которая принимает предыдущее состояние и действие  и возвращает следующее
+    состояние:</p>
+
+    <pre><code class="language-js">
+            (previousState, action) => newState
+    </code></pre>
+
+    <p>Функция называется редюсером потому, что ее можно передать в
+    <mark>Array.prototype.reduce(reducer, ?initialValue)</mark>. Очень важно, чтобы редюсеры оставались чистыми
+    функциями. Вот список того, чего никогда нельзя делать в редюсере:</p>
+
+    <ul>
+        <li>• Непосредственно изменять то, что пришло в аргументах функции;</li>
+        <li>• Выполнять какие-либо сайд-эффекты: обращаться к API или осуществлять переход по роутам;</li>
+        <li>• Вызывать не чистые функции, например <mark>Date.now()</mark> или <mark>Math.random()</mark>.</li>
+    </ul>
+
+    <p>Мы рассмотрим способы выполнения сайд-эффектов чуть позже. На данный момент просто запомните, что редюсер должен
+    быть чистым. Получая аргументы одного типа, редюсер должен вычислять новую версию состояния и возвращать ее. Никаких
+    сюрпризов. Никаких сайд-эффектов. Никаких обращений к стороннему API. Никаких изменений. Только вычисление новой
+    версии состояния.</p>
+    <p>Исходя из вышенаписанных принципов, давайте начнем писать редюсер, постепенно обучая его понимать действия,
+    которые мы описали чуть раньше. Мы начнем с определения начального состояния. В первый раз Redux вызовет редюсер с
+    неопределенным состоянием <mark>(state === undefined)</mark>. Это наш шанс инициализировать начальное состояние
+    приложения:</p>
+
+    <pre><code class="language-js">
+        import { VisibilityFilters } from './actions'
+
+        const initialState = {
+            visibilityFilter: VisibilityFilters.SHOW_ALL,
+            todos: []
+        }
+
+        function todoApp(state, action) {
+            if (typeof state === 'undefined') {
+                return initialState
+            }
+
+        // Пока не обрабатываем никаких действий
+        // и просто возвращаем состояние, которое приняли в качестве параметра
+        return state
+        }
+    </code></pre>
+
+    <p>Использование синтаксиса аргументов по умолчанию из ES6 для более компактного написания — просто аккуратный
+    трюк:</p>
+
+    <pre><code class="language-js">
+        function todoApp(state = initialState, action) {
+            // Пока не обрабатываем никаких действий
+            // и просто возвращаем состояние, которое приняли в качестве параметра
+            return state
+        }
+    </code></pre>
+
+    <p>Теперь давайте начнем обрабатывать действие <mark>SET_VISIBILITY_FILTER</mark>. Все, что нужно сделать — это
+    изменить <mark>visibilityFilter</mark> в состоянии приложения. Это просто:</p>
+
+    <pre><code class="language-js">
+        function todoApp(state = initialState, action) {
+            switch (action.type) {
+                case SET_VISIBILITY_FILTER:
+                    return Object.assign({}, state, {
+                    visibilityFilter: action.filter
+                    })
+                default:
+                    return state
+            }
+        }
+    </code></pre>
+
+    <p>Обратите внимание:</p>
+
+    <ol>
+        <li>Мы не изменяем state. Мы создаем копию с помощью <mark>Object.assign()</mark>.
+        <mark>Object.assign(state, { visibilityFilter: action.filter })</mark> тоже неверный вариант: в этом случае
+        первый аргумент будет изменен. Вы должны передать первым аргументом пустой объект. Вы также можете разрешить
+        <mark>object spread operator proposal</mark>, чтобы вместо этого писать <mark>{ ...state, ...newState }</mark>.
+        </li>
+        <li>Мы возвращаем предыдущую версию состояния в основной ветке. Очень важно возвращать предыдущую версию
+        состояния для любого неизвестного/необрабатываемого действия.</li>
+    </ol>
+
+    <div class="warning">
+        <p><b>Примечание:</b></p>
+        <p><mark>Object.assign()</mark> это часть ES6, но этот метод пока не реализован в большинстве браузеров.
+        Вам нужно будет использовать либо плагин-полифилл для Babel, либо хелпер из другой библиотеки, к примеру
+        <mark>_.assign()</mark> из <mark>lodash</mark>.</p>
+        <p>Обратите внимание на <mark>switch</mark> и шаблон <mark>(boilerplate)</mark>. Конструкция <mark>switch</mark>
+        не является реальным требованием. Реальный шаблон Flux определяется концепцией: необходимость инициировать
+        обновление, необходимость зарегистрировать хранилище в <mark>Dispatcher</mark>, необходимость, чтобы был
+        объектом (возникают осложнения, если вы хотите универсальное приложение. Redux решает эти проблемы благодаря
+        использованию чистых редюсеров вместо генераторов событий. Если вам не нравится конструкция <mark>switch</mark>,
+        вы можете использовать собственную функцию <mark>createReducer</mark>, которая принимает объект обработчиков.</p>
+    </div>
+
+    <p class="section">Обрабатываем больше действий</p>
+
+    <p>У нас есть еще два действия, которые должны быть обработаны! Давайте расширим наш редюсер так, чтобы он мог
+    обрабатывать действие <mark>ADD_TODO</mark>.</p>
+
+    <pre><code class="language-js">
+        function todoApp(state = initialState, action) {
+            switch (action.type) {
+                case SET_VISIBILITY_FILTER:
+                    return Object.assign({}, state, {
+                    visibilityFilter: action.filter
+                })
+                case ADD_TODO:
+                    return Object.assign({}, state, {
+                        todos: [
+                            ...state.todos,
+                            {
+                                text: action.text,
+                                completed: false
+                            }
+                        ]
+                    })
+                default:
+                    return state
+            }
+        }
+    </code></pre>
+
+    <p>Как и раньше, мы никогда не изменяем непосредственно <mark>state</mark> или его поля. Вместо этого мы возвращаем
+    новый объект. В случае добавления ещё одного пункта новый todos-объект — это старый todos-объект
+    (в данном случае массив), в конец которого добавлен новый элемент todo. Свежий todos-объект был создан с
+    использованием информации, полученной из <mark>action</mark>. Ну и наконец, имплементация обработчика для действия
+    <mark>TOGGLE_TODO</mark> не должна стать для Вас большим сюрпризом:</p>
+
+    <pre><code class="language-js">
+        case TOGGLE_TODO:
+            return Object.assign({}, state, {
+                todos: state.todos.map((todo, index) => {
+                    if (index === action.index) {
+                        return Object.assign({}, todo, {
+                            completed: !todo.completed
+                        })
+                    }
+                return todo
+            })
+        })
+    </code></pre>
+
+    <p>В силу того, что мы хотим обновить конкретный todo-элемент в массиве, не прибегая к изменению исходного массива,
+    мы должны использовать функцию <mark>slice</mark> для массива. Мы как бы создадим новый массив из кусочков старого -
+    <mark>[элементы до интересующего нас элемента, обновленный интересующий нас элемент, элементы после интересующего нас
+    элемента]</mark>. Если вы поймаете себя на частом написании такого рода решений, то, возможно, вам стоит обратить
+    внимание на такие утилиты, как <mark>React.addons.update</mark>, <mark>updeep</mark> или даже такие библиотеки,
+    как <mark>Immutable</mark>, которые имеют нативную поддержку глубоких обновлений. Просто запомните, что нельзя
+    присваивать ничего внутри <mark>state</mark>, пока вы его не склонировали.</p>
+
+    <p class="section">Разделение редюсеров</p>
+
+    <p>Вот так выглядит наш код на данный момент. Выглядит излишне многословным:</p>
+
+    <pre><code class="language-js">
+        function todoApp(state = initialState, action) {
+            switch (action.type) {
+                case SET_VISIBILITY_FILTER:
+                    return Object.assign({}, state, {
+                    visibilityFilter: action.filter
+                    })
+                case ADD_TODO:
+                    return Object.assign({}, state, {
+                        todos: [
+                            ...state.todos,
+                            {
+                                text: action.text,
+                                completed: false
+                            }
+                        ]
+                    })
+                case TOGGLE_TODO:
+                    return Object.assign({}, state, {
+                        todos: state.todos.map((todo, index) => {
+                            if(index === action.index) {
+                                return Object.assign({}, todo, {
+                                    completed: !todo.completed
+                                })
+                            }
+                            return todo
+                        })
+                    })
+                default:
+                    return state
+            }
+        }
+    </code></pre>
+
+    <p>Есть ли какой-либо способ сделать его более простым для чтения и понимания? Кажется, что <mark>todos</mark> и
+    <mark>visibilityFilter</mark> обновляются совершенно независимо. Иногда поля состояния зависят от других полей и
+    требуется большая связанность, но в нашем случаем мы безболезненно можем вынести обновление <mark>todos</mark> в
+    отдельную функцию:</p>
+
+    <pre><code class="language-js">
+        function todos(state = [], action) {
+            switch (action.type) {
+                case ADD_TODO:
+                    return [
+                        ...state,
+                        {
+                            text: action.text,
+                            completed: false
+                        }
+                    ]
+                case TOGGLE_TODO:
+                    return state.map((todo, index) => {
+                        if (index === action.index) {
+                            return Object.assign({}, todo, {
+                                completed: !todo.completed
+                            })
+                        }
+                        return todo
+                    })
+                default:
+                    return state
+            }
+        }
+
+        function todoApp(state = initialState, action) {
+            switch (action.type) {
+                case SET_VISIBILITY_FILTER:
+                    return Object.assign({}, state, {
+                        visibilityFilter: action.filter
+                    })
+                case ADD_TODO:
+                case TOGGLE_TODO:
+                    return Object.assign({}, state, {
+                        todos: todos(state.todos, action)
+                    })
+                default:
+                    return state
+            }
+        }
+    </code></pre>
+
+    <p>Обратите внимание, что функция <mark>todos</mark> также принимает <mark>state</mark>, но <mark>state</mark> —
+    это массив! Теперь <mark>todoApp</mark> просто передает срез состояния в функцию <mark>todos</mark>, которая, свою
+    очередь, точно знает, как обновить именно этот кусок состояния. Это называется композицией редюсера и является
+    фундаментальным шаблоном построения Redux-приложений. Мы разбиваем главный редюсер на дочерние "подредюсеры",
+    которые выполняют каждый свою работу — обрабатывают какой-то один кусочек данных (срез состояния). А главный
+    редюсер только лишь решает, какому дочернему редюсеру и какой срез состояния отдать.</p>
+    <p>Давайте рассмотрим это подробнее. Можем ли мы извлечь редюсер, который будет управлять только
+    <mark>visibilityFilter</mark>? Конечно можем:</p>
+
+    <pre><code class="language-js">
+        function visibilityFilter(state = SHOW_ALL, action) {
+            switch (action.type) {
+                case SET_VISIBILITY_FILTER:
+                    return action.filter
+                default:
+                    return state
+            }
+        }
+    </code></pre>
+
+    <p>Теперь мы можем переписать наш главный редюсер как функцию, которая:</p>
+
+    <ul>
+      <li>• вызывает другие редюсеры, обрабатывающие части состояния;</li>
+      <li>• собирает отдельно обработанные части состояния в один цельный объект. Также главному редюсеру больше нет
+      необходимости знать полное начальное состояние. Достаточно того, что каждый дочерний редюсер возвращает свое
+      начальное состояние, если при первом вызове получает <mark>undefined</mark> вместо <mark>state</mark>.</li>
+    </ul>
+
+    <pre><code class="language-js">
+        function todos(state = [], action) {
+            switch (action.type) {
+                case ADD_TODO:
+                    return [
+                        ...state,
+                        {
+                            text: action.text,
+                            completed: false
+                        }
+                    ]
+                case TOGGLE_TODO:
+                    return state.map((todo, index) => {
+                        if (index === action.index) {
+                            return Object.assign({}, todo, {
+                                completed: !todo.completed
+                            })
+                        }
+                        return todo
+                    })
+                default:
+                    return state
+            }
+        }
+
+    function visibilityFilter(state = SHOW_ALL, action) {
+        switch (action.type) {
+            case SET_VISIBILITY_FILTER:
+                return action.filter
+            default:
+                return state
+        }
+    }
+
+    function todoApp(state = {}, action) {
+        return {
+            visibilityFilter: visibilityFilter(state.visibilityFilter, action),
+            todos: todos(state.todos, action)
+        }
+    }
+    </code></pre>
+
+    <p>Обратите внимание на то, что каждый из этих дочерних редюсеров управляет только какой-то одной частью глобального
+    состояния. Параметр <mark>state</mark> разный для каждого отдельного дочернего редюсера и соответствует той части
+    глобального состояния, которой управляет этот дочерний редюсер.</p>
+    <p>Уже выглядит лучше! Когда приложение разрастается, мы можем выносить редюсеры в отдельные файлы и поддерживать
+    их совершенно независимыми, что дает нам возможность управлять различными разделами наших данных.</p>
+    <p>Наконец, Redux предоставляет утилиту, называемую <mark>combineReducers()</mark>, которая реализует точно такой же
+    логический шаблон, который мы только что реализовали в todoApp. С ее помощью мы можем переписать todoApp следующим
+    образом:</p>
+
+    <pre><code class="language-js">
+        import { combineReducers } from 'redux'
+
+        const todoApp = combineReducers({
+            visibilityFilter,
+            todos
+        })
+
+        export default todoApp
+    </code></pre>
+
+    <p>Обратите внимание, что это полностью эквивалентно такому коду:</p>
+
+    <pre><code class="language-js">
+        export default function todoApp(state = {}, action) {
+            return {
+                visibilityFilter: visibilityFilter(state.visibilityFilter, action),
+                todos: todos(state.todos, action)
+            }
+        }
+    </code></pre>
+
+    <p>Есть два совершенно равноценных способа писать комбинированные редюсеры:</p>
+
+    <pre><code class="language-js">
+        const reducer = combineReducers({
+            a: doSomethingWithA,
+            b: processB,
+            c: c
+        })
+
+        function reducer(state = {}, action) {
+            return {
+                a: doSomethingWithA(state.a, action),
+                b: processB(state.b, action),
+                c: c(state.c, action)
+            }
+        }
+    </code></pre>
+
+    <p>Все, что делает <mark>combineReducers()</mark> — это генерирует функцию, которая вызывает ваши редюсеры,
+    передавая им в качестве одного из аргументов срез глобального состояния, который выбирается в соответствии с именем
+    его ключа в глобальном состоянии, и затем снова собирает результаты всех вызовов в один объект.</p>
+
+    <div class="warning">
+        <p><b>Примечание:</b></p>
+        <p>Т.к. <mark>combineReducers</mark> ожидает на входе объект, мы можем поместить все редюсеры верхнего уровня в
+        разные файлы, экспортировать каждую функцию-редюсер и использовать <mark>import *</mark> as редюсеры</mark> для
+        получения их в формате объекта, ключами которого будут имена экспортируемых функций.</p>
+
+        <pre><code class="language-js">
+            import { combineReducers } from 'redux'
+            import * as reducers from './reducers'
+
+            const todoApp = combineReducers(reducers)
+        </code></pre>
+
+        <p>Поскольку <mark>import *</mark> — это все еще новый синтаксис, мы не используем его нигде в документации во
+        избежание путаницы, но вы можете случайно наткнуться на него в каких-нибудь примерах кода из сообщества.</p>
+    </div>
+    <div class="button">
+        <a href="../../redux/actions/">&laquo; Назад</a>
+        <a class="next" href="../../redux/store/">Далее &raquo;</a>
+    </div>
+
+</div>
+
+</body>
+</html>

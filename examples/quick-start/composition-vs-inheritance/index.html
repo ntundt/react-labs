@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Композиция вместо наследования</title>
+
+    <link rel="stylesheet" href="../../../css/header.css">
+    <link rel="stylesheet" href="../../../css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script src="../../../libraries/prism.js"></script>
+
+    <script type="text/babel" src="script.js"></script>
+    <script type="text/babel" src="script2.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../index.html">React.js</a>
+        <a href="../../../examples.html">Содержание</a>
+        <a href="../../../info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+    <p class="section">Композиция вместо наследования</p>
+
+    <p>React обладает сильной композиционной моделью и мы рекомендуем использовать её вместо наследования для повторного
+    использования кода между компонентами.</p>
+    <p>В этом разделе мы рассмотрим некоторые проблемы, с которыми сталкиваются разработчики, используя в React
+    наследование, и покажем, как решить их с помощью композиции.</p>
+
+    <p class="section">Вложенность</p>
+
+    <p>Некоторые компоненты не могут узнать о своих потомках раньше времени. Это обычно свойственно компонентам,
+    которые имеют особое свойство <mark>children</mark> для передачи дочерних элементов непосредственно на выход:</p>
+
+    <pre><code class="language-js">
+        function FancyBorder(props) {
+            return (
+                &lt;div className={'FancyBorder FancyBorder-' + props.color}&gt;
+                    {props.children}
+                &lt;/div&gt;
+            );
+        }
+    </code></pre>
+
+    <p>Это позволяет другим компонентам передавать им произвольные дочерние элементы, используя вложения JSX:</p>
+
+    <pre><code class="language-js">
+        function WelcomeDialog() {
+            return (
+                &lt;FancyBorder color="blue"&gt;
+                    &lt;h1 className="Dialog-title"&gt;
+                        Добро пожаловать!
+                    &lt;/h1&gt;
+                    &lt;p className="Dialog-message"&gt;
+                        Спасибо, что посетили наш космический корабль.
+                    &lt;/p&gt;
+                &lt;/FancyBorder&gt;
+            );
+        }
+    </code></pre>
+
+    <p>Выглядит это так:</p>
+
+    <div class="example">
+        <div id="root"></div>
+    </div>
+
+    <p>Все содержимое тега JSX <mark>&lt;FancyBorder&gt;</mark> передаётся компоненту <mark>FancyBorder</mark> как
+    свойство <mark>children</mark>. Так как <mark>FancyBorder</mark> помещает <mark>{props.children}</mark> в
+    <mark>&lt;div&gt;</mark>, то переданные элементы появляются в итоге на выходе.</p>
+    <p>Хоть это и менее распространено, иногда вам может понадобиться несколько "дыр" в вашем компоненте. В таких
+    случаях вы можете придумать собственное решение проблем, вместо использования <mark>children</mark>:</p>
+
+    <pre><code class="language-js">
+        function SplitPane(props) {
+            return (
+                &lt;div className="SplitPane"&gt;
+                    &lt;div className="SplitPane-left"&gt;
+                        {props.left}
+                    &lt;/div&gt;
+                    &lt;div className="SplitPane-right"&gt;
+                        {props.right}
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            );
+        }
+
+        function App() {
+            return (
+                &lt;SplitPane
+                    left={
+                        &lt;Contacts /&gt;
+                    }
+                    right={
+                        &lt;Chat /&gt;
+                    } /&gt;
+            );
+        }
+    </code></pre>
+
+    <p>Элементы React, такие как <mark>&lt;Contracts /&gt;</mark> и <mark>&lt;Chat /&gt;</mark>, всего лишь объекты, так
+    что вы можете их передавать как свойства (как и любую другую информацию). Такой подход может напоминать о "слотах" в
+    других библиотеках, но в нашем случае нет никаких ограничений на то, что можно передать в качестве свойства.</p>
+
+    <p class="section">Частные случаи</p>
+
+    <p>Иногда мы представляем компоненты как "частные случаи" других компонентов. Для примера, мы можем сказать, что
+    <mark>WelcomeDialog</mark> это частный случай компонента <mark>Dialog</mark>.</p>
+    <p>В React, это также достигается с помощью композиции, в которой "частные" компоненты создают более "общие" и
+    управляют их свойствами:</p>
+
+    <pre><code class="language-js">
+            function Dialog(props) {
+                return (
+                    &lt;FancyBorder color="blue">
+                        &lt;h1 className="Dialog-title">
+                            {props.title}
+                        &lt;/h1>
+                        &lt;p className="Dialog-message">
+                            {props.message}
+                        &lt;/p>
+                    &lt;/FancyBorder>
+                );
+            }
+
+            function WelcomeDialog() {
+                return (
+                    &lt;Dialog
+                        title="Добро пожаловать!"
+                        message="Спасибо, что посетили наш космический корабль." />
+
+                );
+            }
+    </code></pre>
+
+    <p>Композиция работает также хорошо и для компонентов-классов:</p>
+
+    <pre><code class="language-js">
+        function Dialog(props) {
+            return (
+                &lt;FancyBorder color="blue"&gt;
+                    &lt;h1 className="Dialog-title"&gt;
+                        {props.title}
+                    &lt;/h1&gt;
+                    &lt;p className="Dialog-message"&gt;
+                        {props.message}
+                    &lt;/p&gt;
+                    {props.children}
+                &lt;/FancyBorder&gt;
+            );
+        }
+
+        class SignUpDialog extends React.Component {
+            constructor(props) {
+                super(props);
+                this.handleChange = this.handleChange.bind(this);
+                this.handleSignUp = this.handleSignUp.bind(this);
+                this.state = {login: ''};
+            }
+
+            render() {
+                return (
+                    &lt;Dialog title="Программа исследования Марса"
+                            message="Как к вам можно обращаться?"&gt;
+                        &lt;input value={this.state.login}
+                            onChange={this.handleChange} /&gt;
+
+                        &lt;button onClick={this.handleSignUp}&gt;
+                            Запишите меня!
+                        &lt;/button&gt;
+                    &lt;/Dialog&gt;
+                );
+            }
+
+            handleChange(e) {
+                this.setState({login: e.target.value});
+            }
+
+            handleSignUp() {
+                alert(`Добро пожаловать на борт, ${this.state.login}!`);
+            }
+        }
+    </code></pre>
+
+    <p>Результат:</p>
+
+    <div class="example">
+        <div id="root2"></div>
+    </div>
+
+    <p class="section">А как же наследование?</p>
+
+    <p>В Facebook используется React в тысячах компонентов, но так и не было обнаружено ни одного хорошего случая для
+    построения иерархий с наследованием.</p>
+    <p>Свойства и композиция дают вам достаточную гибкость для настройки ваших компонентов и их поведения. Помните, что
+    компоненты могут принимать произвольные свойства, включая примитивные значения, элементы React или функции.</p>
+    <p>Если вы хотите повторно использовать функциональность, не относящуюся к UI, то мы советуем вам извлечь её в
+    отдельный JavaScript-модуль. Компоненты смогут брать и использовать эту функцию, объект или класс, не расширяя их.</p>
+
+    <div class="button">
+        <a href="../../quick-start/lifting-state-up/">&laquo; Назад</a>
+        <a class="next" href="../../quick-start/thinking-in-react/">Далее &raquo;</a>
+    </div>
+</div>
+
+</body>
+</html>

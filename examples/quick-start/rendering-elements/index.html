@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание элементов</title>
+
+    <link rel="stylesheet" href="../../../css/header.css">
+    <link rel="stylesheet" href="../../../css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script src="../../../libraries/prism.js"></script>
+
+    <script type="text/babel" src="script.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../index.html">React.js</a>
+        <a href="../../../examples.html">Содержание</a>
+        <a href="../../../info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+    <p class="section">Создание элементов</p>
+
+    <p>Элементы - наименьшие составные части React приложения. Элемент описывает то, что вы хотите видеть на экране:</p>
+
+    <pre><code class="language-js">
+       const element = &lt;h1&gt;Hello, world!&lt;/h1&gt;;
+    </code></pre>
+
+    <p>В отличие от браузерных DOM элементов, элементы React являются простыми объектами. React DOM обеспечивает
+    обновление DOM для его соответствия элементам React.</p>
+
+    <div class="warning">
+        <p><b>Примечание:</b></p>
+        <p>Не путайте элементы с другим понятием React - "компоненты". С ними мы ознакомимся позже. Элементы
+        - это то, из чего состоят компоненты.</p>
+    </div>
+
+    <p class="section">Добавление элемента в React DOM</p>
+
+    <p>Предположим, что у нас где-то в HTML документе есть тег <mark>&lt;div&gt;:</mark></p>
+
+    <pre><code class="language-js">
+       &lt;div id="root"&gt;&lt;/div&gt;
+    </code></pre>
+
+    <p>Мы дали ему идентификатор "root", так как React DOM будет управлять всем тем, что мы поместим внутрь этого
+    тега. Приложения построенные только на React обычно имеют только один корневой элемент. Если же вы внедряете
+    React в уже существующее приложение, то вы можете создать таких элементов сколько пожелаете. Чтобы добавить
+    элемент в корневой узел DOM, то необходимо и элемент, и узел передать в функцию
+    <mark>ReactDOM.render()</mark>:</p>
+
+    <pre><code class="language-js">
+        const element = &lt;h1&gt;Hello, world!&lt;/h1&gt;;
+        ReactDOM.render(element, document.getElementById('root'));
+    </code></pre>
+
+    <p>В результате мы увидим на экране надпись "Hello, world!" (наглядно продемонстрировано в главе
+        <a href="../../../examples/quick-start/hello-world/index.html">Hello, world!</a>).</p>
+
+    <p class="section">Обновление созданного элемента</p>
+
+    <p>Элементы React неизменяемы. Как только вы создали элемент, то уже не сможете изменить его атрибуты или
+    дочерние узлы. Элемент - как кадр из фильма: отображает состояние UI только в определённый момент времени.
+    </p>
+    <p>Так как мы ещё не изучили достаточно глубоко React, то единственным вариантом изменить UI будет создание
+    нового элемента с последующей его передачей в  <mark>ReactDOM.render()</mark>. Покажем это на примере отсчета
+    времени:</p>
+
+    <pre><code class="language-js">
+        function tick() {
+         const element = (
+          &lt;div&gt;
+            &lt;h1&gt;Hello, world!&lt;/h1&gt;
+            &lt;h2>Сейчас {new Date().toLocaleTimeString()}.&lt;/h2&gt;
+          &lt;/div&gt;
+          );
+         ReactDOM.render(element, document.getElementById('root'));
+        }
+
+        setInterval(tick, 1000);
+    </code></pre>
+
+    <p>В данном случае мы вызываем <mark>ReactDOM.render()</mark> каждую секунду из другой функции
+        <mark class="markJSX">setInterval()</mark>. Результат выполнения выглядит так:</p>
+
+    <div class="example">
+        <div id="root"></div>
+    </div>
+
+    <div class="warning">
+        <p><b>Примечание:</b></p>
+         <p>На практике, большинство приложений вызывают функцию <mark>ReactDOM.render()</mark> только один раз.
+         Далее мы узнаем, как подобный код инкапсулируется в компоненты состояния.</p>
+    </div>
+
+    <p class="section">React обновляет только необходимое</p>
+
+    <p>React DOM сравнивает элемент и его дочерние узлы с предыдущим, и применяет только те изменения,
+    которые приведут DOM в желаемое состояние.</p>
+    <p>В примере с отсчетом времени, несмотря на то, что мы создаём элемент, описывающий весь UI на каждом тике,
+    React DOM изменяет только текстовый сегмент, содержащий время.</p>
+    <p>По опыту скажем, что обдумывание того, как должен выглядеть UI в данный момент времени, а не как он должен
+    изменяться с течение времени, позволяет устранить целый класс ошибок.</p>
+
+    <div class="button">
+        <a href="../../quick-start/introducing-jsx/">&laquo; Назад</a>
+        <a class="next" href="../../quick-start/components-and-props/">Далее &raquo;</a>
+    </div>
+</div>
+
+</body>
+</html>

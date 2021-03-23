@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Обработка событий</title>
+
+    <link rel="stylesheet" href="../../../css/header.css">
+    <link rel="stylesheet" href="../../../css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script src="../../../libraries/prism.js"></script>
+
+    <script type="text/babel" src="script.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../index.html">React.js</a>
+        <a href="../../../examples.html">Содержание</a>
+        <a href="../../../info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+    <p class="section">Обработка событий</p>
+
+    <p>Обработка событий с помощью элементов React подобна обработке событий на элементах DOM. Но есть пара
+    синтаксических различий:</p>
+    <p>• Имена событиям в React дают в соответствии со стилем camelCase.</p>
+    <p>• С помощью JSX функция передаётся как обработчик события, а не как строка.</p>
+    <p>Например, в HTML:</p>
+
+    <pre><code class="language-js">
+        &lt;button onclick="activateLasers()"&gt;
+            Активировать лазеры
+        &lt;/button&gt;
+    </code></pre>
+
+    <p>В React это выглядит так:</p>
+
+    <pre><code class="language-js">
+        &lt;button onclick={activateLasers}&gt;
+            Активировать лазеры
+        &lt;/button&gt;
+    </code></pre>
+
+    <p>Ещё одно отличие в том, что вы не можете вернуть <mark>false</mark>, чтобы воспрепятствовать выполнению функции
+    по умолчанию в React. Вы должны явно вызвать <mark>preventDefault</mark>. Например, в простом HTML для
+    предотвращения открытия по умолчанию новой страницы вы можете написать такой код:</p>
+
+    <pre><code class="language-js">
+        &lt;a href="#" onclick="console.log('Ссылка была нажата.'); return false"&gt;
+            Нажми на меня
+        &lt;/a&gt;
+    </code></pre>
+
+    <p>В React это будет так:</p>
+
+    <pre><code class="language-js">
+        function ActionLink() {
+            function handleClick(e) {
+                e.preventDefault();
+                console.log('The link was clicked.');
+            }
+
+            return (
+                &lt;a href="#" onClick={handleClick}&gt;
+                    Нажми на меня
+                &lt;/a&gt;
+            );
+        }
+    </code></pre>
+
+    <p><mark>e</mark> здесь это синтетическое событие. React определяет эти синтетические события в соответствии со
+    <a href="https://www.w3.org/TR/DOM-Level-3-Events/">спецификацией W3C</a>, так что вам не надо беспокоиться о
+    кроссбраузерной совместимости. Чтобы узнать больше о синтетических событиях загляните в соответствующий
+    <a href="../../../../web-page/examples/reference/syntheticEvent/index.hrml">раздел справочника</a>.</p>
+    <p>При использовании React, как правило, вам не нужно вызывать <mark>addEventListener</mark>, чтобы добавить
+    обработчики в элемент DOM после его создания. Лучше, просто передайте обработчик, когда элемент будет
+    первоначально отрисован.</p>
+    <p>Когда вы объявляете компонент как <mark class="markJSX">класс ES6</mark>, образцом для обработчика событий
+    является метод класса. Допустим, что у нас есть компонент <mark>Toggle</mark>, который создаёт кнопку,
+    позволяющую пользователю переключать её состояние с "ВКЛЮЧЕНО" на "ВЫКЛЮЧЕНО" и наоборот:</p>
+
+    <pre><code class="language-js">
+        class Toggle extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {isToggleOn: true};
+
+                // Эта привязка необходима для того, чтобы "this" работала
+                    и с обратным вызовом
+                this.handleClick = this.handleClick.bind(this);
+            }
+
+            handleClick() {
+                this.setState(prevState => ({
+                    isToggleOn: !prevState.isToggleOn
+                }));
+            }
+
+            render() {
+                return (
+                    &lt;button onClick={this.handleClick}&gt;
+                        {this.state.isToggleOn ? 'ВКЛЮЧЕНО' : 'ВЫКЛЮЧЕНО'}
+                    &lt;/button&gt;
+                );
+            }
+        }
+
+        ReactDOM.render(
+            &lt;Toggle /&gt;,
+            document.getElementById('root')
+        );
+    </code></pre>
+
+    <p>Результат:</p>
+
+    <div class="example">
+        <div id="root"></div>
+    </div>
+
+    <p>Будьте осторожны при работе со значением <mark>this</mark> в JSX-функциях обратного вызова. В JavaScript по
+    умолчанию методы классов не привязаны. Если вы забудете привязать <mark>this.handleClick</mark> и передадите его в
+    <mark>onClick</mark>, то <mark>this</mark> будет неопределенна во время вызова функции.</p>
+    <p>Такое поведение присуще не только React - именно так работают все функции в JavaScript. В общем случае, если вы
+    обращаетесь к методу без простановки<mark>()</mark>, например <mark>onClick={this.handleClick}</mark>, то вам
+    следует привязать его.</p>
+    <p>Если вас раздражает вызывать <mark>bind</mark>, то у есть два пути обхода. Первый - это использовать
+    экспериментально новый плагин <a href="https://babeljs.io/docs/plugins/transform-class-properties/">
+    Class properties transform</a>, в котором вы можете использовать поля класса для корректной привязки функций
+    обратного вызова:</p>
+
+    <pre><code class="language-js">
+        class LoggingButton extends React.Component {
+            // Этот синтаксис обеспечивает 'this' привязку в handleClick.
+            // Внимание: это 'экспериментальный' синтаксис.
+            handleClick = () => {
+                console.log('this is:', this);
+            }
+
+            render() {
+                return (
+                    &lt;button onClick={this.handleClick}&gt;
+                        Нажми на меня
+                    &lt;/button&gt;
+                );
+            }
+        }
+    </code></pre>
+
+    <p>React поддерживает данный синтаксис по умолчанию.</p>
+    <p>Второй путь - использование стрелочных функций в обратных вызовах:</p>
+
+    <pre><code class="language-js">
+        class LoggingButton extends React.Component {
+            handleClick() {
+                console.log('this is:', this);
+            }
+
+            render() {
+                // Этот синтаксис обеспечивает 'this' привязку в handleClick.
+                return (
+                    &lt;button onClick={(e) => this.handleClick(e)}&gt;
+                        Нажми на меня
+                    &lt;/button&gt;
+                );
+            }
+        }
+    </code></pre>
+
+    <p>Проблема этого синтаксиса в том, что появляются различные функции обратного вызова всякий раз, как создаётся
+    <mark>LoggingButton</mark>. В большинстве случаев ничего страшного. Однако, если этот обратный вызов передать как
+    свойство для нижестоящих компонентов, то эти компоненты могут получить дополнительную перерисовку. В общем, мы
+    рекомендуем делать привязку в конструкторе или использовать синтаксис на основе полей класса, чтобы избежать
+    подобных проблем.</p>
+
+    <p class="section">Передача параметров обработчикам событий</p>
+
+    <p>Обычно внутри цикла требуется передать дополнительный параметр обработчику событий. Например, если
+    <mark>id</mark> является идентификатором строки, то эти оба варианта будут работать:</p>
+
+    <pre><code class="language-js">
+        &lt;button onClick={(e) => this.deleteRow(id, e)}>Удалить строку&lt;/button&gt;
+        &lt;button onClick={this.deleteRow.bind(this, id)}>Удалить строку&lt;/button&gt;
+    </code></pre>
+
+    <p>Строки идентичны, и в них используются стрелочные функции и соответственно
+    <mark class="markJSX">Function.prototype.bind</mark>.</p>
+    <p>В обоих случаях, параметр <mark>e</mark> представляет собой React-событие, которое будет передано в качестве
+    второго ( ID - первый) параметра. С помощью стрелочной функции мы передаём его явно, и благодаря
+    <mark>bind</mark> любые дополнительные параметры будут автоматически перенаправлены.</p>
+
+    <div class="button">
+        <a href="../../quick-start/state-and-lifecycle/">&laquo; Назад</a>
+        <a class="next" href="../../quick-start/conditional-rendering/">Далее &raquo;</a>
+    </div>
+</div>
+
+</body>
+</html>

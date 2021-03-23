@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSX подробнее</title>
+
+    <link rel="stylesheet" href="../../../../web-page/css/header.css">
+    <link rel="stylesheet" href="../../../../web-page/css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script src="../../../libraries/prism.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../../web-page/index.html">React.js</a>
+        <a href="../../../../web-page/examples.html">Содержание</a>
+        <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+    <p class="section">JSX подробнее</p>
+
+    <p>Фундаментально, JSX всего лишь предоставляет синтаксис для функции React.createElement(component, props,
+        ...children)</p>
+    <p>Например, данный JSX код</p>
+
+    <pre><code class="language-js">
+        &lt;MyButton color="blue" shadowSize={2}>
+            Click Me
+        &lt;/MyButton>
+    </code></pre>
+
+    <p>Будет преобразован в:</p>
+
+    <pre><code class="language-js">
+        React.createElement(
+            MyButton,
+            {color: 'blue', shadowSize: 2},
+            'Click Me'
+        )
+    </code></pre>
+
+    <p>Так же вы можете использовать самозакрывающуюся форму тега, если у него нет потомков:</p>
+
+    <pre><code class="language-js">
+        &lt;div className="sidebar" />
+    </code></pre>
+
+    <p>Что будет преобразовано в:</p>
+
+    <pre><code class="language-js">
+        React.createElement(
+            'div',
+            {className: 'sidebar'},
+            null
+        )
+    </code></pre>
+
+    <p class="section">Свойства в JSX</p>
+
+    <p>Есть несколько способов определения свойств в JSX:</p>
+
+    <p>Выражения JavaScript</p>
+
+    <pre><code class="language-js">
+        &lt;MyComponent foo={1 + 2 + 3 + 4} />
+    </code></pre>
+
+    <p>Строковые литералы (оба выражения эквивалентны)</p>
+
+    <pre><code class="language-js">
+        &lt;MyComponent message="hello world" />
+        &lt;MyComponent message={'hello world'} />
+    </code></pre>
+
+    <p>Свойства со стандартным значением "true" (оба выражения эквивалентны)</p>
+
+    <pre><code class="language-js">
+        &lt;MyTextBox autocomplete />
+        &lt;MyTextBox autocomplete={true} />
+    </code></pre>
+
+    <p>Распространенные атрибуты</p>
+    <p>Если вы уже имеете объект "props" и хотите передать его в JSX,
+        вы можете использовать "оператор распространения" : ...</p>
+
+    <pre><code class="language-js">
+        function App1() {
+            return &lt;Greeting firstName="Ben" lastName="Hector" />;
+        }
+
+        function App2() {
+            const props = {firstName: 'Ben', lastName: 'Hector'};
+            return &lt;Greeting {...props} />;
+        }
+    </code></pre>
+
+    <div class="button">
+        <a class="next" href="../../advanced/typechecking-with-proptypes/">Далее &raquo;</a>
+    </div>
+
+</div>
+
+</body>
+</html>

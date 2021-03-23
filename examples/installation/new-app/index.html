@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Создание нового приложения</title>
+
+  <link rel="stylesheet" href="../../../../web-page/css/header.css">
+  <link rel="stylesheet" href="../../../../web-page/css/content.css">
+  <link rel="stylesheet" href="../../../libraries/prism.css">
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+  <script src="../../../libraries/prism.js"></script>
+
+</head>
+
+<body>
+
+  <div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+      <a href="../../../../web-page/index.html">React.js</a>
+      <a href="../../../../web-page/examples.html">Содержание</a>
+      <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+  </div>
+  <div id="delimiter"></div>
+
+  <div class="content">
+    <p class="section">Создание нового приложения React</p>
+
+    <p>Самый простой способ начать работу над новым проектом React - это использовать стартовый комплект.</p>
+
+    <p>
+      Заметка:
+      <ul>
+        <li> <span>• </span> На этой странице описывается настройка одностраничного приложения со всем необходимым для комфортного процесса разработки, включая листинг, тестирование, оптимизацию производства и многое другое. Для полнофункциональных инструментов,
+          таких как эти, требуется некоторое время и место на диске.
+          <br /> Если вы ищете легковесную среду для экспериментов с React, вместо этого проверьте страницу <a href="../try-react/index.html">Try React</a>. <a href="https://raw.githubusercontent.com/reactjs/reactjs.org/master/static/html/single-file-example.html">Одного HTML-файла</a> достаточно, чтобы вы начали!
+          <br /> Наконец, если вы не создаете одностраничное приложение, вы можете либо <a href="../add-to-app/index.html">добавить React в существующий конвейер сборки</a>, либо <a href="../cdn-links/index.html">использовать его из CDN</a> и <a href="../../advanced/react-without-jsx/index.html">без этапа сборки</a>.
+        </li>
+      </ul>
+    </p>
+
+    <p class="section">Create React App</p>
+
+    <p>
+      <a href="https://github.com/facebook/create-react-app">Create React App</a> - лучший способ начать создать одностраничное приложение React. Он настраивает среду разработки так, чтобы вы могли использовать новейшие функции JavaScript, обеспечивает комфортную разработку и оптимизирует ваше
+      приложение для производства. Вам понадобится Node.js версии 6.0 или старше на вашем компьютере.
+    </p>
+
+    <pre><code class="language-js">  npm install -g create-react-app
+  create-react-app my-app
+
+  cd my-app
+  npm start
+    </code></pre>
+
+    <p>
+      Если у вас установлен npm 5.2.0+, вы можете использовать npx.
+    </p>
+
+    <pre><code class="language-js">  npx create-react-app my-app
+
+  cd my-app
+  npm start
+    </code></pre>
+
+    <p>
+      Create React App не обрабатывает логику или базы данных; он просто создает frontend, поэтому вы можете использовать его с любым backend, которым хотите. Он использует инструменты построения, такие как <a href="http://babeljs.io/">Babel</a> и <a href="https://webpack.js.org/">webpack</a>,
+      но работает и с нулевой конфигурацией.
+    </p>
+
+    <p>
+      Когда приложение будет готово, запуск npm run build приведет к созданию его оптимизированной сборки. Вы можете узнать больше о Create React App из файла <a href="https://github.com/facebook/create-react-app#create-react-app-">README</a> и <a href="https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#table-of-contents">руководства пользователя</a>.
+    </p>
+
+    <p class="section">Другие стартовые наборы</p>
+    <p>
+      <a href="https://reactjs.org/community/starter-kits.html">Официально рекомендованный список сторонних стартовых комплектов</a>.
+    </p>
+      <p>
+        Они все имеют отличия, но готовы к производству, хорошо поддерживаются и не требуют настройки для начала работы.
+      </p>
+      <p>
+        Вы также можете просмотреть список <a href="https://reactjs.org/community/starter-kits.html#other-starter-kits">других комплектов</a>, предоставленных сообществом.
+      </p>
+
+
+    <p class="section">Продвинутый уровень</p>
+
+    <p>
+      Если вы предпочитаете вручную настраивать проект, см. Раздел <a href="../add-to-app/index.html">Установка React</a> в следующем разделе.
+    </p>
+
+    <div class="button">
+      <a href="../../installation/try-react/">&laquo; Назад</a>
+      <a class="next" href="../../installation/add-to-app/">Далее &raquo;</a>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

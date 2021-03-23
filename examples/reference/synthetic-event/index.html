@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>SyntheticEvent</title>
+
+  <link rel="stylesheet" href="../../../../web-page/css/header.css">
+  <link rel="stylesheet" href="../../../../web-page/css/content.css">
+  <link rel="stylesheet" href="../../../libraries/prism.css">
+
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+  <script src="../../../libraries/prism.js"></script>
+
+</head>
+
+<body>
+
+  <div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>SyntheticEvent</p>
+    </a>
+    <div class="header-right">
+      <a href="../../../../web-page/index.html">React.js</a>
+      <a href="../../../../web-page/examples.html">Содержание</a>
+      <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+  </div>
+  <div id="delimiter"></div>
+
+  <!--ВСЕ ВАШЕ ТВОРЧЕСТВО В ДИВЕ CONTENT-->
+  <div class="content">
+    <p class="section">SyntheticEvent</p>
+
+    <p>Данное справочное руководство описывает оболочку <mark>SyntheticEvent</mark>, которая является частью системы событий React.</p>
+
+    <p class="section">Обзор</p>
+
+    <p>Вашим обработчикам событий будут переданы экземпляры <mark>SyntheticEvent</mark>, который является кросс-браузерной оболочкой вокруг нативного события браузера. Он имеет тот же интерфейс, что и нативное событие браузера, включая методы <mark>stopPropagation()</mark>      и <mark>preventDefault()</mark>, и имеет отличие в том, что работает одинаково во всех браузерах. Если вы обнаружите, что по какой-то причине вам нужно базовое событие браузера, чтобы получить его, просто используйте атрибут <mark>nativeEvent</mark>.
+      Каждый объект <mark>SyntheticEvent</mark> имеет следующие атрибуты:</p>
+
+    <pre><code class="language-js">boolean bubbles
+  boolean cancelable
+  DOMEventTarget currentTarget
+  boolean defaultPrevented
+  number eventPhase
+  boolean isTrusted
+  DOMEvent nativeEvent
+  void preventDefault()
+  boolean isDefaultPrevented()
+  void stopPropagation()
+  boolean isPropagationStopped()
+  DOMEventTarget target
+  number timeStamp
+  string type
+    </code></pre>
+
+    <p class="section">Пул событий</p>
+
+    <p><mark>SyntheticEvent</mark> помещается в пул. Это означает, что объект <mark>SyntheticEvent</mark> будет повторно использован, и все свойства будут аннулированы после того, как отработает коллбэк-обработчик события. Это сделано из соображений производительности.
+      Таким образом, вы не можете получить доступ к событию асинхронным способом.</p>
+
+    <pre><code class="language-js"> function onClick(event) {
+    console.log(event); // => обнуляемый объект.
+    console.log(event.type); // => "click"
+    const eventType = event.type; // => "click"
+
+    setTimeout(function() {
+      console.log(event.type); // => null
+      console.log(eventType); // => "click"
+    }, 0);
+
+    // Не будет работать. this.state.clickEvent будет иметь null
+    this.setState({clickEvent: event});
+
+    // Но вы можете сохранить свойства события
+    this.setState({eventType: event.type});
+  }</code></pre>
+
+    <p class="section">Поддерживаемые события</p>
+
+    <p>React нормализует события, чтобы они имели согласованные свойства в разных браузерах.<br/> Обработчики событий, приведенные ниже, срабатывают по событию в фазе всплытия. Чтобы зарегистрировать обработчик событий для фазы захвата, добавьте <mark>Capture</mark>      в имя события. Например, вместо использования <mark>onClick</mark> вы должны использовать <mark>onClickCapture</mark> для обработки события <mark>click</mark> в фазе захвата.</p>
+
+    <ul>
+      <li><span>• </span><mark>События буфера обмена</mark></li>
+      <li><span>• </span><mark>События композиции</mark></li>
+      <li><span>• </span><mark>События клавиатуры</mark></li>
+      <li><span>• </span><mark>События фокуса</mark></li>
+      <li><span>• </span><mark>События формы</mark></li>
+      <li><span>• </span><mark>События мыши</mark></li>
+      <li><span>• </span><mark>События выбора</mark></li>
+      <li><span>• </span><mark>События касания</mark></li>
+      <li><span>• </span><mark>События UI</mark></li>
+      <li><span>• </span><mark>События колеса прокрутки</mark></li>
+      <li><span>• </span><mark>События медиа</mark></li>
+      <li><span>• </span><mark>События изображения</mark></li>
+      <li><span>• </span><mark>События анимации</mark></li>
+      <li><span>• </span><mark>События перехода</mark></li>
+      <li><span>• </span><mark>Другие события</mark></li>
+    </ul>
+
+    <p class="section">
+      Справка
+    </p>
+
+    <p class="section"> События буфера обмена</p>
+
+    <p>Имена событий:</p>
+
+    <pre><code class="language-js">onCopy onCut onPaste</code></pre>
+
+    <p>Свойства:<br />code-example-3.tag</p>
+
+    <pre><code class="language-js">DOMDataTransfer clipboardData</code></pre>
+
+    <p class="section">События композиции</p>
+
+    <p>Имена событий:</p>
+
+    <pre><code class="language-js">onCompositionEnd onCompositionStart onCompositionUpdate</code></pre>
+
+    <p>Свойства:</p>
+
+    <pre><code class="language-js">string data</code></pre>
+
+    <p class="section">События клавиатуры</p>
+
+    <p>Имена событий:</p>
+
+    <pre><code class="language-js">onKeyDown onKeyPress onKeyUp</code></pre>
+
+    <p>Свойства:</p>
+
+    <pre><code class="language-js"> boolean altKey
+  number charCode
+  boolean ctrlKey
+  boolean getModifierState(key)
+  string key
+  number keyCode
+  string locale
+  number location
+  boolean metaKey
+  boolean repeat
+  boolean shiftKey
+  number which</code></pre>
+
+    <p class="section">События фокуса</p>
+
+    <p>Имена событий:</p>
+
+    <pre><code class="language-js">onFocus onBlur</code></pre>
+
+    <p>Свойства:</p>
+
+    <pre><code class="language-js">DOMEventTarget relatedTarget</code></pre>
+
+    <p class="section">События формы</p>
+
+    <p>Имена событий:</p>
+
+    <pre><code class="language-js">onChange onInput onSubmit onInvalid(>= v16)</code></pre>
+
+    <p class="section">События мыши</p>
+
+    <p>Имена событий:</p>
+
+    <pre><code class="language-js">onClick onContextMenu onDoubleClick onDrag onDragEnd onDragEnter onDragExit
+  onDragLeave onDragOver onDragStart onDrop onMouseDown onMouseEnter onMouseLeave
+  onMouseMove onMouseOut onMouseOver onMouseUp</code></pre>
+
+    <p>Свойства:</p>
+
+    <pre><code class="language-js">boolean altKey
+  number button
+  number buttons
+  number clientX
+  number clientY
+  boolean ctrlKey
+  boolean getModifierState(key)
+  boolean metaKey
+  number pageX
+  number pageY
+  DOMEventTarget relatedTarget
+  number screenX
+  number screenY
+  boolean shiftKey</code></pre>
+
+    <p class="section">События выбора</p>
+
+    <p>Имена событий:</p>
+
+    <pre><code class="language-js">onSelect</code></pre>
+
+    <p class="section">События касания</p>
+
+    <p>Имена событий:</p>
+
+    <pre><code class="language-js">onTouchCancel onTouchEnd onTouchMove onTouchStart</code></pre>
+
+    <p>Свойства:</p>
+
+    <pre><code class="language-js">boolean altKey
+  DOMTouchList changedTouches
+  boolean ctrlKey
+  boolean getModifierState(key)
+  boolean metaKey
+  boolean shiftKey
+  DOMTouchList targetTouches
+  DOMTouchList touches</code></pre>
+
+    <p class="section">События UI</p>
+
+    <p>Имена событий:</p>
+
+    <pre><code class="language-js">onScroll</code></pre>
+
+    <p>Свойства:</p>
+
+    <pre><code class="language-js">number detail
+  DOMAbstractView view</code></pre>
+
+    <p class="section">События колеса прокрутки</p>
+
+    <p>Имена событий:</p>
+
+    <pre><code class="language-js">onWheel</code></pre>
+
+    <p>Свойства:</p>
+
+    <pre><code class="language-js">number deltaMode
+  number deltaX
+  number deltaY
+  number deltaZ</code></pre>
+
+    <p class="section">События медиа</p>
+
+    <p>Имена событий:</p>
+
+    <pre><code class="language-js">onAbort onCanPlay onCanPlayThrough onDurationChange onEmptied onEncrypted
+  onEnded onError onLoadedData onLoadedMetadata onLoadStart onPause onPlay
+  onPlaying onProgress onRateChange onSeeked onSeeking onStalled onSuspend
+  onTimeUpdate onVolumeChange onWaiting</code></pre>
+
+    <p>Свойства:</p>
+
+    <pre><code class="language-js">number deltaMode
+  number deltaX
+  number deltaY
+  number deltaZ</code></pre>
+
+    <p class="section">События изображения</p>
+
+    <p>Имена событий:</p>
+
+    <pre><code class="language-js">onLoad onError</code></pre>
+
+    <p class="section">События анимации</p>
+
+    <p>Имена событий:</p>
+
+    <pre><code class="language-js">onAnimationStart onAnimationEnd onAnimationIteration</code></pre>
+
+    <p>Свойства:</p>
+
+    <pre><code class="language-js">string animationName
+  string pseudoElement
+  float elapsedTime</code></pre>
+
+    <p class="section">События перехода</p>
+
+    <p>Имена событий:</p>
+
+    <pre><code class="language-js">onTransitionEnd</code></pre>
+
+    <p>Свойства:</p>
+
+    <pre><code class="language-js">string propertyName
+  string pseudoElement
+  float elapsedTime</code></pre>
+
+    <p class="section">Другие события</p>
+
+    <p>Имена событий:</p>
+
+    <pre><code class="language-js">onToggle</code></pre>
+
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>React.Component</title>
+
+  <link rel="stylesheet" href="../../../../web-page/css/header.css">
+  <link rel="stylesheet" href="../../../../web-page/css/content.css">
+  <link rel="stylesheet" href="../../../libraries/prism.css">
+
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+  <script src="../../../libraries/prism.js"></script>
+
+</head>
+
+<body>
+
+  <div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>React.Component</p>
+    </a>
+    <div class="header-right">
+      <a href="../../../../web-page/index.html">React.js</a>
+      <a href="../../../../web-page/examples.html">Содержание</a>
+      <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+  </div>
+  <div id="delimiter"></div>
+
+  <!--ВСЕ ВАШЕ ТВОРЧЕСТВО В ДИВЕ CONTENT-->
+  <div class="content">
+    <p class="section">Обзор</p>
+
+    <p><mark>React.Component</mark>является абстрактным базовым классом, поэтому редко имеет смысл обращаться к нему напрямую. Вместо этого вы обычно подклассифицируете его и определите по крайней мере <mark>render()</mark> метод.</p>
+
+    <p>
+      Вы определяете компонент React как обычный класс <mark>JavaScript</mark> :
+    </p>
+
+    <pre><code class="language-js">class Greeting extends React.Component {
+render() {
+  return &lt;h1>Hello, {this.props.name}&lt;/h1>;
+}
+}</code></pre>
+
+    <p>
+      Если вы еще не используете ES6, вы можете использовать <mark>create-react-class</mark> модуль.
+    </p>
+
+    <p class="section">Жизненный цикл компонента</p>
+
+    <p>
+      Каждый компонент имеет несколько «методов жизненного цикла», которые вы можете переопределить для запуска кода в определенное время в процессе. Методы с префиксом <mark>will</mark> вызываются прямо перед тем, как что-то происходит, а методы с префиксом
+      <mark>did</mark> вызываются сразу после того, как что-то происходит.
+    </p>
+
+    <p class="section">
+      Монтаж
+    </p>
+
+    <p>
+      Эти методы вызывают, когда экземпляр компонента создается и вставляется в DOM:
+    </p>
+
+    <ul>
+      <li><span>• </span><mark>constructor()</mark></li>
+      <li><span>• </span><mark>static getDerivedStateFromProps()</mark></li>
+      <li><span>• </span><mark>componentWillMount() / UNSAFE_componentWillMount()</mark></li>
+      <li><span>• </span><mark>render()</mark></li>
+      <li><span>• </span><mark>componentDidMount()</mark></li>
+    </ul>
+
+    <p class="section">
+      Обновление
+    </p>
+
+    <p>
+      Обновление может быть вызвано изменениями в параметрах или состоянии. Эти методы вызываются, когда компонент повторно отображается:
+    </p>
+
+    <ul>
+      <li><span>• </span><mark>componentWillReceiveProps() / UNSAFE_componentWillReceiveProps()</mark></li>
+      <li><span>• </span><mark>static getDerivedStateFromProps()</mark></li>
+      <li><span>• </span><mark>shouldComponentUpdate()</mark></li>
+      <li><span>• </span><mark>componentWillUpdate() / UNSAFE_componentWillUpdate()</mark></li>
+      <li><span>• </span><mark>render()</mark></li>
+      <li><span>• </span><mark>getSnapshotBeforeUpdate()</mark></li>
+      <li><span>• </span><mark>componentDidUpdate()</mark></li>
+    </ul>
+
+    <p class="section">
+      Демонтирование
+    </p>
+
+    <p>Этот метод вызывается, когда компонент удаляется из DOM:</p>
+
+    <ul>
+      <li><span>• </span><mark>componentWillUnmount()</mark></li>
+    </ul>
+
+    <p class="section">
+      Обработка ошибок
+    </p>
+
+    <p>Этот метод вызывается при возникновении ошибки во время рендеринга, в методе жизненного цикла или в конструкторе любого дочернего компонента.</p>
+
+    <ul>
+      <li><span>• </span><mark>componentDidCatch()</mark></li>
+    </ul>
+
+    <p class="section">
+      Другие API
+    </p>
+
+    <p>Каждый компонент также предоставляет некоторые другие API:</p>
+    <ul>
+      <li><span>• </span><mark>setState()</mark></li>
+      <li><span>• </span><mark>forceUpdate()</mark></li>
+    </ul>
+
+    <p class="section">
+      Свойства класса
+    </p>
+
+    <ul>
+      <li><span>• </span><mark>defaultProps</mark></li>
+      <li><span>• </span><mark>displayName</mark></li>
+    </ul>
+
+    <p class="section">
+      Свойства экземпляра
+    </p>
+
+    <ul>
+      <li><span>• </span><mark>props</mark></li>
+      <li><span>• </span><mark>state</mark></li>
+    </ul>
+
+    <p class="section">
+      Справка
+    </p>
+
+    <p class="section">
+      render()
+    </p>
+
+    <pre><code class="language-js">render()</code></pre>
+
+    <p>
+      <mark>render()</mark> - обязательный метод.
+      <br /> При вызове проверяет <mark>this.props</mark> и <mark>this.state</mark> и возвращает один из следующих типов:
+    </p>
+
+    <ul>
+      <li><span>• </span>Элементы React</li>
+      <li><span>• </span>Строки и числа</li>
+      <li><span>• </span>Порталы</li>
+      <li><span>• </span>null</li>
+      <li><span>• </span>true/false</li>
+    </ul>
+
+    <p class="section">
+      Фрагменты
+    </p>
+    <p>
+      Вы также можете вернуть несколько элементов из render()массива:
+    </p>
+    <pre><code class="language-js">render() {
+  return [
+    &lt;li key="A">First item&lt;/li>,
+    &lt;li key="B">Second item&lt;/li>,
+    &lt;li key="C">Third item&lt;/li>,
+  ];
+}</code></pre>
+
+    <p class="section">
+      constructor()
+    </p>
+    <pre><code class="language-js">constructor(props)</code></pre>
+    <p>
+      Конструктор для компонента React вызывается до его установки. При реализации конструктора для <mark>React.Component</mark> подкласса вы должны вызывать <mark>super(props)</mark>перед любым изменением состояния. В противном случае конструктор <mark>this.props</mark>      не будет определен, что может привести к ошибкам. Избегайте введения каких-либо побочных эффектов в конструкторе. Для этих случаев использования используйте <mark>componentDidMount()</mark>. Конструктор - это место для инициализации состояния. Для
+      этого просто назначьте объект <mark>this.state</mark>; не пытайтесь вызвать <mark>setState()</mark> из конструктора. Конструктор также часто используется для привязки обработчиков событий к экземпляру класса. Если вы не инициализируете состояние
+      и не связываете методы, вам не нужно реализовывать конструктор для вашего компонента React. В редких случаях нормально инициализировать состояние на основе параметров. Вот пример конструктора подкласса:
+    </p>
+
+    <pre><code class="language-js">constructor(props) {
+  super(props);
+  this.state = {
+    color: props.initialColor
+  };
+}</code></pre>
+
+    <p class="section">
+      static getDerivedStateFromProps()
+    </p>
+    <pre><code class="language-js">static getDerivedStateFromProps(props, state)</code></pre>
+    <p>
+      <mark>getDerivedStateFromProps</mark> вызывается непосредственно перед вызовом метода рендеринга. Он должен вернуть объект для обновления состояния или null, чтобы ничего не обновлять. Обратите внимание, что этот метод запускается на каждом рендере
+      независимо от причины. Это контрастирует с тем <mark>UNSAFE_componentWillReceiveProps</mark>, запускается только тогда, когда родитель вызывает повторную визуализацию, а не в результате локального <mark>setState</mark>.
+    </p>
+
+    <p class="section">
+      UNSAFE_componentWillMount()
+    </p>
+    <pre><code class="language-js">UNSAFE_componentWillMount()</code></pre>
+    <p>
+      <mark>UNSAFE_componentWillMount()</mark>вызывается непосредственно перед установкой. Он вызывается раньше <mark>render()</mark>, поэтому вызов <mark>setState()</mark> синхронно в этом методе не вызовет дополнительный рендеринг.
+    </p>
+
+    <p class="section">
+      componentDidMount()
+    </p>
+    <pre><code class="language-js">componentDidMount()</code></pre>
+    <p>
+      <mark>componentDidMount()</mark>вызывается сразу после установки компонента. Если вам нужно загружать данные с удаленной конечной точки, это хорошее место для создания экземпляра сетевого запроса. Вызов <mark>setState()</mark>этого метода вызовет
+      дополнительный рендеринг, но это произойдет до того, как браузер обновит экран. Это гарантирует, что, хотя <mark>render()</mark> будет вызван дважды, пользователь не увидит промежуточное состояние.
+    </p>
+
+    <p class="section">
+      shouldComponentUpdate()
+    </p>
+    <pre><code class="language-js">shouldComponentUpdate(nextProps, nextState)</code></pre>
+    <p>
+      Используйте, <mark>shouldComponentUpdate()</mark> чтобы позволить React знать, не влияет ли на результат компонента текущее изменение состояния или параметров. Поведение по умолчанию заключается в повторном рендеринге при каждом изменении состояния,
+      и в подавляющем большинстве случаев вы должны полагаться на поведение по умолчанию.
+      <mark>shouldComponentUpdate()</mark>вызывается перед рендерингом при получении новых параметров или состояний. По умолчанию <mark>true</mark>. Этот метод не вызывается для начальной визуализации или когда используется <mark>forceUpdate()</mark>.
+      Возврат <mark>false</mark> не предотвращает повторный рендеринг дочерних компонентов при изменении их состояния. В настоящее время, если <mark>shouldComponentUpdate()</mark> возвращается <mark>false</mark>, то <mark>UNSAFE_componentWillUpdate()</mark>,
+      <mark>render()</mark>и
+      <mark>componentDidUpdate()</mark>не будет вызван.
+    </p>
+
+    <p class="section">
+      getSnapshotBeforeUpdate()
+    </p>
+    <pre><code class="language-js">UNSAFE_componentWillUpdate(nextProps, nextState)</code></pre>
+    <p>
+      <mark>getSnapshotBeforeUpdate()</mark> вызывается непосредственно перед тем, как последний обработанный вывод будет выполнен, например, для DOM. Он позволяет вашему компоненту фиксировать текущие значения (например, положение прокрутки), прежде
+      чем они будут потенциально изменены. Любое значение, возвращаемое этим жизненным циклом, будет передано как параметр <mark>componentDidUpdate()</mark></p>
+
+    <p class="section">
+      UNSAFE_componentWillUpdate()
+    </p>
+    <pre><code class="language-js">UNSAFE_componentWillUpdate(nextProps, nextState)</code></pre>
+    <p>
+      <mark>UNSAFE_componentWillUpdate()</mark>вызывается непосредственно перед рендерингом при получении новых параметров или состояний. Используйте это как возможность выполнить подготовку до того, как произойдет обновление. Этот метод не вызывается
+      для первоначального рендеринга. Обратите внимание, что вы не можете вызвать <mark>this.setState()</mark> здесь; и вы не должны делать что-либо еще.</p>
+
+    <p class="section">
+      componentDidUpdate()
+    </p>
+    <pre><code class="language-js">componentDidUpdate(prevProps, prevState, snapshot)</code></pre>
+    <p>
+      <mark>componentDidUpdate()</mark> вызывается сразу после обновления. Этот метод не вызывается для первоначального рендеринга. Используйте это как возможность работать с DOM при обновлении компонента. Это также хорошее место для выполнения сетевых
+      запросов, если вы сравниваете текущие параметры с предыдущими (например, сетевой запрос может не понадобиться, если параметры не изменились). Если ваш компонент реализует <mark>getSnapshotBeforeUpdate()</mark>, возвращаемое им значение будет передано
+      в качестве третьего параметра «моментального снимка» <mark>componentDidUpdate()</mark>. (В противном случае этот параметр будет неопределенным.)
+    </p>
+
+    <p class="section">
+      componentWillUnmount()
+    </p>
+    <pre><code class="language-js">componentWillUnmount()</code></pre>
+    <p>
+      <mark>componentWillUnmount()</mark> вызывается непосредственно перед уничтожением компонента.
+
+    </p>
+
+    <p class="section">
+      componentDidCatch()
+    </p>
+    <pre><code class="language-js">componentDidCatch(error, info)</code></pre>
+    <p>Ограничение ошибок - это компонент React, которые улавливает ошибки JavaScript в любом месте их дочернего дерева компонентов, записывает эти ошибки и отображает резервный интерфейс.</p>
+
+    <p class="section">
+      setState()
+    </p>
+    <pre><code class="language-js">setState()</code></pre>
+    <p><mark>setState()</mark> создает очередь изменений состояния компонента и сообщает React, что этот компонент и его дочерние элементы должны быть повторно отрисованы с обновленным состоянием. Это основной метод, который вы используете для обновления
+      пользовательского интерфейса в ответ на разные события и ответы сервера. Думайте о <mark>setState()</mark> как о запросе, а не как о немедленной команде для обновления компонента. Для улучшения производительности React может задержать ее, а затем
+      обновить несколько компонентов за один проход. React не гарантирует немедленного применения изменений состояния
+      <mark>setState()</mark> не всегда сразу обновляет компонент. Он может добавить в очередь или отложить обновление до наиболее поздней версии. Это делает чтение <mark>this.state</mark> прямо после вызова <mark>setState()</mark> потенциальной ловушкой.
+      Вместо этого используйте <mark>componentDidUpdate</mark> или обратный вызов <mark>setState: (setState (updater, callback))</mark>, любой из которых гарантированно будет срабатывать после применения обновления. Если вам необходимо установить состояние
+      на основе предыдущего состояния, читайте об аргументе <mark>updater</mark> ниже.
+      <mark>setState()</mark> всегда приведет к повторной отрисовке, если <mark>shouldComponentUpdate()</mark> возвращает <mark>false</mark>. Если используются изменяемые объекты, и логика условной отрисовки не может быть реализована в
+      <mark>shouldComponentUpdate()</mark>, вызов <mark>setState()</mark> только тогда, когда новое состояние отличается от предыдущего состояния, позволит избежать ненужных повторных отрисовок. Первый аргумент <mark>updater</mark> - это функция с сигнатурой:
+
+      <mark>prevState</mark> - ссылка на предыдущее состояние. Оно не должно быть непосредственно изменено. Вместо этого, изменения должны быть представлены путем создания нового объекта на основе <mark>prevState</mark> и <mark>props</mark>. Например,
+      предположим, что мы захотели изменить значение в состоянии с помощью <mark>props.delta:</mark></p>
+
+    <pre><code class="language-js"> this.setState((prevState, props) => {
+    return {temperature: prevState.temperature + props.delta};
+  });</code></pre>
+    <p>
+      Как <mark>prevState</mark>, так и <mark>props</mark>, полученные функцией обновления гарантировано будут актуальными. Возвращаемый результат функции обновления будет неглубоко смерджен с <mark>prevState</mark>. Второй параметр для <mark>setState()</mark>      - это дополнительная функция обратного вызова, которая будет выполняться после завершения <mark>setState</mark> и повторной отрисовки компонента. Обычно вместо неё мы рекомендуем использовать <mark>componentDidUpdate()</mark>. Вы можете передать
+      объект в качестве первого аргумента функции <mark>setState()</mark> вместо функции:
+    </p>
+    <pre><code class="language-js">setState(stateChange, [callback])</code></pre>
+    <p>
+      Такой вызов приведёт к неглубокому слиянию <mark>stateChange</mark> в новое состояние, например, чтобы показать диалог:
+    </p>
+    <pre><code class="language-js"> this.setState({isDialogShowed: true})</code></pre>
+    <p>
+      Эта форма <mark>setState()</mark> также асинхронна, и несколько вызовов в течение одного и того же цикла могут быть объединены вместе. Например, если вы пытаетесь увеличить счетчик более одного раза в одном цикле, это будет эквивалентно:
+    </p>
+    <pre><code class="language-js"> Object.assign(
+    previousState,
+    {counter: state.counter + 1},
+    {counter: state.counter + 1},
+    ...
+  )</code></pre>
+    <p>
+      Последующие вызовы будут переопределять значения из предыдущих вызовов в том же цикле, поэтому счетчик будет увеличен только один раз. Если следующее состояние зависит от предыдущего состояния, мы рекомендуем использовать такую форму функции обновления:
+    </p>
+    <pre><code class="language-js">this.setState((prevState) => {
+    return {counter: prevState.counter + 1};
+  });</code></pre>
+
+    <p class="section">
+      forceUpdate()
+    </p>
+    <pre><code class="language-js">component.forceUpdate(callback)</code></pre>
+    <p>По умолчанию, когда свойства или состояние вашего компонента изменяются, ваш компонент будет повторно отрисован. Если метод <mark>render()</mark> зависит от каких-то других данных, вы можете сказать React, что компонент нуждается в повторной перерисовке,
+      вызвав <mark>forceUpdate()</mark>. Вызов <mark>forceUpdate()</mark> приведет к вызову <mark>render()</mark> для компонента, пропуская <mark>shouldComponentUpdate()</mark>. Будут вызваны обычные методы жизненного цикла дочерних компонентов, включая
+      метод <mark>shouldComponentUpdate()</mark> для каждого потомка. React будет по-прежнему обновлять DOM только в случае изменения разметки. В большинстве случаев вы должны стараться избегать использования <mark>forceUpdate()</mark> и считывать данные
+      только из <mark>this.props</mark> и <mark>this.state</mark> в методе <mark>render()</mark>.</p>
+
+    <p class="section">
+      Свойства класса
+    </p>
+
+    <p class="section">
+      defaultProps
+    </p>
+
+    <p>
+      <mark>defaultProps</mark> можно определить как свойство самого класса компонента, чтобы установить свойства по умолчанию для класса. Это используется для <mark>undefined</mark> свойств, но не для <mark></mark> свойств. Например:
+    </p>
+
+    <pre><code class="language-js"> class Alert extends React.Component {
+    // ...
+  }
+
+  Alert.defaultProps = {
+    type: 'success'
+  };</code></pre>
+
+    <p>Если <mark>props.type</mark> не будет предоставлен, по умолчанию он будет установлен в <mark>'success'</mark>:</p>
+
+    <pre><code class="language-js">render() {
+    return <Alert /> ; // props.type будет установлено в 'success'
+  }</code></pre>
+
+    <p>
+      Если для свойства <mark>props.type</mark> установлено значение <mark>null</mark>, оно останется <mark>null</mark>
+    </p>
+
+    <p class="section">
+      displayName
+    </p>
+    Строковое свойство <mark>displayName</mark> используется для сообщений отладки. Обычно вам не нужно явно указывать его, поскольку оно берётся из имени функции или класса, которые определяют компонент. Возможно, вы захотите установить его явно, если
+    хотите отобразить другое имя для целей отладки или когда вы создаете компонент более высокого порядка.
+
+    <p class="section">
+      Свойства экземпляра
+    </p>
+
+    <p class="section">
+      props
+    </p>
+
+    <p>
+      <mark>this.props</mark> содержит свойства, которые были определены вызывающим компонентом данного компонента. В частности, <mark>this.props.children</mark> - специальное свойство, обычно определяемое дочерними тегами в выражении JSX, а не на в самом
+      теге.
+    </p>
+
+    <p class="section">
+      state
+    </p>
+
+    <p>
+      Состояние содержит данные, специфичные для этого компонента, которые могут меняться со временем. Состояние определяется пользователем, и оно должно быть простым объектом JavaScript. Если вы не используете что-то в <mark>render()</mark>, оно не должно
+      находиться в состоянии. Например, вы можете поместить идентификаторы таймера непосредственно в экземпляр. Никогда не изменяйте <mark>this.state</mark> напрямую, так как вызов <mark>setState()</mark> впоследствии может заменить ваше изменение. Обращайтесь
+      с <mark>this.state</mark>, как если бы оно было неизменяемым.
+    </p>
+
+  </div>
+</body>
+
+</html>

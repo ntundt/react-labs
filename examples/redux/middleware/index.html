@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Связующее ПО</title>
+
+    <link rel="stylesheet" href="../../../../web-page/css/header.css">
+    <link rel="stylesheet" href="../../../../web-page/css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="../../../libraries/prism.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../../web-page/index.html">React.js</a>
+        <a href="../../../../web-page/examples.html">Содержание</a>
+        <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+    <p class="section">Связующее ПО</p>
+
+    <p>Вы видели связующее ПО в действии в примере асинхронных действий. Если вы когда-либо использовали такие серверные
+    библиотеки как Express и Koa, то, вероятно, вы уже хорошо знакомы с концепцией связующего ПО. В этих фреймворках
+    связующее ПО — это часть кода, которую вы можете поместить между фреймворком, принимающим запрос, и фреймворком,
+    генерирующим ответ. Например связующее ПО из Express или Koa может добавлять CORS-заголовки, логирование, сжатие и
+    т.д. Лучшая особенность связующего ПО заключается в том, что его можно соединять в цепочки/последовательности. Вы
+    можете использовать множество независимого стороннего связующего ПО в одном проекте.</p>
+    <p>Redux связующее ПО, в отличие от связующего ПО Express или Koa, решает немного другие проблемы, но концептуально
+    схожим способом. Оно предоставляет стороннюю точку расширения между отправкой действия и моментом, когда это
+    действие достигает редюсера. Люди используют Redux связующее ПО для логирования, сообщения об ошибках, общения с
+    асинхронным API, роутинга и т.д.</p>
+    <p>Эта статья разделена на углубленное введение, которое поможет вам хорошо разобраться в концепте, и пару
+    практических примеров в самом конце, которые покажут вам всю силу связующего ПО. Вам может показаться полезным
+    периодическое переключение между этими частями, так же, как между скукой и вдохновением.</p>
+
+    <p class="section">Понимание связующего ПО</p>
+
+    <p>Т.к. связующее ПО может использоваться для различных задач, в том числе и для асинхронных обращений к API, то
+    очень важно, чтобы вы понимали, откуда оно пришло. Мы покажем вам ход мыслей, шаг за шагом ведущий к связующему ПО,
+    используя логирование и сообщения об ошибках в качестве примера.</p>
+
+    <p class="section">Проблема: логирование</p>
+
+    <p>Одно из достоинств Redux — он делает изменения состояния приложения предсказуемыми и прозрачными. Каждый раз,
+    когда посылается действие, вычисляется и сохраняется новое состояние. Состояние не может измениться самостоятельно,
+    оно может меняться только как последовательность определенных действий.</p>
+    <p>Разве не было бы хорошо, если бы мы записывали каждое действие, которое происходило в приложении, вместе с
+    состоянием, которое было вычислено после этого действия? Когда что-то идет не так, мы можем просмотреть наш лог и
+    понять, какое именно действие испортило наше состояние. Как мы подходим к этому с Redux?</p>
+
+    <p class="section">Попытка #1: Логируем вручную</p>
+
+    <p>Простейшее решение - самостоятельно записывать действие и состояние каждый раз, когда вы вызываете
+    <mark>store.dispatch(action)</mark>. На самом деле это не слишком хорошее решение, это просто первый шаг на пути к
+    пониманию проблемы.</p>
+
+    <div class="warning">
+        <p><b>Обратите внимание:</b></p>
+        <p>Если вы используете react-redux или похожий биндинг, вы, вероятно, хотите иметь непосредственный доступ к
+        экземпляру состояния в ваших компонентах. Для следующих нескольких параграфов представьте, что вы передаете
+        состояние явно.</p>
+    </div>
+
+    <p>Например, вы вызываете такой код, когда создаете todo-элемент:</p>
+
+    <pre><<code class="language-js">
+        store.dispatch(addTodo('Use Redux'))
+    </code></pre>
+
+    <p>Для того чтобы логировать действие и состояние, вы можете изменить код примерно так:</p>
+
+    <pre><code class="language-js">
+        let action = addTodo('Use Redux')
+
+        console.log('dispatching', action)
+        store.dispatch(action)
+        console.log('next state', store.getState())
+    </code></pre>
+
+    <p>Это даст желаемый эффект, но вы бы не хотели делать так каждый раз.</p>
+
+    <p class="section">Попытка #2: Оборачиваем Dispatch</p>
+
+    <p>Вы можете вынести логирование в функцию:</p>
+
+    <pre><code class="language-js">
+        function dispatchAndLog(store, action) {
+            console.log('dispatching', action)
+            store.dispatch(action)
+            console.log('next state', store.getState())
+        }
+    </code></pre>
+
+    <p>Вы можете использовать ее везде вместо обычного <mark>store.dispatch()</mark>:</p>
+
+    <pre><code class="language-js">
+        dispatchAndLog(store, addTodo('Use Redux'))
+    </code></pre>
+
+    <p>Мы бы могли закончить на этом, но не очень удобно импортировать специальную функцию каждый раз.</p>
+
+    <p class="section">Попытка #3: Monkeypatching для Dispatch</p>
+
+    <p>Что, если мы просто заменим функцию <mark>dispatch</mark> в экземпляре хранилища? Redux хранилище — это простой
+    объект с парой методов, а мы пишем на JavaScript, следовательно, мы можем применить технику monkeypatch для
+    реализации <mark>dispatch</mark>:</p>
+
+    <pre><code class="language-js">
+        let next = store.dispatch
+        store.dispatch = function dispatchAndLog(action) {
+            console.log('dispatching', action)
+            let result = next(action)
+            console.log('next state', store.getState())
+            return result
+        }
+    </code></pre>
+
+    <p>Это уже ближе к тому, что нам нужно! Не важно, откуда мы посылаем действие, оно гарантированно будет
+    залогировано. Monkeypatching никогда не покажется правильным ходом, но пока мы можем с этим жить.</p>
+
+    <p class="section">Проблема: Сообщения об ошибках.</p>
+
+    <p>Что, если мы захотим применить больше одного такого преобразования к <mark>dispatch</mark>?</p>
+    <p>Другое такое изменение, которое приходит мне в голову, это сообщения о JavaScript-ошибках в продакшене.
+    Глобальное событие <mark>window.onerror</mark> не надежно потому, что оно в некоторых старых браузерах не
+    предоставляет информацию о стеке вызовов, которая важна для понимания того, почему же произошла ошибка.</p>
+    <p>Разве не было бы полезно, если бы каждый раз, когда ошибка выбрасывалась как результат отправки какого-либо
+    действия, мы могли бы отправить ее (ошибку), вместе со стеком вызовов, действием, которое вызвало ошибку и
+    актуальным состоянием в сервис сообщения об ошибках, такой как Sentry. В таком случае гораздо легче воспроизвести
+    ошибку в разработке.</p>
+    <p>Если логирование и сообщения об ошибках являются отдельными утилитами, то они могут выглядеть так:</p>
+
+    <pre><code class="language-js">
+        function patchStoreToAddLogging(store) {
+            let next = store.dispatch
+            store.dispatch = function dispatchAndLog(action) {
+                console.log('dispatching', action)
+                let result = next(action)
+                console.log('next state', store.getState())
+                return result
+            }
+        }
+
+        function patchStoreToAddCrashReporting(store) {
+            let next = store.dispatch
+            store.dispatch = function dispatchAndReportErrors(action) {
+                try {
+                    return next(action)
+                } catch (err) {
+                    console.error('Caught an exception!', err)
+                    Raven.captureException(err, {
+                        extra: {
+                            action,
+                            state: store.getState()
+                        }
+                    })
+                    throw err
+                }
+            }
+        }
+    </code></pre>
+
+    <p>Если эти функции опубликованы как отдельные модули, то позже мы можем использовать их для изменения нашего
+    хранилища:</p>
+
+    <pre><code class="language-js">
+        patchStoreToAddLogging(store)
+        patchStoreToAddCrashReporting(store)
+    </code></pre>
+
+    <p>Но это все еще не очень хорошо.</p>
+
+    <p class="section">Попытка #4: Прячем Monkeypatching</p>
+
+    <p>Monkeypatching — это хак. "Замените любой метод, который хотите" — что это за вид API? Давайте разберемся в его
+    сути. Ранее наши функции заменяли <mark>store.dispatch</mark>. Что если бы они вместо этого возвращали новую функцию
+    <mark>dispatch</mark>?</p>
+
+    <pre><code class="language-js">
+        function logger(store) {
+            let next = store.dispatch
+
+            // ранее было так:
+            // store.dispatch = function dispatchAndLog(action) {
+
+                return function dispatchAndLog(action) {
+                    console.log('dispatching', action)
+                    let result = next(action)
+                    console.log('next state', store.getState())
+                return result
+            }
+        }
+    </code></pre>
+
+    <p>Мы могли бы предоставить функцию-помощник внутри Redux, которая могла бы применять актуальный monkeypatching, как
+    часть имплементации:</p>
+
+    <pre><code class="language-js">
+        function applyMiddlewareByMonkeypatching(store, middlewares) {
+            middlewares = middlewares.slice()
+            middlewares.reverse()
+
+            // Изменяем функцию dispatch каждым связующим ПО.
+            middlewares.forEach(middleware =>
+            store.dispatch = middleware(store)
+            )
+        }
+    </code></pre>
+
+    <p>Мы можем использовать такой подход для применения нескольких связующих ПО:</p>
+
+    <pre><code class="language-js">
+        applyMiddlewareByMonkeypatching(store, [ logger, crashReporter ])
+    </code></pre>
+
+    <p>Тем не менее это все еще monkeypatching. Факт того, что мы прячем его внутри библиотеки, не отменяет
+    использования monkeypatching.</p>
+
+    <p class="section">Попытка #5: Убираем Monkeypatching</p>
+
+    <p>Зачем мы перезаписываем <mark>dispatch</mark>? Конечно же для того, чтобы иметь возможность потом его вызвать. Но
+    есть еще и другая причина: каждое связующее ПО имеет доступ (и возможность вызвать) ранее обернутый
+    <mark>store.dispatch</mark>:</p>
+
+    <pre><code class="language-js">
+        function logger(store) {
+            // Обязательно нужно закешировать функцию, которую вернуло предыдущее связующее ПО:
+            let next = store.dispatch
+
+            return function dispatchAndLog(action) {
+                console.log('dispatching', action)
+                let result = next(action)
+                console.log('next state', store.getState())
+                return result
+            }
+        }
+    </code></pre>
+
+    <p>Это важно для возможности объединять связующее ПО в цепочки! Если <mark>applyMiddlewareByMonkeypatching</mark> не
+    сохранит <mark>store.dispatch</mark> сразу после обработки первого связующего ПО, <mark>store.dispatch</mark> будет
+    продолжать ссылаться на оригинальную функцию <mark>dispatch</mark>. Следовательно второе связующее ПО тоже будет
+    связан с оригинальной функцией <mark>dispatch</mark>.</p>
+    <p>Но есть еще другой метод реализации объединения связующего ПО в цепочки. Связующее ПО могло бы принимать функцию
+    отправки действия <mark>next()</mark> в параметрах вместо того, чтобы читать ее из экземпляра хранилища.</p>
+
+    <pre><code class="language-js">
+        function logger(store) {
+            return function wrapDispatchToAddLogging(next) {
+                return function dispatchAndLog(action) {
+                    console.log('dispatching', action)
+                    let result = next(action)
+                    console.log('next state', store.getState())
+                    return result
+                }
+            }
+        }
+    </code></pre>
+
+    <p>Это тот момент, когда “нам нужно двигаться глубже”, так что имеет смысл потратить некоторе время на это. Каскад
+    функций выглядит пугающим. Стрелочные функции из ES6 делают это каррирование чуть более простым для глаз:</p>
+
+    <pre><code class="language-js">
+        const logger = store => next => action => {
+            console.log('dispatching', action)
+            let result = next(action)
+            console.log('next state', store.getState())
+            return result
+        }
+
+        const crashReporter = store => next => action => {
+            try {
+                return next(action)
+            } catch (err) {
+                console.error('Caught an exception!', err)
+                Raven.captureException(err, {
+                    extra: {
+                        action,
+                        state: store.getState()
+                    }
+                })
+                throw err
+            }
+        }
+    </code></pre>
+
+    <p>Теперь связующее ПО принимает функцию отправки действия <mark>next()</mark> и возвращает другую функцию отправки
+    действия, которая, в свою очередь, является функцией отправки действия <mark>next()</mark> для связующего ПО слева.
+    Все еще полезно иметь доступ к некоторым методам хранилища, например к <mark>getState()</mark>, следовательно,
+    <mark>store</mark> остается доступен как аргумент самого верхнего уровня.</p>
+
+    <p class="section">Попытка #6: Простейшее применение связующего ПО</p>
+
+    <p>Вместо <mark>applyMiddlewareByMonkeypatching()</mark> мы могли бы написать функцию <mark>applyMiddleware()</mark>,
+    которая сначала получает финальную, полностью обернутую функцию <mark>dispatch()</mark> и возвращает копию хранилища,
+    которая использует эту функцию:</p>
+
+    <pre><code class="language-js">
+        // Осторожно: Простейшая имплементация!
+        // Это *не* Redux API.
+
+        function applyMiddleware(store, middlewares) {
+            middlewares = middlewares.slice()
+            middlewares.reverse()
+
+            let dispatch = store.dispatch
+            middlewares.forEach(middleware =>
+                dispatch = middleware(store)(dispatch)
+            )
+
+            return Object.assign({}, store, { dispatch })
+        }
+    </code></pre>
+
+    <p>Реализация <mark>applyMiddleware()</mark>, которая поставляется с Redux, похожа на эту, но отличается тремя
+    важными аспектами:</p>
+
+    <ul>
+        <li>• Она предоставляет связующему ПО подмножество API хранилища: методы <mark>dispatch(action)</mark> и
+        <mark>getState()</mark>.</li>
+        <li>• Она использует некоторые хитрости для того, чтобы убедиться, что, действие снова пройдет через всю
+        цепочку связующего ПО, включая текущее, если вы вызываете <mark>store.dispatch(action)</mark> из вашего
+        связующего ПО вместо <mark>next(action)</mark>. Это полезно для асинхронного связующего ПО, как мы ранее
+        видели.</li>
+        <li>• Для того чтобы гарантировать, что вы можете применить связующее ПО только один раз, она работает с
+        <mark>createStore()</mark>, а не с самим <mark>store</mark>. Вместо <mark>(store, middlewares) => store</mark>,
+        ее сигнатурой является <mark>(...middlewares) => (createStore) => createStore</mark>.</li>
+    </ul>
+
+    <p class="section">Финальный подход</p>
+
+    <p>Дано связующее ПО, которое мы только что написали:</p>
+
+    <pre><code class="language-js">
+        const logger = store => next => action => {
+            console.log('dispatching', action)
+            let result = next(action)
+            console.log('next state', store.getState())
+            return result
+        }
+
+        const crashReporter = store => next => action => {
+            try {
+                return next(action)
+            } catch (err) {
+                console.error('Caught an exception!', err)
+                Raven.captureException(err, {
+                    extra: {
+                        action,
+                        state: store.getState()
+                    }
+                })
+                throw err
+            }
+        }
+    </code></pre>
+
+    <p>Вот так можно его применить к Redux хранилищу:</p>
+
+    <pre><code class="language-js">
+        import { createStore, combineReducers, applyMiddleware } from 'redux'
+
+        let todoApp = combineReducers(reducers)
+        let store = createStore(
+            todoApp,
+            // applyMiddleware() говорит createStore() как обрабатывать связующее ПО
+            applyMiddleware(logger, crashReporter)
+        )
+    </code></pre>
+
+    <p>Вот и все! Теперь любое действие, отправленное в экземпляр хранилища будет проходить через <mark>logger</mark> и
+    <mark>crashReporter</mark>:</p>
+
+    <pre><code class="language-js">
+        // будет проходить через `logger` и `crashReporter`!
+        store.dispatch(addTodo('Use Redux'))
+    </code></pre>
+
+    <p class="section">Семь примеров</p>
+
+    <p>Если ваша голова вскипела от прочтения предыдущего раздела, представьте, каково было написать это. Этот раздел
+    предназначен для расслабления вас и поможет запустить ваши шестеренки. Каждая из функций, приведенных ниже, является
+    валидным Redux связующим ПО. Они не являются в равной степени полезными, но, по крайней мере, они в равной степени
+    забавны.</p>
+
+    <pre><code class="language-js">
+        /**
+        * Логирует все действия и состояния после того, как действия будут отправлены.
+        */
+        const logger = store => next => action => {
+            console.group(action.type)
+            console.info('dispatching', action)
+            let result = next(action)
+            console.log('next state', store.getState())
+            console.groupEnd(action.type)
+            return result
+        }
+    </code></pre>
+
+    <pre><code class="language-js">
+        /**
+        * Отправляет отчеты об ошибках когда обновляется состояние и уведомляются слушатели.
+        */
+        const crashReporter = store => next => action => {
+            try {
+                return next(action)
+            } catch (err) {
+                console.error('Caught an exception!', err)
+                Raven.captureException(err, {
+                    extra: {
+                        action,
+                        state: store.getState()
+                    }
+                })
+                throw err
+            }
+        }
+    </code></pre>
+
+    <pre><code class="language-js">
+        /**
+        * Планирует действия с { meta: { delay: N } }, которые будут отложены на N миллисекунд.
+        * Создает `dispatch`, возвращающий функцию, для отмены таймаута.
+        */
+        const timeoutScheduler = store => next => action => {
+            if (!action.meta || !action.meta.delay) {
+                return next(action)
+            }
+
+            let timeoutId = setTimeout(
+                () => next(action),
+                action.meta.delay
+            )
+
+            return function cancel() {
+                clearTimeout(timeoutId)
+            }
+        }
+    </code></pre>
+
+    <pre><code class="language-js">
+        /**
+        * Планирует действия с { meta: { raf: true } }, которые будут отправлены внутри
+        * фрейма rAF цикла. Создает  `dispatch`, который возвращает функцию для удаления
+        * действия из очереди.
+        */
+        const rafScheduler = store => next => {
+            let queuedActions = []
+            let frame = null
+
+            function loop() {
+                frame = null
+                try {
+                    if (queuedActions.length) {
+                        next(queuedActions.shift())
+                    }
+                } finally {
+                    maybeRaf()
+                }
+            }
+
+            function maybeRaf() {
+                if (queuedActions.length && !frame) {
+                    frame = requestAnimationFrame(loop)
+                }
+            }
+
+            return action => {
+                if (!action.meta || !action.meta.raf) {
+                    return next(action)
+                }
+
+                queuedActions.push(action)
+                maybeRaf()
+
+                return function cancel() {
+                    queuedActions = queuedActions.filter(a => a !== action)
+                }
+            }
+        }
+    </code></pre>
+
+    <pre><code class="language-js">
+        /**
+        * Позволяет вам отправлять промисы в дополнение к действиям.
+        * Если промис зарезолвен, его результат будет отправлен как действие.
+        * Промис возвращается из `dispatch`, т.о. вызывающая функция может
+        * обрабатывать отказ (rejection) промиса.
+        */
+        const vanillaPromise = store => next => action => {
+            if (typeof action.then !== 'function') {
+                return next(action)
+            }
+
+            return Promise.resolve(action).then(store.dispatch)
+        }
+    </code></pre>
+
+    <pre><code class="language-js">
+        /**
+        * Позволяет вам отправлять специальные действия с полем { promise }.
+        * Это связующее ПО превратит их в единственное действие в начале,
+        * и в единственное успешное (или неудачное) действие, когда `promise` будет зарезолвен.
+        *
+        * Для удобства `dispatch` будет возвращать промис, т.е. вызывающая функция
+        * может ожидать разрешения этого промиса.
+        */
+        const readyStatePromise = store => next => action => {
+            if (!action.promise) {
+                return next(action)
+            }
+
+            function makeAction(ready, data) {
+                let newAction = Object.assign({}, action, { ready }, data)
+                delete newAction.promise
+                return newAction
+            }
+
+            next(makeAction(false))
+            return action.promise.then(
+                result => next(makeAction(true, { result })),
+                error => next(makeAction(true, { error }))
+            )
+        }
+    </code></pre>
+
+    <pre><code class="language-js">
+        /**
+        * Позволяет вам отправлять функцию вместо действия.
+        * Функция будет принимать `dispatch` и `getState` в качестве аргументов.
+        *
+        * Полезно для раннего выхода (условия над `getState()`), а также для
+        * асинхронного потока управления (может `dispatch()` что-то другое)
+        *
+        * `dispatch` будет возвращать значение отправляемой функции.
+        */
+        const thunk = store => next => action =>
+            typeof action === 'function' ?
+                action(store.dispatch, store.getState) :
+                next(action)
+    </code></pre>
+
+    <pre><code class="language-js">
+        // Вы можете использовать их все! (Это не значит, что вы должны.)
+        let todoApp = combineReducers(reducers)
+        let store = createStore(
+            todoApp,
+            applyMiddleware(
+                rafScheduler,
+                timeoutScheduler,
+                thunk,
+                vanillaPromise,
+                readyStatePromise,
+                logger,
+                crashReporter
+            )
+        )
+    </code></pre>
+
+    <div class="button">
+        <a href="../../redux/async-flow/">&laquo; Назад</a>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Списки и ключи</title>
+
+    <link rel="stylesheet" href="../../../css/header.css">
+    <link rel="stylesheet" href="../../../css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script src="../../../libraries/prism.js"></script>
+
+    <script type="text/babel" src="script.js"></script>
+    <script type="text/babel" src="script2.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../index.html">React.js</a>
+        <a href="../../../examples.html">Содержание</a>
+        <a href="../../../info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+    <p class="section">Списки и ключи</p>
+
+    <p>Сперва, давайте вспомним как создаются списки в JavaScript.</p>
+    <p>В примере ниже, мы используем функцию <mark class="markJSX">map()</mark>, чтобы взять массив чисел
+    <mark>numbers</mark> и удвоить его величины. Для этого мы создаем новый массив <mark>double</mark> и возвращаем в
+    него результат выполнения функции <mark>map()</mark> и затем выводим его:</p>
+
+    <pre><code class="language-js">
+        const numbers = [1, 2, 3, 4, 5];
+        const doubled = numbers.map((number) => number * 2);
+        console.log(doubled);
+    </code></pre>
+
+    <p>В консоль выведется <mark>[2, 4, 6, 8, 10]</mark>.</p>
+    <p>В React преобразование массивов в списки элементов происходит идентично.</p>
+
+    <p class="section">Рендеринг нескольких компонентов</p>
+
+    <p>Вы можете создавать коллекции элементов и внедрять их в JSX используя фигурные скобки <mark>{}</mark>.</p>
+    <p>В следующем примере, мы проходим по массиву <mark>numbers</mark> используя функцию JavaScript
+    <mark class="markJSX">map()</mark>. Для каждого значения мы добавляем элемент <mark>&lt;li&gt;</mark>. И в конце, мы
+    возвращаем результат в массив элементов <mark>listItems</mark>.</p>
+
+    <pre><code class="language-js">
+        const numbers = [1, 2, 3, 4, 5];
+        const listItems = numbers.map((number) =>
+            &lt;li&gt;{number}&lt;/li&gt;
+        );
+    </code></pre>
+
+    <p>Затем мы включим весь массив <mark>listItems</mark> в элемент <mark>&lt;ul&gt;</mark> и добавим его в DOM:</p>
+
+    <pre><code class="language-js">
+        ReactDOM.render(
+            &lt;ul&gt;{listItems}&lt;/ul&gt;,
+            document.getElementById('root')
+        );
+    </code></pre>
+
+    <p>Этот код отобразит список чисел от 1 до 5.</p>
+
+    <p class="section">Компонент базового списка</p>
+
+    <p>Чаще всего вы будете создавать списки внутри компонентов.</p>
+    <p>Мы можем переработать предыдущий пример, создав компонент, который будет принимать массив <mark>numbers</mark> и
+    выводить неупорядоченный список элементов:</p>
+
+    <pre><code class="language-js">
+        function NumberList(props) {
+            const numbers = props.numbers;
+            const listItems = numbers.map((number) =>
+                &lt;li&gt;{number}&lt;/li&gt;
+            );
+            return (
+                &lt;ul>{listItems}&lt;/ul&gt;
+            );
+        }
+
+        const numbers = [1, 2, 3, 4, 5];
+        ReactDOM.render(
+            &lt;NumberList numbers={numbers} /&gt;,
+            document.getElementById('root')
+        );
+    </code></pre>
+
+    <p>Когда вы запустите этот код, то получите предупреждение, что для списка необходим ключ. "Ключ" - особый строковый
+    атрибут, который необходимо добавить для создания списка элементов. Далее мы расскажем, почему он настолько важен.</p>
+    <p>Давайте объявим <mark>ключ</mark> в нашем списке внутри <mark>numbers.map()</mark>, тем самым исправив проблему
+    недостатка ключа:</p>
+
+    <pre><code class="language-js">
+        function NumberList(props) {
+            const numbers = props.numbers;
+            const listItems = numbers.map((number) =>
+                &lt;li key={number.toString()}&gt;
+                    {number}
+                &lt;/li&gt;
+            );
+            return (
+                &lt;ul&gt;{listItems}&lt;/ul&gt;
+            );
+        }
+
+        const numbers = [1, 2, 3, 4, 5];
+        ReactDOM.render(
+            &lt;NumberList numbers={numbers} /&gt;,
+            document.getElementById('root')
+        );
+    </code></pre>
+
+    <p class="section">Ключи</p>
+
+    <p>Ключи помогают React идентифицировать элементы, которые подверглись изменению, добавились или удалились. Ключи
+    должны быть присвоены элементам, заключенным в массивы, чтобы у них была стабильная идентифицируемость:</p>
+
+    <pre><code class="language-js">
+        const numbers = [1, 2, 3, 4, 5];
+        const listItems = numbers.map((number) =>
+            &lt;li key={number.toString()}&gt;
+                {number}
+            &lt;/li&gt;
+        );
+    </code></pre>
+
+    <p>Лучший способ подобрать ключ — использовать строку, которая однозначно идентифицирует элемент списка. Чаще
+    всего, в качестве ключей вы будете использовать ID ваших данных:</p>
+
+    <pre><code class="language-js">
+        const todoItems = todos.map((todo) =>
+            &lt;li key={todo.id}&gt;
+                {todo.text}
+            &lt;/li&gt;
+        );
+    </code></pre>
+
+    <p>Если у вас нет стабильных ID для созданных значений, то вы можете использовать индекс значения в качестве ключа
+    (как крайний случай):</p>
+
+    <pre><code class="language-js">
+        const todoItems = todos.map((todo, index) =>
+            // Только если у вас нет стабильных ID
+            &lt;li key={index}&gt;
+                {todo.text}
+            &lt;/li&gt;
+        );
+    </code></pre>
+
+    <p>Мы не рекомендуем вам использовать в качестве ключей индексы, если порядок объектов может измениться. Это может
+    негативно сказаться на отображении и может вызвать проблемы с состоянием компонента. Если вы не объявите явно ключи
+    для списка объектов, то React по умолчанию будет использовать индексы в качестве ключей.</p>
+
+    <p class="section">Извлечение компонентов с помощью ключей</p>
+
+    <p>Использовать ключи имеет смысл только в контексте окружения массива.</p>
+    <p>Например, если вы извлекаете компонент <mark>ListItem</mark>, то следует оставить ключ для элементов
+    <mark>ListItem</mark> в массиве, а не для элементов <mark>&lt;li&gt;</mark> в самом <mark>ListItem</mark>.</p>
+
+    <p class="section">Пример: неправильное применение ключа</p>
+
+    <pre><code class="language-js">
+        function ListItem(props) {
+            const value = props.value;
+            return (
+                // Неправильно! Нет нужды объявлять ключ здесь:
+                &lt;li key={value.toString()}&gt;
+                    {value}
+                &lt;/li&gt;
+            );
+        }
+
+        function NumberList(props) {
+            const numbers = props.numbers;
+            const listItems = numbers.map((number) =>
+                // Неправильно! Ключ должен быть объявлен здесь:
+                &lt;ListItem value={number} /&gt;
+            );
+            return (
+                &lt;ul&gt;
+                    {listItems}
+                &lt;/ul&gt;
+            );
+        }
+
+        const numbers = [1, 2, 3, 4, 5];
+        ReactDOM.render(
+            &lt;NumberList numbers={numbers} /&gt;,
+            document.getElementById('root')
+        );
+    </code></pre>
+
+    <p class="section">Пример: правильное применение ключа</p>
+
+    <pre><code class="language-js">
+        function ListItem(props) {
+            // Правильно! Нет нужды объявлять ключ здесь:
+            return &lt;li&gt;{props.value}&lt;/li&gt;;
+        }
+
+        function NumberList(props) {
+            const numbers = props.numbers;
+            const listItems = numbers.map((number) =>
+                // Правильно! Ключ должен быть объявлен внутри массива.
+                &lt;ListItem key={number.toString()}
+                    value={number} /&gt;
+            );
+            return (
+                &lt;ul&gt;
+                    {listItems}
+                &lt;/ul&gt;
+            );
+        }
+
+        const numbers = [1, 2, 3, 4, 5];
+        ReactDOM.render(
+            &lt;NumberList numbers={numbers} /&gt;,
+            document.getElementById('root')
+        );
+    </code></pre>
+
+    <p>Результат:</p>
+    <div class="example">
+        <div id="root"></div>
+    </div>
+
+    <p>Хорошим практическим правилом является вызов нужных ключей элементами изнутри функции <mark>map()</mark>.</p>
+
+    <p class="section">Ключи должны быть уникальными среди им подобных</p>
+
+    <p>Ключи, используемые в массивах, должны быть уникальными среди им подобных. Однако, они не должны быть глобально
+    уникальными. Мы можем использовать те же ключи для разных массивов:</p>
+
+    <pre><code class="language-js">
+        function Blog(props) {
+            const sidebar = (
+                &lt;ul&gt;
+                    {props.posts.map((post) =>
+                        &lt;li key={post.id}&gt;
+                            {post.title}
+                        &lt;/li&gt;
+                    )}
+                &lt;/ul&gt;
+            );
+            const content = props.posts.map((post) =>
+                &lt;div key={post.id}>
+                    &lt;h3>{post.title}&lt;/h3&gt;
+                    &lt;p>{post.content}&lt;/p&gt;
+                &lt;/div&gt;
+            );
+            return (
+                &lt;div&gt;
+                    {sidebar}
+                &lt;hr /&gt;
+                {content}
+                &lt;/div&gt;
+            );
+        }
+
+        const posts = [
+            {id: 1, title: 'Hello, World!', content: 'Рады вас видеть!'},
+            {id: 2, title: 'Установка', content: 'Вы можете установить React с помощью npm.'}
+        ];
+        ReactDOM.render(
+            &lt;Blog posts={posts} /&gt;,
+            document.getElementById('root')
+        );
+    </code></pre>
+
+    <p>Результат:</p>
+
+    <div class="example">
+        <div id="root2"></div>
+    </div>
+
+    <p>Ключи служат для React подсказками, но они не передаются компонентам. Если вам необходимо их значения для ваших
+    компонентов, то передайте их явно как свойство с другим именем:</p>
+
+    <pre><code class="language-js">
+        const content = posts.map((post) =>
+            &lt;Post
+                key={post.id}
+                id={post.id}
+                title={post.title} /&gt;
+        );
+    </code></pre>
+
+    <p>Как показано в примере выше, компонент <mark>Post</mark> может прочесть <mark>props.id</mark>, но не может
+    <mark>props.key</mark>.</p>
+
+    <p class="section">Внедрение map() в JSX</p>
+
+    <p>В примерах выше, мы отдельно объявляли переменную <mark>listItems</mark> и затем включали её в JSX:</p>
+
+    <pre><code class="language-js">
+        function NumberList(props) {
+            const numbers = props.numbers;
+            const listItems = numbers.map((number) =>
+                &lt;ListItem key={number.toString()}
+                    value={number} /&gt;
+            );
+            return (
+                &lt;ul&gt;
+                    {listItems}
+                &lt;/ul&gt;
+            );
+        }
+    </code></pre>
+
+    <p>JSX позволяет внедрять любые выражения с помощью фигурных скобок, так что мы внедрим результат функции
+    <mark>map()</mark>:</p>
+
+    <pre><code class="language-js">
+        function NumberList(props) {
+            const numbers = props.numbers;
+            return (
+                &lt;ul&gt;
+                    {numbers.map((number) =>
+                        &lt;ListItem key={number.toString()}
+                                  value={number} /&gt;
+                    )}
+                &lt;/ul&gt;
+            );
+        }
+    </code></pre>
+
+    <p>Иногда, благодаря этому код становится чище, но не стоит этим злоупотреблять. Как и в JavaScript, только вам
+    решать, стоит ли выносить переменную для лучшей читаемости. Помните: если тело <mark>map()</mark> имеет слишком
+    много вложений, то стоит повыносить компоненты.</p>
+
+    <div class="button">
+        <a href="../../quick-start/conditional-rendering/">&laquo; Назад</a>
+        <a class="next" href="../../quick-start/forms/">Далее &raquo;</a>
+    </div>
+</div>
+
+</body>
+</html>

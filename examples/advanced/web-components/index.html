@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Веб-компоненты подробнее</title>
+
+    <link rel="stylesheet" href="../../../../web-page/css/header.css">
+    <link rel="stylesheet" href="../../../../web-page/css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script src="../../../libraries/prism.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../../web-page/index.html">React.js</a>
+        <a href="../../../../web-page/examples.html">Содержание</a>
+        <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+    <p class="section">Веб-компоненты подробнее</p>
+
+    <p>React и Web Components созданы для решения разных проблем. Веб-компоненты обеспечивают надежную инкапсуляцию для повторно используемых компонентов, в то время как React предоставляет декларативную библиотеку, которая поддерживает DOM в синхронизации с вашими данными. Эти две цели являются взаимодополняющими. Как разработчик, вы можете использовать React в своих веб-компонентах или использовать веб-компоненты в React или и то и то.</p>
+    <p>Большинство использующих React не используют веб-компоненты, но вы, возможно, захотите, особенно если вы используете сторонние компоненты пользовательского интерфейса, которые написаны с использованием веб-компонентов.</p>
+
+    <p class="section">Использование веб-компонентов в React</p>
+
+    <pre><code class="language-js">
+  class Modal extends React.Component {
+    render() {
+      return &lt;brick-layout flex>{this.props.content}&lt;/brick-layout>;
+    }
+  }
+        <CustomButton color="red"/>
+    </code></pre>
+    <p>Существует распространённая путаница, заключающаяся в том, что веб-компоненты используют class вместо className.</p>
+
+    <pre><code class="language-js">
+  function BrickMenu() {
+    return (
+    &lt;brick-menu class="menu">
+      &lt;brick-item selected>Item 1&lt;/brick-item>
+      &lt;brick-item>Item 2&lt;/brick-item>
+      &lt;brick-item>Item 3&lt;/brick-item>
+      &lt;brick-item>Item 4&lt;/brick-item>
+    &lt;/brick-menu>
+    );
+  }
+        <CustomButton color="red"/>
+    </code></pre>
+    <p class="section">Использование React в веб-компонентах</p>
+
+    <pre><code class="language-js">
+  class XSearch extends HTMLElement {
+    connectedCallback() {
+      const mountPoint = document.createElement('span');
+      this.attachShadow({ mode: 'open' }).appendChild(mountPoint);
+
+      const name = this.getAttribute('name');
+      const url = 'https://www.google.com/search?q=' + encodeURIComponent(name);
+      ReactDOM.render(&lt;a href={url}>{name}&lt;/a>, mountPoint);
+    }
+  }
+  customElements.define('x-search', XSearch);
+        <CustomButton color="red"/>
+    </code></pre>
+    <div class="button">
+    <a href="../../advanced/error-boundaries">&laquo; Назад</a>
+    <a class="next" href="../../advanced/higher-order-comp/">Далее &raquo;</a>
+    </div>
+</div>
+
+</body>
+</html>

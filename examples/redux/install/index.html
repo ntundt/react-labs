@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Установка</title>
+
+    <link rel="stylesheet" href="../../../../web-page/css/header.css">
+    <link rel="stylesheet" href="../../../../web-page/css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="../../../libraries/prism.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../../web-page/index.html">React.js</a>
+        <a href="../../../../web-page/examples.html">Содержание</a>
+        <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+    <p class="section">Установка</p>
+
+    <p>Для установки стабильной версии:</p>
+
+    <pre><code class="language-js">
+        npm install --save redux
+    </code></pre>
+
+    <p>Предполагается, что вы используете npm в качестве менеджера пакетов. Если нет, то вы можете получить доступ к
+    этим файлам на <a href="https://unpkg.com/redux@4.0.0/"> unpkg</a>, загрузить их или настроить ваш пакетный
+    менеджер.</p>
+    <p>Если вы не используете сборщики модулей, это тоже нормально. Npm пакет <mark>redux</mark> включает
+    предкомпилированные UMD develop и production сборки в каталоге <mark>dist</mark>. Они могут быть использованы
+    напрямую без бандлера и, таким образом, совместимы со многими популярными загрузчиками JavaScript-модулей и
+    окружениями. Например, вы можете подключить UMD-сборку на страницу при помощи тега <mark>&lt;script&gt;</mark> или
+    установить при помощи Bower. Сборки UMD делают Redux доступным через глобальную переменную <mark>window.Redux</mark>.
+    Исходные коды Redux написаны на ES2015, но мы предкомпилировали и CommonJS и UMD сборки в ES5 поэтому они
+    работают в любом современном браузере. Вам нет необходимости использовать Babel или сборщик модулей чтобы начать
+    пользоваться Redux.</p>
+
+    <p class="section">Дополнительные пакеты</p>
+
+    <p>Обратите внимание, что в отличие от самого Redux, многие пакеты в экосистеме Redux не предоставляют сборки UMD,
+    поэтому мы рекомендуем использовать сборщики модулей CommonJS, такие как
+    <a href="https://webpack.js.org/">Webpack</a> и <a href="http://browserify.org/">Browserify</a> для
+    наиболее комфортной разработки.</p>
+    <div class="button">
+        <a href="../../redux/about-redux/">&laquo; Назад</a>
+        <a class="next" href="../../redux/introduction/">Далее &raquo;</a>
+    </div>
+
+</div>
+
+</body>
+</html>

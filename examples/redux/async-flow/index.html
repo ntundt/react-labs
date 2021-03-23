@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Асинхронный поток</title>
+
+    <link rel="stylesheet" href="../../../../web-page/css/header.css">
+    <link rel="stylesheet" href="../../../../web-page/css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="../../../libraries/prism.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../../web-page/index.html">React.js</a>
+        <a href="../../../../web-page/examples.html">Содержание</a>
+        <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+    <p class="section">Асинхронный поток</p>
+
+    <p>Без связующего ПО хранилище Redux поддерживает только синхронный поток данных. Это то, что вы получаете по
+    умолчанию с <mark>createStore()</mark>. Вы можете расширить <mark>createStore()</mark> с помощью
+    <mark>applyMiddleware()</mark>. Это не обязательно, но это позволит вам выразить асинхронные действия в удобном
+    виде.</p>
+    <p>Асинхронное связующее ПО, типа redux-thunk или redux-promise, оборачивает метод хранилища <mark>dispatch()</mark>
+    и позволяет вам вызывать что-то, что не является объектом действия, например, функции или Промисы. Любое связующее
+    ПО, которое вы используете, может интерпретировать все, что вы вызываете, и, в свою очередь, может передать действие
+    следующему связующему ПО в цепочке. Например, связующее ПО промисов (Promise middleware) может перехватывать промисы
+    и отправлять пару начало/конец действия асинхронно в ответ на каждый промис.</p>
+    <p>Когда последнее связующее ПО в цепочке отправляет действие, оно должно быть простым объектом. Дальше в дело
+    вступает синхронный поток данных Redux.</p>
+
+    <div class="button">
+        <a href="../../redux/async-actions/">&laquo; Назад</a>
+        <a class="next" href="../../redux/middleware/">Далее &raquo;</a>
+    </div>
+
+</div>
+
+</body>
+</html>

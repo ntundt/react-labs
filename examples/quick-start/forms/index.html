@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Формы</title>
+
+    <link rel="stylesheet" href="../../../css/header.css">
+    <link rel="stylesheet" href="../../../css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script src="../../../libraries/prism.js"></script>
+
+    <script type="text/babel" src="script.js"></script>
+    <script type="text/babel" src="script2.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../index.html">React.js</a>
+        <a href="../../../examples.html">Содержание</a>
+        <a href="../../../info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+    <p class="section">Формы</p>
+
+    <p>В React, формы HTML работают немного по-другому, по сравнению с другими элементами DOM, потому что формы сохраняют
+    некоторое внутреннее состояние. Например, эта форма в простом HTML принимает одно имя:</p>
+
+    <pre><code class="language-js">
+        &lt;form&gt;
+            &lt;label&gt;
+                Имя:
+                &lt;input type="text" name="name" /&gt;
+            &lt;/label&gt;
+            &lt;input type="submit" value="Submit" /&gt;
+        &lt;/form&gt;
+    </code></pre>
+
+    <p>Эта форма ведет себя как элемент простого HTML: перенаправляет пользователя на новую страницу, когда тот
+    заполнит форму. В React это работает также. Но в большинстве случаев лучше иметь JavaScript функцию, которая будет
+    обрабатывать представление формы и иметь доступ к информации, которую введет пользователь. Стандартным способом
+    достижения этого является технология "управляемых компонентов".</p>
+
+    <p class="section">Управляемые компоненты</p>
+
+    <p>В HTML, такие формы как <mark>&lt;input&gt;</mark>, <mark>&lt;textarea&gt;</mark> и <mark>&lt;select&gt;</mark>
+    поддерживают своё состояние и обновляют его при вводе данных. В React же, непостоянное состояние хранится в свойствах
+    состояния компонента и обновляется только с помощью <mark class="markJSX">setState()</mark>.</p>
+
+    <p>Мы можем объединить их оба, сделав состояние React "единственным источником правды". Компонент React, который
+    отображает форму, также и контролирует то, что с ней происходит при последующем вводе данных пользователем. Форма
+    ввода, чьё значение контролирует React таким образом, называется "управляемый компонент".</p>
+
+    <p>Например, если мы хотим заставить предыдущий пример выводить имя после его ввода, то мы можем сделать форму
+    управляемого компонента:</p>
+
+    <pre><code class="language-js">
+        class NameForm extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {value: ''};
+
+                this.handleChange = this.handleChange.bind(this);
+                this.handleSubmit = this.handleSubmit.bind(this);
+            }
+
+            handleChange(event) {
+                this.setState({value: event.target.value});
+            }
+
+            handleSubmit(event) {
+                alert('Вы ввели имя: ' + this.state.value);
+                event.preventDefault();
+            }
+
+            render() {
+                return (
+
+                    &lt;form onSubmit={this.handleSubmit}&gt;
+                        &lt;label&gt;
+                            Имя:
+                            &lt;input type="text" value={this.state.value} onChange={this.handleChange} /&gt;
+                        &lt;/label&gt;
+                        &lt;input type="submit" value="Отправить" /&gt;
+                    &lt;/form&gt;
+                );
+            }
+        }
+    </code></pre>
+
+    <p>Результат:</p>
+    <div class="example">
+        <div id="root"></div>
+    </div>
+
+    <p>Так как у нас задан атрибут <mark>value</mark>, то всегда будет отображаться <mark>this.state.value</mark>, делая
+    состояние React источником истины. И так как <mark>handleChange</mark> запускается при каждом нажатии клавиши для
+    обновления состояния React, отображаемое значение будет обновляться при каждом вводе пользователем данных.</p>
+    <p>В управляемых компонентах каждое изменение состояния будет связано с функцией-обработчиком. Это упрощает
+    изменение и проверку ввода. Для примера, если мы хотим навязать ввод имени только из больших букв, то следует
+    описать <mark>handleChange</mark> следующим образом:</p>
+
+    <pre><code class="language-js">
+        handleChange(event) {
+            this.setState({value: event.target.value.toUpperCase()});
+        }
+    </code></pre>
+
+    <p class="section">Тег textarea</p>
+
+    <p>В HTML <mark>&lt;textarea&gt;</mark> является родителем помещаемого в него текста:</p>
+
+    <pre><code class="language-js">
+        &lt;textarea&gt;
+            Привет, это текст в нашей текстовой области
+        &lt;textarea&gt;
+    </code></pre>
+
+    <p>В React <mark>&lt;textarea&gt;</mark> использует <mark>value</mark>. Таким образом, тег
+    <mark>&lt;textarea&gt;</mark> может быть описан как одностроковое поле для ввода:</p>
+
+    <pre><code class="language-js">
+        class EssayForm extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    value: 'Пожалуйста, напишите эссе о вашем любимом элементе DOM.'
+                };
+
+                this.handleChange = this.handleChange.bind(this);
+                this.handleSubmit = this.handleSubmit.bind(this);
+            }
+
+            handleChange(event) {
+                this.setState({value: event.target.value});
+            }
+
+            handleSubmit(event) {
+                alert('Отправлено эссе:: ' + this.state.value);
+            event.preventDefault();
+            }
+
+            render() {
+                return (
+                    &lt;form onSubmit={this.handleSubmit}&gt;
+                        &lt;label&gt;
+                            Эссе:
+                            &lt;textarea value={this.state.value} onChange={this.handleChange} /&gt;
+                        &lt;/label&gt;
+                        &lt;input type="submit" value="Отправить" /&gt;
+                    &lt;/form&gt;
+                );
+            }
+        }
+    </code></pre>
+
+    <p>Обратите внимание на то, что <mark>this.state.value</mark> инициализирован в конструкторе, поэтому текстовая
+    область появится с текстом внутри.</p>
+
+    <p class="section">Тег select</p>
+
+    <p>В HTML <mark>&lt;select&gt;</mark> создаёт выпадающий список. Для примера, здесь создаётся список фруктов:</p>
+
+    <pre><code class="language-js">
+        &lt;select&gt;
+            &lt;option value="Грейпфрут"&gt;Грейпфрут&lt;/option&gt;
+            &lt;option value="Лайм"&gt;Лайм&lt;/option&gt;
+            &lt;option selected value="Апельсин"&gt;Апельсин&lt;/option&gt;
+            &lt;option value="Манго"&gt;Манго&lt;/option&gt;
+        &lt;/select&gt;
+    </code></pre>
+
+    <p>Обратите внимание, что "Апельсин" выбран по умолчанию, так как имеет атрибут <mark>selected</mark>. React, вместо
+    этого атрибута, использует атрибут <mark>value</mark> в корне тега <mark>select</mark>. Так намного удобнее для
+    управляемых компонентов, потому что вам нужно обновить его только в одном месте. Покажем на примере:</p>
+
+    <pre><code class="language-js">
+        class FlavorForm extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {value: 'coconut'};
+
+                this.handleChange = this.handleChange.bind(this);
+                this.handleSubmit = this.handleSubmit.bind(this);
+            }
+
+            handleChange(event) {
+                this.setState({value: event.target.value});
+            }
+
+            handleSubmit(event) {
+                alert('Вам понравился: ' + this.state.value);
+                event.preventDefault();
+            }
+
+            render() {
+                return (
+                    &lt;form onSubmit={this.handleSubmit}&gt;
+                        &lt;label&gt;
+                            Выберите понравившийся фрукт:
+                            &lt;select value={this.state.value} onChange={this.handleChange}&gt;
+                                &lt;option value="Грейпфрут"&gt;Грейпфрут&lt;/option&gt;
+                                &lt;option value="Лайм"&gt;Лайм&lt;/option&gt;
+                                &lt;option value="Апельсин"&gt;Апельсин&lt;/option&gt;
+                                &lt;option value="Манго"&gt;Манго&lt;/option&gt;
+                            &lt;/select&gt;
+                        &lt;/label&gt;
+                        &lt;input type="submit" value="Отправить" /&gt;
+                    &lt;/form&gt;
+                );
+            }
+        }
+    </code></pre>
+
+    <p>Результат:</p>
+    <div class="example">
+        <div id="root2"></div>
+    </div>
+
+    <p>Подведем промежуточный итог: <mark>&lt;input type="text"&gt;</mark>, <mark>&lt;textarea&gt;</mark> и
+    <mark>&lt;select&gt;</mark> работают по одному принципу - они все принимают атрибут <mark>value</mark>, который
+    можно использовать для создания управляемого элемента.</p>
+
+    <div class="warning">
+        <p><b>Примечание:</b></p>
+        <p>Вы можете передать атрибуту <mark>value</mark> массив. Это позволяет выбрать несколько вариантов в теге
+        <mark>&lt;select&gt;</mark>:</p>
+
+        <pre><code class="language-js">
+            &lt;select multiple={true} value={['B', 'C']}&gt;
+        </code></pre>
+    </div>
+
+    <p class="section">Тег file input</p>
+
+    <p>В HTML тег <mark>&lt;input type="file"&gt;</mark> позволяет пользователю выбрать один или несколько файлов с
+    накопителя для загрузки на сервер или для манипуляций с ними, используя Javascript с File API.</p>
+
+    <pre><code class="language-js">
+        &lt;input type="file"&gt;
+    </code></pre>
+
+    <p>Так как его значение только для чтения, то он является неуправляемым компонентом React. В одной из следующих глав
+    мы остановимся на этом подробнее.</p>
+
+    <p class="section">Обработка нескольких форм input</p>
+
+    <p>Когда вам необходимо обработать несколько управляемых элементов <mark>input</mark>, вы можете добавить атрибут
+    <mark>name</mark> каждому элементу и позволить функции-обработчику выбрать нужный, исходя из значения
+    <mark>event.target.name</mark>.</p>
+    <p>Например:</p>
+
+    <pre><code class="language-js">
+        class Reservation extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    isGoing: true,
+                    numberOfGuests: 2
+                };
+
+                this.handleInputChange = this.handleInputChange.bind(this);
+            }
+
+            handleInputChange(event) {
+                const target = event.target;
+                const value = target.type === 'checkbox' ? target.checked : target.value;
+                const name = target.name;
+
+                this.setState({
+                    [name]: value
+                });
+            }
+
+            render() {
+                return (
+                    &lt;form&gt;
+                        &lt;label&gt;
+                            Придет:
+                            &lt;input
+                                name="isGoing"
+                                type="checkbox"
+                                checked={this.state.isGoing}
+                                onChange={this.handleInputChange} /&gt;
+                        &lt;/label&gt;
+                        &lt;br /&gt;
+                        &lt;label&gt;
+                            Количество гостей:
+                            &lt;input
+                                name="numberOfGuests"
+                                type="number"
+                                value={this.state.numberOfGuests}
+                                onChange={this.handleInputChange} /&gt;
+                        &lt;/label&gt;
+                    &lt;/form&gt;
+                );
+            }
+        }
+    </code></pre>
+
+    <p>Обратите внимание на то, что мы использовали синтаксис вычислительного имени ES6 для обновления состояния ключа,
+    соответствующего данному имени input:</p>
+
+    <pre><code class="language-js">
+        this.setState({
+            [name]: value
+        });
+    </code></pre>
+
+    <p>Эквивалент на ES5:</p>
+
+    <pre><code class="language-js">
+        var partialState = {};
+        partialState[name] = value;
+        this.setState(partialState);
+    </code></pre>
+
+    <p>Благодаря тому, что <mark>setState()</mark> автоматически объединяет частичное состояние с текущим, нам
+    необходимо вызвать эту функцию лишь для измененных частей.</p>
+
+    <p class="section">Контролируемое входное значение NULL</p>
+
+    <p>Указание значения свойства для управляемого значения не позволяет пользователю изменять входные данные, если вы
+    этого не хотите. Если вы указали <mark>value</mark>, но входные данные всё ещё можно менять, то скорее всего вы
+    присвоили <mark>value</mark> значение <mark>undefined</mark> или <mark>null</mark>.</p>
+    <p>В следующем примере это наглядно демонстрируется (сперва поле ввода заблокировано, но после небольшой задержки
+    становится доступным):</p>
+
+    <pre><code class="language-js">
+        ReactDOM.render(&lt;input value="hi" /&gt;, mountNode);
+
+        setTimeout(function() {
+            ReactDOM.render(&lt;input value={null} /&gt;, mountNode);
+        }, 1000);
+    </code></pre>
+
+    <p class="section">Альтернатива управляемым компонентам</p>
+
+    <p>Иногда бывает сложно использовать управляемые компоненты из-за того, что вы хотите написать обработчик событий
+    для каждого возможного случая изменения ваших данных и передать все состояния входных данных в компонент React. Это
+    будет особенно раздражать вас, когда необходимо подстроить существующий код под React, или при интеграции
+    React-приложения в среду без соответствующей библиотеки. В таких случаях, вам стоит ознакомиться с неуправляемыми
+    компонентами, которые мы рассмотрим далее.</p>
+
+    <div class="button">
+        <a href="../../quick-start/lists-and-keys/">&laquo; Назад</a>
+        <a class="next" href="../../quick-start/lifting-state-up/">Далее &raquo;</a>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Компоненты и их свойства</title>
+
+    <link rel="stylesheet" href="../../../css/header.css">
+    <link rel="stylesheet" href="../../../css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script src="../../../libraries/prism.js"></script>
+
+    <script type="text/babel" src="script.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../index.html">React.js</a>
+        <a href="../../../examples.html">Содержание</a>
+        <a href="../../../info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+    <p class="section">Компоненты и их свойства</p>
+
+    <p>Компоненты позволяют разделять UI на независимые, повторно используемые фрагменты, и обдумывать каждый из них
+    отдельно. По своей концепции, компоненты похожи на функции в JavaScript. Они принимают какие-либо данные
+    (называемые "свойства") и возвращают элементы React, описывающие, что должно появиться на экране.</p>
+
+    <p class="section">Функциональные компоненты и компоненты-классы</p>
+
+    <p>Простейший способ создания компонента - это написание JavaScript-функции:</p>
+
+    <pre><code class="language-js">
+        function Welcome(props) {
+            return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;;
+        }
+    </code></pre>
+
+    <p>Эта функция - компонент React, потому что она принимает одно "props" (свойство) в качестве аргумента с
+    информацией и возвращает элемент React. Эти компоненты называются "функциональные", так как они идентичны
+    функциям JavaScript.</p>
+    <p>Для создания этого же компонента можно также использовать классы ES6:</p>
+
+    <pre><code class="language-js">
+        class Welcome extends React.Component {
+            render() {
+                return &lt;h1&gt;Hello, {this.props.name}&lt;/h1&gt;;
+             }
+        }
+    </code></pre>
+
+    <p>С точки зрения React, эти примеры эквиваленты. Классы имеют дополнительные возможности, которые мы рассмотрим
+    в следующей главе. А пока, мы будем использовать функциональные компоненты за их наглядность.</p>
+
+    <p class="section">Создание компонентов</p>
+
+    <p>Ранее, мы встречали только те элементы React, которые представляли собой теги DOM:</p>
+
+    <pre><code class="language-js">
+        const element = &lt;div /&gt;;
+    </code></pre>
+
+    <p>Однако, элементы могут также представлять собой компоненты, описанные пользователем:</p>
+
+    <pre><code class="language-js">
+        const element = &lt;Welcome name="Sara" /&gt;;
+    </code></pre>
+
+    <p>Когда React обнаруживает такой элемент, то он передает JSX атрибуты компоненту как отдельному объекту.
+    Такой объект называется "свойство".</p>
+    <p>Приведем пример программы, которая выводит на экран надпись "Привет, Сара!":</p>
+    <pre><code class="language-js">
+        function Welcome(props) {
+            return &lt;h1&gt;Привет, {props.name}!&lt;/h1&gt;;
+        }
+
+        const element = &lt;Welcome name="Сара" /&gt;;
+        ReactDOM.render(
+            element,
+            document.getElementById('root')
+        );
+    </code></pre>
+
+    <p>Давайте разберем по порядку, что происходит в данном примере:</p>
+    <ol>
+        <li>Мы вызываем <mark>ReactDOM.render()</mark>, передаём в неё элемент <mark>&lt;Welcome name="Сара" /&gt;</mark>.</li>
+        <li>React вызывает компонент <mark>Welcome</mark> со свойством <mark>{name: 'Сара'}</mark>.</li>
+        <li>Наш компонент <mark>Welcome</mark> возвращает элемент <mark>&lt;h1&gt;Привет, Сара!&lt;/h1&gt;</mark></li>
+        <li>React DOM обновляет DOM, добавляя в него <mark>&lt;h1&gt;Привет, Сара!&lt;/h1&gt;.</mark></li>
+    </ol>
+
+    <div class="warning">
+        <p><b>Важно! Всегда называйте свои компоненты с большой буквы!</b></p>
+        <p>React воспринимает компоненты, названные с маленькой буквы, как теги DOM. Например, <mark>&lt;div /&gt;</mark>
+        представляет собой тег HTML, а <mark>&lt;Welcome /&gt;</mark> - компонент.</p>
+    </div>
+
+    <p class="section">Сочетание компонентов</p>
+
+    <p>Компоненты могут ссылаться на другие компоненты при их выполнении. Это позволяет нам использовать одну компонентную
+    абстракцию для любых других уровней детализации. Кнопка, форма, диалоговое окно, экран: в приложениях React всё это
+    может быть оформлено в виде компонентов.</p>
+    <p>Для примера, создадим компонент <mark>App</mark>, который будет создавать компонент <mark>Welcome</mark> несколько
+    раз:</p>
+
+    <pre><code class="language-js">
+        function Welcome(props) {
+            return &lt;h1&gt;Привет, {props.name}!&lt;/h1&gt;;
+        }
+
+        function App() {
+            return (
+                &lt;div&gt;
+                    &lt;Welcome name="Сара" /&gt;
+                    &lt;Welcome name="Халиф" /&gt;
+                    &lt;Welcome name="Эдуард" /&gt;
+                &lt;/div&gt;
+            );
+        }
+
+        ReactDOM.render(
+            &lt;App /&gt;,
+            document.getElementById('root')
+        );
+    </code></pre>
+
+    <p>Результат:</p>
+    <div class="example">
+        <div id="root"></div>
+    </div>
+
+    <p>Обычно, новые React-приложения включают один компонент <mark>App</mark> на самом верху DOM. Однако, если вы
+    внедряете React в уже существующее приложение, то вы можете начать строить иерархию с самых низов из небольших
+    компонентов (например, <mark>Button</mark>) и продвигаться на самый её верх.</p>
+
+    <p class="section">Извлечение компонентов</p>
+
+    <p>Не бойтесь разбивать свои компоненты на более мелкие. Рассмотрим это на примере компонента <mark>Comment</mark>:</p>
+
+    <pre><code class="language-js">
+       function Comment(props) {
+         return (
+            &lt;div className="Comment"&gt;
+                &lt;div className="UserInfo"&gt;
+                    &lt;img className="Avatar"
+                        src={props.author.avatarUrl}
+                        alt={props.author.name}
+                    /&gt;
+                    &lt;div className="UserInfo-name"&gt;
+                        {props.author.name}
+                    &lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div className="Comment-text"&gt;
+                    {props.text}
+                &lt;/div&gt;
+                &lt;div className="Comment-date"&gt;
+                    {formatDate(props.date)}
+                &lt;/div&gt;
+            &lt;/div&gt;
+         );
+       }
+    </code></pre>
+
+    <p>Он принимает <mark>author</mark> (объект), <mark>text</mark> (строка), и <mark>date</mark> (дата) за свойства, и
+    описывает комментарий, оставленный на каком-либо сайте сайте.</p>
+    <p>Этот компонент может быть непросто изменить из-за всех вложений в него, а также становится сложнее повторно
+    использовать отдельные его фрагменты. Так давайте же извлечем некоторые компоненты из него. Сперва, мы извлечем
+    <mark>Avatar</mark>:</p>
+
+    <pre><code class="language-js">
+        function Avatar(props) {
+            return (
+                &lt;img className="Avatar"
+                    src={props.user.avatarUrl}
+                    alt={props.user.name}
+                /&gt;
+            );
+        }
+    </code></pre>
+
+    <p>Компоненту <mark>Avatar</mark> не нужно знать, что он создаётся в <mark>Comment</mark>. Именно поэтому мы и дали
+    его свойству более общее имя:<mark>user</mark> вместо <mark>author</mark>. Мы рекомендуем давать имена свойствам
+    компонентов исходя из их функции, а не их использования. Теперь, мы можем немного упростить <mark>Comment</mark>:</p>
+
+    <pre><code class="language-js">
+        function Comment(props) {
+            return (
+                &lt;div className="Comment"&gt;
+                    &lt;div className="UserInfo"&gt;
+                        &lt;Avatar user={props.author} /&gt;
+                        &lt;div className="UserInfo-name"&gt;
+                            {props.author.name}
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div className="Comment-text"&gt;
+                        {props.text}
+                    &lt;/div&gt;
+                    &lt;div className="Comment-date"&gt;
+                        {formatDate(props.date)}
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            );
+        }
+    </code></pre>
+
+    <p>Далее, мы извлечем компонент <mark>UserInfo</mark>, который создаёт <mark>Avatar</mark> с именем пользователя:</p>
+
+    <pre><code class="language-js">
+        function UserInfo(props) {
+            return (
+                &lt;div className="UserInfo"&gt;
+                    &lt;Avatar user={props.user} /&gt;
+                    &lt;div className="UserInfo-name"&gt;
+                        {props.user.name}
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            );
+        }
+    </code></pre>
+
+    <p>Это позволяет нам ещё сильнее упростить <mark>Comment</mark>:</p>
+
+    <pre><code class="language-js">
+        function Comment(props) {
+            return (
+                &lt;div className="Comment"&gt;
+                    &lt;UserInfo user={props.author} /&gt;
+                    &lt;div className="Comment-text"&gt;
+                        {props.text}
+                    &lt;/div&gt;
+                    &lt;div className="Comment-date"&gt;
+                        {formatDate(props.date)}
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            );
+        }
+    </code></pre>
+
+    <p>Извлечение компонентов может показаться трудоёмким процессом, но, имея набор компонентов с возможностью их
+    многократного использования, наши усилия окупятся с лихвой при работе с огромными проектами. Возьмите себе на заметку
+    рассматривать компоненты, которые используются неоднократно (такие как <mark>Button</mark>, <mark>Panel</mark>,
+    <mark>Avatar</mark>, или достаточно комплексные (<mark>App</mark>, <mark>FeedStory</mark>, <mark>Comment</mark>),
+    в качестве кандидатов на роль повторно используемых.</p>
+
+    <p class="section">Свойства только для чтения</p>
+
+    <p>Когда вы создаёте компонент (функциональный или класса), то он не должен изменять свои собственные свойства.
+    Взгляните на эту функцию <mark>sum</mark>:</p>
+
+    <pre><code class="language-js">
+        function sum(a, b) {
+            return a + b;
+        }
+    </code></pre>
+
+    <p>Такие функции называют "чистыми", потому что они не меняют принимаемые данные и всегда возвращают один и тот же
+    результат для одних и тех же данных. Для сравнения, это примесная функция, потому что она меняет принимаемые данные:
+    </p>
+
+    <pre><code class="language-js">
+        function withdraw(account, amount) {
+            account.total -= amount;
+        }
+    </code></pre>
+
+    <p>React достаточно гибок, но имеет одно строгое правило:</p>
+    <p><b>Все компоненты React должны работать как чистые по отношению к своим свойствам.</b></p>
+    <p>Конечно, UI приложения динамичны и меняются со временем. В следующей главе мы введём новое понятие "состояние".
+    Состояние позволяет компонентам React изменять свой результат с течение времени в ответ на действия
+    пользователя, сетевые запросы, и любые другие действия, не нарушая этого правила.</p>
+
+    <div class="button">
+        <a href="../../quick-start/rendering-elements/">&laquo; Назад</a>
+        <a class="next" href="../../quick-start/state-and-lifecycle/">Далее &raquo;</a>
+    </div>
+</div>
+
+</body>
+</html>

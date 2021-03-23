@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Интеграция в другие библиотеки</title>
+
+    <link rel="stylesheet" href="../../../../web-page/css/header.css">
+    <link rel="stylesheet" href="../../../../web-page/css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script src="../../../libraries/prism.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../../web-page/index.html">React.js</a>
+        <a href="../../../../web-page/examples.html">Содержание</a>
+        <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+    <p class="section">Интеграция со сторонними библиотеками</p>
+    <p>React может использоваться в любом веб-приложении. Он может быть встроен в другие приложения и, с некоторой осторожностью, другие приложения могут быть встроены в React. В этом этой главе будут рассмотрены некоторые из наиболее распространенных случаев использования, сосредотачивая основное внимание на интеграции с jQuery , но те же идеи могут быть применены для интеграции компонентов с любым существующим кодом.</p>
+
+    <p class="section">Интеграция с плагинами манипуляции DOM</p>
+    <p>React не знает об изменениях, внесенных в DOM вне контекста React. Он определяет обновления, основанные на собственном внутреннем представлении, и если одни и те же узлы DOM управляются другой библиотекой, React запутывается и не имеет возможности восстановления.</p>
+    <p>Это не означает, что невозможно или чрезвычайно сложно совместить React с другими способами воздействия на DOM, вам просто нужно понимать, что каждый из них делает.</p>
+    <p>Самый простой способ избежать конфликтов - предотвратить обновление компонента React. Вы можете сделать это, предоставив элементы, для которых у React нет никаких причин их обновлять, например, пустой &lt;div />.</p>
+
+    <p class="section">Как подойти к проблеме</p>
+    <p>Чтобы это продемонстрировать, давайте построим обёртку для известного плагина jQuery.</p>
+    <p>Мы добавим атрибут ref к корневому элементу DOM. Внутри componentDidMount мы получим на него ссылку, чтобы можно было передать его в плагин jQuery.</p>
+    <p>Чтобы предотвратить взаимодействие React с DOM после монтирования, мы вернем пустой тег &lt;div /> из метода render(). Элемент &lt;div /> не имеет свойств или дочерних элементов, поэтому у React нет причин обновлять его, оставляя плагину jQuery свободу для управления этой частью DOM:</p>
+
+    <pre><code class="language-js">
+  // применим плагин "modal"
+  class Modal extends React.Component {
+    componentDidMount() {
+      this.$element = $(this.element);
+    // установить плагин
+      this.$element.modal();
+    }
+
+    componentWillUnmount() {
+    // удалить плагин
+      this.$element.modal('destroy');
+    }
+
+    render() {
+      return &lt;div ref={element => this.element = element} />;
+    }
+  }
+        <CustomButton color="red"/>
+    </code></pre>
+    <p>Обратите внимание, что мы определили методы жизненного цикла componentDidMount и componentWillUnmount. Многие плагины jQuery присоединяют слушателей событий к DOM, поэтому важно удалить их в componentWillUnmount. Если плагин не предоставляет метод очистки, вам, вероятно, придется предоставить свой собственный, чтобы удалить слушатели событий, зарегистрированных плагином, предотвращая тем самым утечку памяти.</p>
+
+    <p class="section">Интеграция с JQuery UI Dialog плагином</p>
+    <p>Для более конкретного примера, давайте напишем минимальную оболочку для плагина JQuery UI Dialog.</p>
+    <p>Во-первых, давайте посмотрим, что Dialog делает с DOM.</p>
+    <p>Если вы вызываете Dialog на узле DOM &lt;div>, он автоматически внесет следующие изменения</p>
+    <pre><code class="language-js">
+  &lt;div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-resizable">
+     &lt;div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
+        &lt;span id="ui-dialog-title-dialog" class="ui-dialog-title">Заголовок&lt;/span>
+        &lt;a class="ui-dialog-titlebar-close ui-corner-all" href="#">&lt;span class="ui-icon ui-icon-closethick">close&lt;/span>&lt;/a>
+     &lt;/div>
+     &lt;div style="height: 200px; min-height: 109px; width: auto;" class="ui-dialog-content ui-widget-content" id="dialog">
+        &lt;p>Содержимое диалогового окна.&lt;/p>
+     &lt;/div>
+  &lt;/div>
+        <CustomButton color="red"/>
+    </code></pre>
+    <p>Предположим, что это API, к которому мы стремимся с помощью нашего React-компонента-оболочки &lt;Dialog>:</p>
+
+
+    <pre><code class="language-js">
+  class App extends React.Component {
+    constructor(props){
+      super(props);
+      this.showDialog = this.showDialog.bind(this);
+      this.state = {isDialogShowed: false};
+    }
+
+    showDialog(){
+  this.setState({isDialogShowed: true});
+    }
+
+    render(){
+      return (
+      &lt;div>
+          &lt;button onClick={this.showDialog}>Показать диалог&lt;/button>
+          {this.state.isDialogShowed ? &lt;Dialog title="Диалог">Привет, Мир!&lt;/Dialog> : null}
+      &lt;/div>
+      );
+    }
+  }
+        <CustomButton color="red"/>
+    </code></pre>
+    <p>Во-первых, мы создадим компонент с методом render(), где будем возвращать &lt;div>:</p>
+
+    <pre><code class="language-js">
+class Dialog extends React.Component {
+    constructor(props){
+      super(props);
+    }
+
+    render() {
+      return &lt;div ref={element => this.element = element}>{this.props.children}&lt;/div>;
+}
+}
+        <CustomButton color="red"/>
+    </code></pre>
+    <p>Важно знать, что если вы измените DOM вне потока React, вы должны убедиться, что у React нет оснований касаться этих узлов DOM.</p>
+    <p>Далее мы реализуем метод жизненного цикла. Нам нужно инициализировать Dialog с помощью ссылки ref на узел &lt;div> в componentDidMount:</p>
+    <pre><code class="language-js">
+  componentDidMount() {
+    this.$element = $(this.element);
+    this.$element.dialog({title: this.props.title});
+  }
+        <CustomButton color="red"/>
+    </code></pre>
+    <p>Обратите внимание на одну очень важную деталь: как мы вызываем диалог из приложения.</p>
+    <pre><code class="language-js">
+        {this.state.isDialogShowed ? &lt;Dialog title="Диалог">Привет, Мир!&lt;/Dialog> : null}
+        <CustomButton color="red"/>
+    </code></pre>
+    <p>Мы либо отрисовываем его, либо возвращаем null. Это сделано для того, чтобы диалог при открытии и закрытии монтировался и демонтировался каждый раз. Это обеспечит вызов методов жизненного цикла компонента диалога, в которых происходит установка и уничтожение плагина. Если бы мы показывали диалог таким образом:</p>
+
+    <pre><code class="language-js">
+  render(){
+    const isShowed = this.state.isDialogShowed;
+    return &lt;Dialog isShowed={isShowed} title="Диалог">Привет, Мир!&lt;/Dialog>
+  }
+        <CustomButton color="red"/>
+    </code></pre>
+    <p>То его методы жизненного цикла сработали бы лишь один раз при первой отрисовке. А далее вызывался бы только его метод render(), так как диалог не монтируется и не демонтируется.</p>
+    <p>Также обратите внимание, что React не присваивает какое-то особенное значение полю this.element. Оно работает только потому, что мы ранее назначили это поле в атрибуте ref в методе render ():</p>
+    <pre><code class="language-js">
+        &lt;div ref={element => this.element = element}>
+        <CustomButton color="red"/>
+    </code></pre>
+    <p>Данный компонент пока не может демонтироваться. Если вы щелкните на кнопке «закрыть», то диалог больше не откроется. Это происходит потому, что мы не демонтируем компонент. Чтобы это исправить, добавим в компонент диалога метод жизненного цикла componentWillUnmount, в котором будем уничтожать диалог:</p>
+    <pre><code class="language-js">
+  componentWillUnmount() {
+    this.$element.dialog('destroy');
+  }
+        <CustomButton color="red"/>
+    </code></pre>
+    <p>Но чтобы данный метод вызвался, нам необходимо демонтировать наш диалог. Для этого нам понадобится атрибут onClose для диалога, которому мы присвоим метод-коллбэк, выставляющий isDialogShowed в false:</p>
+    <pre><code class="language-js">
+ class App extends React.Component {
+    constructor(props){
+      super(props);
+      this.showDialog = this.showDialog.bind(this);
+      this.hideDialog = this.hideDialog.bind(this);
+      this.state = {isDialogShowed: false};
+    }
+
+    showDialog(){
+      this.setState({isDialogShowed: true});
+    }
+
+    hideDialog(){
+      this.setState({isDialogShowed: false});
+    }
+
+    render(){
+      return (
+      &lt;div>
+        &lt;button onClick={this.showDialog}>Показать диалог&lt;/button>
+          {this.state.isDialogShowed ? &lt;Dialog isShowed={true} title="Диалог"
+                                               onClose={this.hideDialog}>Привет, Мир!&lt;/Dialog> : null}
+      &lt;/div>
+      );
+    }
+  }
+        <CustomButton color="red"/>
+    </code></pre>
+    <p>У самого компонента диалога будем использовать коллбэк onClose в componentDidMount:</p>
+    <pre><code class="language-js">
+  componentDidMount() {
+    this.$element = $(this.element);
+    this.$element.dialog({title: this.props.title, close: this.props.onClose});
+  }
+        <CustomButton color="red"/>
+    </code></pre>
+
+    <p class="section">Интеграция с другими библиотеками</p>
+    <p>React может быть встроен в другие приложения благодаря гибкости ReactDOM.render().</p>
+    <p>Хотя React обычно используется при запуске для загрузки единственного корневого React компонента в DOM, ReactDOM.render() может быть вызван множество раз для независимых частей UI, которые могут быть маленькими как одиночные кнопки, так и большими, как целое приложение .</p>
+    <p>Фактически, именно так React используется в Facebook. Это позволяет разработчикам Facebook писать приложения на React по частям и комбинировать их с уже существующими, сгенерированными сервером шаблонами и другим клиентским кодом.</p>
+
+    <p class="section">Замена отрисовки, основанной на строках, на React</p>
+    <p>Общим паттерном в старых веб-приложениях является описание фрагментов DOM в виде строки и вставка их в DOM, например: $element.html(htmlString). Эти точки в кодовой базе идеально подходят для внедрения React. Просто перепишите строковое представление как компонент React.</p>
+    <p>Итак, следующая реализация jQuery ...</p>
+    <pre><code class="language-js">
+  $('#root').html('<button id="okButton" class="btn btn-default">OK</button>');
+  $('#okButton').on('click',() => {
+     alert('Нажата кнопка "ОК"');
+  });
+        <CustomButton color="red"/>
+    </code></pre>
+    <p>... может быть переписана с использованием компонента React:</p>
+
+    <pre><code class="language-js">
+  class Button extends React.Component {
+    componentDidMount(){
+      $('#okButton').on('click', this.onClick);
+    }
+
+    componentWillUnmount(){
+      $('#okButton').off('click', this.onClick);
+    }
+
+    onClick(){
+      alert('Hello!');
+    }
+
+    render(){
+      return &lt;button id="okButton" className="btn btn-success">ОК&lt;/button>;
+    }
+  }
+
+  ReactDOM.render(&lt;Button />, document.getElementById('root'));
+        <CustomButton color="red"/>
+    </code></pre>
+    <p>Теперь вы можете начать перемещать больше логики в компонент и применять наиболее распространенные практики React. Например, в компонентах лучше не полагаться на идентификаторы, потому что один и тот же компонент может отображаться несколько раз.</p>
+    <p>Вместо этого мы будем использовать систему событий React и зарегистрируем обраsботчик кликов непосредственно в элементе React &lt;button>:</p>
+
+    <pre><code class="language-js">
+  class Button extends React.Component {
+    onClick(){
+      alert('Hello!');
+    }
+
+    render(){
+      return &lt;button id="okButton" onClick={this.onClick} className="btn btn-success">ОК&lt;/button>;
+    }
+  }
+
+  ReactDOM.render(&lt;Button />, document.getElementById('root'));
+        <CustomButton color="red"/>
+    </code></pre>
+    <p>Вы можете иметь столько изолированных компонентов, сколько захотите, и использовать ReactDOM.render() для рендеринга их в разные контейнеры DOM. Постепенно при преобразовании всё большего количества вашего приложения в React вы сможете объединить их в более крупные компоненты и переместить некоторые из ReactDOM.render() вызовов выше по иерархии.</p>
+    <div class="button">
+    <a href="../../advanced/render-props/">&laquo; Назад</a>
+    <a class="next" href="../../advanced/strict-mode/">Далее &raquo;</a>
+    </div>
+</div>
+
+</body>
+</html>

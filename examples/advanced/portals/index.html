@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Порталы</title>
+
+    <link rel="stylesheet" href="../../../../web-page/css/header.css">
+    <link rel="stylesheet" href="../../../../web-page/css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script src="../../../libraries/prism.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../../web-page/index.html">React.js</a>
+        <a href="../../../../web-page/examples.html">Содержание</a>
+        <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+    <p class="section">Порталы</p>
+
+    <p>Порталы предоставляют первоклассный способ отображения дочерних элементов в узел DOM, который существует вне иерархии DOM родительского компонента.</p>
+
+    <pre><code class="language-js">
+        ReactDOM.createPortal(child, container)
+        <CustomButton color="red"/>
+    </code></pre>
+
+    <p>Первым аргументом (child) является любой отображаемый потомок React, такой как элемент, строка или фрагмент. Второй аргумент (container) является элементом DOM.</p>
+
+    <p class="section">Использование</p>
+    <p>Как правило, когда вы возвращаете элемент из метода отрисовки компонента, он монтируется в DOM как дочерний элемент ближайшего родительского узла:</p>
+    <pre><code class="language-js">
+        render() {
+         // React mounts a new div and renders the children into it
+        return (
+        &lt;dіv>
+        {this.props.children}
+        &lt;/dіv>
+        );
+        }
+        <CustomButton color="red"/>
+    </code></pre>
+
+    <p>Однако иногда полезно вставлять дочерний элемент в другое место в DOM:</p>
+
+    <pre><code class="language-js">
+        render() {
+        // React does *not* create a new div. It renders the children into `domNode`.
+        // `domNode` is any valid DOM node, regardless of its location in the DOM.
+        return ReactDOM.createPortal(
+          this.props.children,
+          domNode
+         );
+        }
+        <CustomButton color="red"/>
+    </code></pre>
+
+    <p>Типичный вариант использования порталов - это когда родительский компонент имеет overflow: hidden или z-index стиль, но вам нужно, чтобы дочерний компонент визуально «выходил» из своего контейнера. Например, диалоги, всплывающие подсказки.</p>
+
+    <p class="section">Всплытие событий через порталы</p>
+    <p>Несмотря на то, что портал может быть где угодно в дереве DOM, он ведет себя как обычный дочерний элемент React во всех отношениях. Такие функции, как контекст, работают как и ранее, независимо от того, является ли дочерний элемент порталом, поскольку портал все еще существует в дереве React независимо от его положения в дереве DOM.
+
+        Это же касается и всплытия события. Событие, созданное внутри портала, будет распространяться к предкам в объемлющем дереве React, даже если они не являются предками в дереве DOM. Представим следующую структуру HTML:</p>
+
+    <pre><code class="language-js">
+         &lt;html>
+          &lt;body>
+           &lt;div id="app-root">&lt;/div>
+           &lt;div id="modal-root">&lt;/div>
+          &lt;/body>
+         &lt;/html>
+        <CustomButton color="red"/>
+    </code></pre>
+    <p>Компонент Parent в #app-root мог бы поймать неперехваченное всплывающее событие из соседнего узла #modal-root.</p>
+
+    <pre><code class="language-js">
+
+        // Эти два контейнера являются соседями в DOM
+  const appRoot = document.getElementById('app-root');
+  const modalRoot = document.getElementById('modal-root');
+
+  class Modal extends React.Component {
+    constructor(props) {
+      super(props);
+      this.el = document.createElement('div');
+    }
+
+    componentDidMount() {
+      /*
+        Элемент портала вставлен в дерево DOM после того, как потомки Modal
+      были монтированы, что означает, что потомки будут монтированы в отдельный
+      узел DOM.
+        Если дочерний компонент требует присоединения к дереву DOM сразу после
+      его монтирования, например, для измерения узла DOM или использования
+      «autoFocus» в потомке, добавьте состояние в Modal и отрисуйте дочерние
+      элементы, после того, как Modal будет вставлен в DOM дерево.
+      */
+      modalRoot.appendChild(this.el);
+    }
+
+    componentWillUnmount() {
+      modalRoot.removeChild(this.el);
+    }
+
+    render() {
+      return ReactDOM.createPortal(
+        this.props.children,
+        this.el,
+      );
+    }
+  }
+
+  class Parent extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {clicks: 0};
+      this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+      // Он сработает, когда кнопка в Child будет нажата,
+      // обновляя состояние Parent, даже если кнопка
+      // не является его прямым потомком в DOM.
+      this.setState(prevState => ({
+        clicks: prevState.clicks + 1
+      }));
+    }
+
+    render() {
+      return (
+        &lt;div onClick={this.handleClick}>
+          &lt;p>Число кликов: {this.state.clicks}&lt;/p>
+        &lt;p>
+            Откройте DevTools браузера,
+            чтобы увидеть, что кнопка button
+            не является потомком div
+            с обработчиком onClick.
+          &lt;/p>
+          &lt;Modal>
+            &lt;Child />
+          &lt;/Modal>
+        &lt;/div>
+      );
+    }
+  }
+
+  function Child() {
+    // Событие клика на этой кнопке будет всплывать к Parent,
+    // так как нет заданного 'onClick' атрибута
+    return (
+      &lt;div className="modal">
+        &lt;button>Click&lt;/button>
+        &lt;/div>
+    );
+  }
+
+  ReactDOM.render(&lt;Parent />, appRoot);
+        <CustomButton color="red"/>
+    </code></pre>
+
+    <p>Захват события, всплывающего из портала в родительском компоненте, позволяет создавать более гибкие абстракции, которые по своей сути не зависят от порталов. Например, если вы отрисовываете компонент &lt;Modal />, родитель может захватывать свои события независимо от того, реализован ли он с помощью порталов.</p>
+    <div class="button">
+        <a href="../../advanced/context">&laquo; Назад</a>
+        <a class="next" href="../../advanced/error-boundaries/">Далее &raquo;</a>
+    </div>
+</div>
+
+</body>
+</html>

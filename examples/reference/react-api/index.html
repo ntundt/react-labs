@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>React</title>
+
+  <link rel="stylesheet" href="../../../../web-page/css/header.css">
+  <link rel="stylesheet" href="../../../../web-page/css/content.css">
+  <link rel="stylesheet" href="../../../libraries/prism.css">
+
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+  <script src="../../../libraries/prism.js"></script>
+
+</head>
+
+<body>
+
+  <div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>React API</p>
+    </a>
+    <div class="header-right">
+      <a href="../../../../web-page/index.html">React.js</a>
+      <a href="../../../../web-page/examples.html">Содержание</a>
+      <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+  </div>
+  <div id="delimiter"></div>
+
+  <!--ВСЕ ВАШЕ ТВОРЧЕСТВО В ДИВЕ CONTENT-->
+  <div class="content">
+    <p class="section">React API верхнего уровня</p>
+
+    <p>
+      Если вы загружаете React из тега <mark>&lt;script></mark>, API верхнего уровня доступны на глобальном уровне. Если вы используете ES6 с npm, вы можете написать <mark>import React from 'react'</mark>. Если вы используете ES5 с npm, вы можете написать
+      <mark>var React = require('react')</mark>.</p>
+
+    <div class="content">
+      <p class="section">Общее</p>
+
+      <p class="section">
+        Компоненты
+      </p>
+
+      <p>Компоненты React позволяют разделить пользовательский интерфейс на независимые, многоразовые фрагменты и работать с каждым отдельно. Компоненты могут быть определены путем подклассификации <mark>React.Component</mark> или <mark>React.PureComponent</mark>.
+      </p>
+
+      <ul>
+        <li><span>• </span><mark>React.Component</mark></li>
+        <li><span>• </span><mark>React.PureComponent</mark></li>
+      </ul>
+
+      <p>
+        Если вы не используете классы ES6, вы можете использовать <mark>create-react-class</mark> модуль.
+      </p>
+
+      <p class="section">
+        Создание элементов React
+      </p>
+
+      <p>Мы рекомендуем использовать JSX для описания того, как должен выглядеть ваш пользовательский интерфейс. Каждый элемент JSX вызывает React.createElement(). Обычно вы не используете следующие методы, если используете JSX.
+      </p>
+
+      <ul>
+        <li><span>• </span><mark>createElement()</mark></li>
+        <li><span>• </span><mark>createFactory()</mark></li>
+      </ul>
+
+      <p class="section">
+        Преобразование элементов
+      </p>
+
+      <p>React предоставляет несколько API для управления элементами:</p>
+
+      <ul>
+        <li><span>• </span><mark>cloneElement()</mark></li>
+        <li><span>• </span><mark>isValidElement()</mark></li>
+        <li><span>• </span><mark>React.Children</mark></li>
+      </ul>
+
+      <p class="section">
+        Фрагменты
+      </p>
+
+      <p>React также предоставляет компонент для рендеринга элементов без оболочки.</p>
+
+      <ul>
+        <li><span>• </span><mark>React.Fragment</mark></li>
+      </ul>
+
+      <p class="section">
+        Refs
+      </p>
+
+      <ul>
+        <li><span>• </span><mark>React.createRef</mark></li>
+        <li><span>• </span><mark>React.forwardRef</mark></li>
+      </ul>
+
+      <p class="section">
+        Справка
+      </p>
+
+      <p class="section">
+        React.Component
+      </p>
+
+      <p><mark>React.Component</mark> является базовым классом для компонентов React, когда они определены с использованием классов ES6 :</p>
+
+      <pre><code class="language-js">class Greeting extends React.Component {
+    render() {
+      return <h1>Hello, {this.props.name}</h1>;
+    }
+  }</code></pre>
+
+      <p>
+        См. Справочник API <mark>React.Component</mark> для списка методов и свойств, связанных с базовым <mark>React.Component</mark> классом.
+      </p>
+
+      <p class="section">
+        createElement()
+      </p>
+
+      <pre><code class="language-js">React.createElement(
+  type,
+  [props],
+  [...children]
+)
+  }</code></pre>
+
+      <p>
+        Создайте и верните новый элемент React данного типа. Аргумент типа может быть либо строкой имени тега (например, 'div'и 'span'), типа компонента React (класс или функция) или типа фрагмента React . Код, написанный с помощью JSX, будет конвертирован в
+        использование React.createElement(). Обычно вы не вызываете, React.createElement()если используете JSX.
+      </p>
+
+      <p class="section">
+        cloneElement()
+      </p>
+
+      <pre><code class="language-js">React.cloneElement(
+  element,
+  [props],
+  [...children]
+)
+  }</code></pre>
+
+      <p>
+        Клонировать и вернуть новый элемент React, используя element в качестве отправной точки. Получившийся элемент будет иметь внутренности оригинального элемента с новыми, неглубоко вложенными. Новые элементы-дети заменят существующих. key и ref из исходного
+        элемента будут сохранены.
+      </p>
+
+      <p class="section">
+        isValidElement()
+      </p>
+
+      <pre><code class="language-js">React.isValidElement(object)</code></pre>
+
+      <p>
+        Проверяет объект как элемент React. Возвращает <mark>true</mark> или <mark>false</mark>.
+      </p>
+
+      <p class="section">
+        React.Children
+      </p>
+
+      <p>
+        <mark>React.Children</mark> предоставляет утилиты для работы с <mark>this.props.children</mark> непрозрачной структурой данных.
+      </p>
+
+      <p class="section">
+        React.Children.map
+      </p>
+
+      <pre><code class="language-js">React.Children.map(children, function[(thisArg)])</code></pre>
+
+      <p>
+        Вызывает функцию для каждого дочернего элемента, содержащегося внутри
+        <mark>children</mark> с <mark>this</mark> c установленным значением thisArg. Если <mark>children</mark> это фрагмент или массив, он будет пройден: функция никогда не будет передана объектам контейнера. Если дети <mark>null</mark> или <mark>undefined</mark>,
+        возвращает <mark>null</mark> или <mark>undefined</mark> реже чем массив.
+      </p>
+
+      <p class="section">
+        React.Children.forEach
+      </p>
+
+      <pre><code class="language-js">React.Children.forEach(children, function[(thisArg)])</code></pre>
+
+      <p>
+        Подобна <mark>React.Children.map()</mark> но не возвращает массив.
+      </p>
+
+      <p class="section">
+        React.Children.count
+      </p>
+
+      <pre><code class="language-js">React.Children.count(children)</code></pre>
+
+      <p>
+        Возвращает общее количество компонентов в <mark>children</mark>, равное количеству раз, когда обратный вызов был передан <mark>map</mark> или был вызван <mark>forEach</mark>.
+      </p>
+
+
+      <p class="section">
+        React.Children.only
+      </p>
+
+      <pre><code class="language-js">React.Children.only(children)</code></pre>
+
+      <p>
+        Проверяет, что <mark>children</mark> имеет только один дочерний элемент (элемент React) и возвращает его. В противном случае этот метод выдает ошибку.
+      </p>
+
+      <p class="section">
+        React.Children.toArray
+      </p>
+
+      <pre><code class="language-js">React.Children.toArray(children)</code></pre>
+
+      <p>
+        Возвращает структуру данных как плоский массив с ключами, назначенными каждому ребенку. Полезно, если вы хотите манипулировать коллекциями детей в ваших методах рендеринга, особенно если вы хотите изменить порядок или <mark>this.props.children</mark>        перед его передачей.
+      </p>
+
+      <p class="section">
+        React.Fragment
+      </p>
+
+      <p>
+        Позволяет возвращать несколько элементов в <mark>render()</mark> методе, не создавая дополнительный элемент DOM:
+      </p>
+
+      <pre><code class="language-js">render() {
+  return (
+    &lt;React.Fragment>
+      Some text.
+      &lt;h2>A heading&lt;/h2>
+    &lt;/React.Fragment>
+  );
+}</code></pre>
+
+      <p>
+        Вы также можете использовать его с сокращенным &lt;>&lt;/>синтаксисом.
+      </p>
+
+      <p class="section">
+        React.createRef
+      </p>
+
+      <p>
+        <mark>React.createRef</mark> создает ссылку ref, которая может быть присоединена к элементам React через атрибут <mark>ref</mark>.
+      </p>
+
+      <pre><code class="language-js">class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.inputRef = React.createRef();
+  }
+
+  render() {
+    return &lt;input type="text" ref={this.inputRef} />;
+  }
+
+  componentDidMount() {
+    this.inputRef.current.focus();
+  }
+}</code></pre>
+
+      <p class="section">
+        React.forwardRef
+      </p>
+
+      <p>
+        <mark>React.forwardRef</mark> создает компонент React, который перенаправляет атрибут <mark>ref</mark>, который он получает, на другой компонент ниже в дереве. Этот метод не очень распространен, но особенно полезен в двух сценариях:
+      </p>
+
+      <ul>
+        <li><span>• </span><mark>Пересылка ссылок на компоненты DOM</mark></li>
+        <li><span>• </span><mark>Пересылка ссылок в компонентах более высокого порядка</mark></li>
+      </ul>
+
+      <p>
+        <mark>React.forwardRef</mark> принимает функцию рендеринга в качестве аргумента. React вызовет эту функцию с помощью <mark>props</mark> и <mark>ref</mark> двумя аргументами. Эта функция должна возвращать узел React.
+      </p>
+
+      <pre><code class="language-js">const FancyButton = React.forwardRef((props, ref) => (
+  &lt;button ref={ref} className="FancyButton">
+    {props.children}
+  &lt;/button>
+  ));
+
+  const ref = React.createRef();
+  &lt;FancyButton ref={ref}>Click me!&lt;/FancyButton>;</code></pre>
+
+      <p>
+        В приведенном выше примере React передает <mark>ref</mark> данный &lt;FancyButton ref={ref}> элемент в качестве второго аргумента функции рендеринга внутри <mark>React.forwardRef</mark>. Эта функция рендеринга присоединяет <mark>React.forwardRef</mark>        к &lt;button ref={ref}> элементу. В результате после того, как React присоединяет <mark>ref</mark>, он <mark>ref.current</mark> укажет непосредственно на экземпляр элемента DOM.
+      </p>
+
+
+      <!--ВСЕ ПРИМЕРЫ РАБОТЫ РЕАКТА ВНУТРИ ДИВА EXAMPLE-->
+      <div class="example">
+
+      </div>
+
+
+    </div>
+
+</body>
+
+</html>

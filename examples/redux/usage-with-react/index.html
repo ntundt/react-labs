@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Использование с React</title>
+
+    <link rel="stylesheet" href="../../../../web-page/css/header.css">
+    <link rel="stylesheet" href="../../../../web-page/css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="../../../libraries/prism.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../../web-page/index.html">React.js</a>
+        <a href="../../../../web-page/examples.html">Содержание</a>
+        <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+    <p class="section">Использование с React</p>
+
+    <p>Для начала стоит подчеркнуть, что Redux не имеет отношения к React. Вы можете создавать Redux-приложения c
+    помощью React, Angular, Ember, jQuery или обычного JavaScript. И все-таки, Redux работает особенно хорошо с такими
+    фреймворками, как React и Deku, потому что они позволяют вам описать UI как функцию состояния и, кроме того,
+    Redux умеет менять состояние (state) приложения в ответ на произошедшие действия (actions). Для построения нашего
+    простенького todo-приложения мы будем использовать React.</p>
+
+    <p class="section">Установка React Redux</p>
+
+    <p>React bindings не включены в Redux по умолчанию. Вам нужно установить их явно:</p>
+
+    <pre><code class="language-js">
+        npm install --save react-redux
+    </code></pre>
+
+    <p>Если вы не используете npm, то можете взять последнюю UMD-сборку из unpkg (
+    <a href="https://unpkg.com/react-redux@5.0.7/dist/react-redux.js">development</a> или
+    <a href="https://unpkg.com/react-redux@5.0.7/dist/react-redux.min.js">production</a>). Добавив UMD-сборку на
+        страницу при помощи тега <mark>&lt;script&gt;</mark>, вы получите глобальный <mark>window.ReactRedux</mark>.</p>
+
+    <p class="section">Презентационные компоненты и компоненты-контейнеры</p>
+
+    <p>React-биндинги для Redux руководствуются идеей разделения компонентов на представления и контейнеры. Давайте
+    перечислим их отличия:</p>
+
+    <table>
+        <thead>
+        <tr>
+            <th></th>
+            <th class="th">Компоненты-представления</th>
+            <th class="th">Компоненты-контейнеры</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th>Назначение</th>
+            <td>Как выглядит (разметка, стили)</td>
+            <td>Как работает (загрузка данных, обновление состояния)</td>
+        </tr>
+        <tr>
+            <th>Знают о Redux</th>
+            <td>Нет</td>
+            <td>Да</td>
+        </tr>
+        <tr>
+            <th>Читают данные</th>
+            <td>Читают данные из props</td>
+            <td>Подписываются на Redux-состояние</td>
+        </tr>
+        <tr>
+            <th>Изменяют данные	</th>
+            <td>Вызывают колбеки из props</td>
+            <td>Отправляют Redux-действия</td>
+        </tr>
+        <tr>
+            <th>Написаны</th>
+            <td>Руками</td>
+            <td>Обычно генерируются React Redux</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p>Большинство компонентов, которые мы напишем, будут представлениями, но чтобы соединить их с Redux-состоянием, нам
+    потребуется сгенерировать несколько контейнеров. Это и дальнейшее описание не означает, что компоненты контейнера
+    должны быть расположены ближе к вершине дерева компонентов. Если компонент-контейнер становится слишком сложным,
+    т.е. он имеет сильную вложенность презентационных компонентов, с бесчисленным количеством обратных вызовов,
+    передающихся вниз, используйте еще один контейнер в дереве компонентов.</p>
+    <p>Технически, вы можете написать контейнеры вручную, используя <mark>store.subscribe()</mark>. Мы не советуем вам
+    это делать, потому что React Redux производит много оптимизаций производительности, которые было бы трудно написать
+    руками. По этой причине, вместо того чтобы писать контейнеры, мы генерируем их, воспользовавшись функцией
+    <mark>connect()</mark>, предоставленной React Redux, об этом ниже.</p>
+
+    <p class="section">Компоненты-представления</p>
+
+    <p>Из этого руководства получаются следующие представления и их свойства:</p>
+
+    <ul>
+        <li><mark>• TodoList</mark> — список, показывающий видимые todos.</li>
+        <ul>
+            <li>• <mark>todos: Array</mark> — массив todo-объектов, имеющих форму
+            <mark>{ id, text, completed }</mark>.</li>
+            <li>• <mark>onTodoClick(id: number)</mark> — колбек, который будет вызван при клике на todo.</li>
+        </ul>
+        <li>• <mark>Todo</mark> — отдельный todo.</li>
+        <ul>
+            <li>• <mark>text: string</mark> — текст для отображения.</li>
+            <li>• <mark>completed: boolean</mark> — должен ли todo показываться зачеркнутым.</li>
+            <li>• <mark>onClick()</mark> — колбек, который будет вызван при клике на todo.</li>
+        </ul>
+        <li>• <mark>Link</mark> — ссылка с колбеком.</li>
+        <ul>
+            <li>• <mark>onClick()</mark> — колбек, который будет вызван при клике на ссылку.</li>
+        </ul>
+        <li>• <mark>Footer</mark> — область, где мы позволим пользователю менять текущую видимость todos.</li>
+        <li>• <mark>App</mark> — корневой компонент, который рендерит все остальное.</li>
+    </ul>
+
+    <p>Они описывают вид, но не знают откуда приходят данные или как изменить их. Они только рендерят то, что им дают.
+    Если вы мигрируете с Redux на что-нибудь другое, вы сможете оставить эти компоненты точно такими же. Они не зависят
+    от Redux.</p>
+
+    <p class="section">Компоненты-контейнеры</p>
+
+    <p>Нам также потребуются некоторые контейнеры, чтобы соединить представления с Redux. Например, представлению
+    <mark>TodoList</mark> требуется контейнер <mark>VisibleTodoList</mark>, который подписывается на Redux-хранилище и
+    знает, как применять текущий фильтр видимости. Чтобы изменить фильтр видимости, мы предоставим представлению
+    <mark>FilterLink</mark>, контейнер, который рендерит <mark>Link</mark>, а тот, в свою очередь, отправляет
+    соответствующее действие при клике:</p>
+
+    <ul>
+        <li>• <mark>VisibleTodoList</mark> — фильтрует todos согласно текущему фильтру видимости и рендерит
+        <mark>TodoList</mark>.</li>
+        <li>• <mark>FilterLink</mark> — получает текущий фильтр видимости и рендерит <mark>Link</mark>.</li>
+        <ul>
+            <li>• <mark>filter: string</mark> — текущий фильтр видимости.</li>
+        </ul>
+    </ul>
+
+    <p class="section">Другие компоненты</p>
+
+    <p>Иногда трудно сказать, каким должен быть компонент — представлением или контейнером. Например, иногда форма и
+    функция действительно соединены вместе, как в случае с этим миниатюрным компонентом:</p>
+
+    <ul>
+        <li>• <mark>AddTodo</mark> — поле ввода с кнопкой "Добавить"</li>
+    </ul>
+
+    <p>Технически мы могли бы "разбить" его на два компонента, но это может быть слишком рано на данном этапе. Вполне
+    допустимо смешивать представление и логику, когда компонент очень маленький. Как только он вырастет, станет более
+    понятно как "разбить" его, так что мы пока оставим его смешанным.</p>
+
+    <p class="section">Реализация компонентов-представлений</p>
+
+    <p>Это все обычные React-компоненты, поэтому мы не будем изучать их детально. Мы пишем функциональные
+    компоненты без состояния, пока нам не потребуются локальное состояние или lifecycle-методы. Это не значит, что
+    представления должны быть функциями, просто так легче. Если/когда вам потребуется добавить локальное состояние,
+    методы жизненного цикла или оптимизацию производительности, вы сможете конвертировать их в классы.</p>
+
+    <p><mark>components/Todo.js</mark></p>
+
+    <pre><code class="language-js">
+        import React, { PropTypes } from 'react'
+
+        const Todo = ({ onClick, completed, text }) => (
+            &lt;li
+                onClick={onClick}
+                style={{
+                    textDecoration: completed ? 'line-through' : 'none'
+                }}
+            &gt;
+            {text}
+            &lt;/li&gt;
+        )
+
+        Todo.propTypes = {
+            onClick: PropTypes.func.isRequired,
+            completed: PropTypes.bool.isRequired,
+            text: PropTypes.string.isRequired
+        }
+
+        export default Todo
+    </code></pre>
+
+    <p><mark>components/TodoList.js</mark></p>
+
+    <pre><code class="language-js">
+        import React, { PropTypes } from 'react'
+        import Todo from './Todo'
+
+        const TodoList = ({ todos, onTodoClick }) => (
+            &lt;ul&gt;
+                {todos.map(todo =>
+                &lt;Todo
+                key={todo.id}
+                {...todo}
+                onClick={() => onTodoClick(todo.id)}
+                /&gt;
+                )}
+            &lt;/ul&gt;
+        )
+
+        TodoList.propTypes = {
+            todos: PropTypes.arrayOf(PropTypes.shape({
+                id: PropTypes.number.isRequired,
+                completed: PropTypes.bool.isRequired,
+                text: PropTypes.string.isRequired
+            }).isRequired).isRequired,
+            onTodoClick: PropTypes.func.isRequired
+        }
+
+        export default TodoList
+    </code></pre>
+
+    <p><mark>components/Link.js</mark></p>
+
+    <pre><code class="language-js">
+        import React, { PropTypes } from 'react'
+
+        const Link = ({ active, children, onClick }) => {
+            if (active) {
+                return <span>{children}</span>
+            }
+
+            return (
+                &lt;a href="#"
+                    onClick={e => {
+                        e.preventDefault()
+                        onClick()
+                    }}
+                &gt;
+                {children}
+                &lt;/a&gt;
+            )
+        }
+
+        Link.propTypes = {
+            active: PropTypes.bool.isRequired,
+            children: PropTypes.node.isRequired,
+            onClick: PropTypes.func.isRequired
+        }
+
+        export default Link
+    </code></pre>
+
+    <p><mark>components/Footer.js</mark></p>
+
+    <pre><code class="language-js">
+        import React from 'react'
+        import FilterLink from '../containers/FilterLink'
+
+        const Footer = () => (
+            &lt;p&gt;
+                Show:
+                {" "}
+                &lt;FilterLink filter="SHOW_ALL"&gt;
+                    Все
+                &lt;/FilterLink&gt;
+                {", "}
+                &lt;FilterLink filter="SHOW_ACTIVE"&gt;
+                    Активные
+                &lt;/FilterLink&gt;
+                {", "}
+                &lt;FilterLink filter="SHOW_COMPLETED"&gt;
+                    Завершенные
+                &lt;/FilterLink&gt;
+            &lt;/p&gt;
+        )
+
+        export default Footer
+    </code></pre>
+
+    <p><mark>components/App.js</mark></p>
+
+    <pre><code class="language-js">
+        import React from 'react'
+        import Footer from './Footer'
+        import AddTodo from '../containers/AddTodo'
+        import VisibleTodoList from '../containers/VisibleTodoList'
+
+        const App = () => (
+            &lt;div&gt;
+                &lt;AddTodo /&gt;
+                &lt;VisibleTodoList /&gt;
+                &lt;Footer /&gt;
+            &lt;/div&gt;
+        )
+
+        export default App
+    </code></pre>
+
+    <p class="section">Компоненты-контейнеры</p>
+
+    <p>А теперь настало время подключить эти компоненты представления к Redux, создав некоторые компоненты-контейнеры.
+    Технически, контейнер — это просто React-компонент, который использует <mark>store.subscribe()</mark> для чтения
+    части Redux-дерева состояний и поставляет props представлению, которое он рендерит. Вы можете написать
+    компонент-контейнер вручную, но вместо этого мы предлагаем генерировать контейнеры с помощью библиотечной функции
+    React Redux <mark>connect()</mark>, которая предоставляет много полезных оптимизаций для предотвращения ненужных
+    ре-рендеров.</p>
+    <p>Чтобы использовать <mark>connect()</mark>, вам нужно определить специальную функцию <mark>mapStateToProps</mark>,
+    которая говорит, как трансформировать текущее Redux-состояние хранилища в props, которые вы хотите передать в
+    оборачиваемое (контейнером) представление. Например, <mark>VisibleTodoList</mark> требуется вычислить todos для
+    передачи в <mark>TodoList</mark>, так что нам нужно определить функцию, которая фильтрует <mark>state.todos</mark>
+    согласно <mark>state.visibilityFilter</mark>, и использовать ее в <mark>mapStateToProps</mark>:</p>
+
+    <pre><code class="language-js">
+        const getVisibleTodos = (todos, filter) => {
+            switch (filter) {
+                case 'SHOW_ALL':
+                    return todos
+                case 'SHOW_COMPLETED':
+                    return todos.filter(t => t.completed)
+                case 'SHOW_ACTIVE':
+                    return todos.filter(t => !t.completed)
+            }
+        }
+
+        const mapStateToProps = (state) => {
+            return {
+                todos: getVisibleTodos(state.todos, state.visibilityFilter)
+            }
+        }
+    </code></pre>
+
+    <p>В дополнение к чтению состояния контейнеры могут отправлять действия. В похожем стиле вы можете определить
+    функцию <mark>mapDispatchToProps()</mark>, которая получает метод <mark>dispatch()</mark> и возвращает обратно
+    <mark>props</mark>, который вы можете вставить в представление. Например, мы хотим, чтобы контейнер
+    <mark>VisibleTodoList</mark> вставил <mark>prop onTodoClick</mark> в представление <mark>TodoList</mark> и еще мы
+    хотим, чтобы <mark>onTodoClick</mark> отправлял <mark>TOGGLE_TODO</mark> действие:</p>
+
+    <pre><code class="language-js">
+        const mapDispatchToProps = (dispatch) => {
+            return {
+                onTodoClick: (id) => {
+                    dispatch(toggleTodo(id))
+                }
+            }
+        }
+    </code></pre>
+
+    <p>Наконец, вызовом <mark>connect()</mark> мы создаем <mark>VisibleTodoList</mark> и передаем эти две функции:</p>
+
+    <pre><code class="language-js">
+        import { connect } from 'react-redux'
+
+        const VisibleTodoList = connect(
+            mapStateToProps,
+            mapDispatchToProps
+        )(TodoList)
+
+        export default VisibleTodoList
+    </code></pre>
+
+    <p>Остальные компоненты контейнеры вы найдете ниже:</p>
+
+    <p><mark>containers/FilterLink.js</mark></p>
+
+    <pre><code class="language-js">
+        import { connect } from 'react-redux'
+        import { setVisibilityFilter } from '../actions'
+        import Link from '../components/Link'
+
+        const mapStateToProps = (state, ownProps) => {
+            return {
+                active: ownProps.filter === state.visibilityFilter
+            }
+        }
+
+        const mapDispatchToProps = (dispatch, ownProps) => {
+            return {
+                onClick: () => {
+                    dispatch(setVisibilityFilter(ownProps.filter))
+                }
+            }
+        }
+
+        const FilterLink = connect(
+            mapStateToProps,
+            mapDispatchToProps
+        )(Link)
+
+        export default FilterLink
+    </code></pre>
+
+    <p><mark>containers/VisibleTodoList.js</mark></p>
+
+    <pre><code class="language-js">
+        import { connect } from 'react-redux'
+        import { toggleTodo } from '../actions'
+        import TodoList from '../components/TodoList'
+
+        const getVisibleTodos = (todos, filter) => {
+            switch (filter) {
+                case 'SHOW_ALL':
+                    return todos
+                case 'SHOW_COMPLETED':
+                    return todos.filter(t => t.completed)
+                case 'SHOW_ACTIVE':
+                    return todos.filter(t => !t.completed)
+            }
+        }
+
+        const mapStateToProps = (state) => {
+            return {
+                todos: getVisibleTodos(state.todos, state.visibilityFilter)
+            }
+        }
+
+        const mapDispatchToProps = (dispatch) => {
+            return {
+                onTodoClick: (id) => {
+                    dispatch(toggleTodo(id))
+                }
+            }
+        }
+
+        const VisibleTodoList = connect(
+            mapStateToProps,
+            mapDispatchToProps
+        )(TodoList)
+
+        export default VisibleTodoList
+    </code></pre>
+
+    <p class="section">Другие Компоненты</p>
+
+    <p><mark>containers/AddTodo.js</mark></p>
+
+    <pre><code class="language-js">
+        import React from 'react'
+        import { connect } from 'react-redux'
+        import { addTodo } from '../actions'
+
+        let AddTodo = ({ dispatch }) => {
+            let input
+
+            return (
+                &lt;div&gt;
+                    &lt;form onSubmit={e => {
+                        e.preventDefault()
+                        if (!input.value.trim()) {
+                            return
+                        }
+                        dispatch(addTodo(input.value))
+                        input.value = ''
+                        }}&gt;
+                        &lt;input ref={node => {
+                            input = node
+                        }} /&gt;
+                        &lt;button type="submit"&gt;
+                            Добавить дело
+                        &lt;/button&gt;
+                    &lt;/form&gt;
+                &lt;/div&gt;
+            )
+        }
+        AddTodo = connect()(AddTodo)
+
+        export default AddTodo
+    </code></pre>
+
+    <p class="section">Передаем Хранилище</p>
+
+    <p>Всем компонентам-контейнерам необходим доступ к Redux-хранилищу, для того чтобы они могли подписаться на него.
+    Как вариант — передать его как <mark>prop</mark> в каждый контейнер. Однако это становится утомительным, так как вы
+    должны подключать <mark>store</mark>, даже если представления просто рендерят контейнер глубоко в дереве компонентов.
+    </p>
+    <p>Мы рекомендуем другой вариант — использовать специальный React Redux компонент <mark>&lt;Provider&gt;</mark>,
+    вызов которого магически делает хранилище доступным всем контейнерам в приложении без его явной передачи. Вам нужно
+    только воспользоваться им единожды, когда вы рендерите корневой компонент:</p>
+
+    <p><mark>index.js</mark></p>
+
+    <pre><code class="language-js">
+        import React from 'react'
+        import { render } from 'react-dom'
+        import { Provider } from 'react-redux'
+        import { createStore } from 'redux'
+        import todoApp from './reducers'
+        import App from './components/App'
+
+        let store = createStore(todoApp)
+
+        render(
+            &lt;Provider store={store}&gt;
+                &lt;App /&gt;
+            &lt;/Provider&gt;,
+        document.getElementById('root')
+    )
+    </code></pre>
+
+    <p>Пример работы нашего разработанного списка дел можно посмотреть на
+    <a href="https://codesandbox.io/s/github/reduxjs/redux/tree/master/examples/todos">CodeSandbox</a>.</p>
+
+    <div class="button">
+        <a href="../../redux/data-flow/">&laquo; Назад</a>
+        <a class="next" href="../../redux/async-actions/">Далее &raquo;</a>
+    </div>
+
+</div>
+
+</body>
+</html>

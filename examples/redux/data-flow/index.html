@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Поток данных</title>
+
+    <link rel="stylesheet" href="../../../../web-page/css/header.css">
+    <link rel="stylesheet" href="../../../../web-page/css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="../../../libraries/prism.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../../web-page/index.html">React.js</a>
+        <a href="../../../../web-page/examples.html">Содержание</a>
+        <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+    <p class="section">Поток данных</p>
+
+    <p>Архитектура Redux вращается вокруг строго однонаправленного потока данных. Это значит, что все данные в
+    приложении следуют одному паттерну жизненного цикла, делая логику Вашего приложения более предсказуемой и легкой для
+    понимания. Также это способствует большей упорядоченности данных, так что в конечном итоге у Вас не будет нескольких
+    изолированных копий одних и тех же данных, которые ничего не знают друг о друге.</p>
+    <p>Жизненный цикл данных в любом Redux-приложении включает в себя 4 шага:</p>
+
+    <ol>
+        <li><p><b>Вы вызываете store.dispatch(action).</b></p></li>
+        <li>
+            <p><b>Хранилище Redux вызывает функцию-редюсер, который вы ему передали.</b></p>
+            <p>Хранилище передаст два аргумента при вызове редюсера: текущее дерево состояния (current state tree) и
+            действие. Например, в todo-приложении главный редюсер может принимать что-то такое:</p>
+
+            <pre><code class="language-js">
+                // Текущее состояние приложения (список дел и выбранный фильтр)
+                let previousState = {
+                    visibleTodoFilter: 'SHOW_ALL',
+                    todos: [
+                        {
+                        text: 'Прочитать документы',
+                        complete: false
+                        }
+                    ]
+                }
+
+                // Выполнение действия (добавление дела)
+                let action = {
+                    type: 'ADD_TODO',
+                    text: 'Разобрать потоки.'
+                }
+
+                // Ваш редюсер возвращает следующее состояние приложения
+                let nextState = todoApp(previousState, action)
+            </code></pre>
+
+            <p>Обратите внимание на то, что редюсер — это чистая функция. Он только вычисляет следующее состояние. Он
+            должен быть совершенно предсказуемым: тип возвращаемых данных не должен меняться, если на вход подаются
+            данные одного типа. Он не должен совершать никаких сайд-эффектов, таких как обращение к API или
+            маршрутизация по приложению. Все это должно происходить только после того, как действие будет совершено.</p>
+        </li>
+        <li>
+            <p><b>Главный редюсер может комбинировать результат работы нескольких редюсеров в единственное дерево
+            состояния приложения.</b></p>
+
+            <p>Каким образом вы будете структурировать главный редюсер, зависит только от Вас. Redux поставляется с
+            хелпером <mark>combineReducers()</mark>, полезным для "разделения" главного редюсера на отдельные функции,
+            которые управляют отдельными ветвями дерева состояния. <mark>combineReducers()</mark> работает следующим
+            образом. Допустим, у Вас есть два редюсера: один для списка todo-дел, второй — для выбранного сейчас режима
+            отображения этого списка:</p>
+
+            <pre><code class="language-js">
+                function todos(state = [], action) {
+                    // как-то вычисляет nextState...
+                    return nextState
+                }
+
+                function visibleTodoFilter(state = 'SHOW_ALL', action) {
+                    // как-то вычисляет nextState...
+                    return nextState
+                }
+
+                let todoApp = combineReducers({
+                    todos,
+                    visibleTodoFilter
+                })
+            </code></pre>
+
+            <p>Когда вы инициируете действие, todoApp, которое вернул <mark>combineReducers</mark>, вызовет оба
+            редюсера:</p>
+
+            <pre><code class="language-js">
+                 let nextTodos = todos(state.todos, action)
+                 let nextVisibleTodoFilter = visibleTodoFilter(state.visibleTodoFilter, action)
+            </code></pre>
+
+            <p>Затем оба набора состояний будут снова собраны в единое состояние:</p>
+
+            <pre><code class="language-js">
+                 return {
+                    todos: nextTodos,
+                    visibleTodoFilter: nextVisibleTodoFilter
+                 }
+            </code></pre>
+
+            <p>Так как <mark>combineReducers()</mark> — это просто удобная утилита, вы совершено не обязаны ее
+            использовать. Вы можете написать главный редюсер самостоятельно.</p>
+        </li>
+        <li>
+            <p><b>Хранилище Redux сохраняет полное дерево состояния, которое возвращает главный редюсер.</b></p>
+            <p>Это новое дерево является следующим состоянием Вашего приложения! Каждый слушатель, зарегистрированный с
+            помощью <mark>store.subscribe(listener)</mark>, будет вызван. Слушатели могут вызывать
+            <mark>store.getState()</mark> для получения текущего состояния приложения.</p>
+            <p>Теперь UI может быть обновлен для отражения нового состояния приложения. Если вы используете такие
+            биндинги, как React Redux, то это та точка, в которой стоит вызвать
+            <mark>component.setState(newState)</mark></p>
+        </li>
+    </ol>
+
+    <div class="button">
+        <a href="../../redux/store/">&laquo; Назад</a>
+        <a class="next" href="../../redux/usage-with-react/">Далее &raquo;</a>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+.content li a{
+    color: #0077aa;
+}
+
+.content li a:hover{
+    color: aqua;
+}

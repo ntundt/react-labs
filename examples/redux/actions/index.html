@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Действия</title>
+
+    <link rel="stylesheet" href="../../../../web-page/css/header.css">
+    <link rel="stylesheet" href="../../../../web-page/css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="../../../libraries/prism.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../../web-page/index.html">React.js</a>
+        <a href="../../../../web-page/examples.html">Содержание</a>
+        <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+    <p class="section">Действия</p>
+
+    <p>Действия — это структуры, которые передают данные из вашего приложения в хранилище. Они являются единственными
+    источниками информации для хранилища. Вы отправляете их в хранилище, используя метод
+    <mark>store.dispatch()</mark>.</p>
+    <p>Например, вот действие, которое представляет добавление нового пункта в список дел:</p>
+
+    <pre><code class="language-js">
+        const ADD_TODO = 'Добавить дело'
+        {
+            type: ADD_TODO,
+            text: 'Сделать моё первое React-приложение'
+        }
+    </code></pre>
+
+    <p>Действия — это обычные JavaScript-объекты. Действия должны иметь поле type, которое указывает на тип
+    исполняемого действия. Типы должны, как правило, определяться, как строковые константы. После того, как ваше
+    приложение разрастется, вы можете захотеть переместить их в отдельный модуль:</p>
+
+    <pre><code class="language-js">
+        import { ADD_TODO, REMOVE_TODO } from '../actionTypes'
+    </code></pre>
+
+    <p>Кроме <mark>type</mark>, структуру объекта действий вы можете строить на ваше усмотрение. Мы добавим еще один
+    тип действия, который будет отмечать задачу, как выполненную. Мы обращаемся к конкретному todo по <mark>index</mark>,
+    потому что мы храним их в виде массива. В реальном приложении разумнее генерировать уникальный ID каждый раз, когда
+    что-то новое создается:</p>
+
+    <pre><code class="language-js">
+        {
+            type: TOGGLE_TODO,
+            index: 5
+        }
+    </code></pre>
+
+    <p>Это хорошая идея, передавать как можно меньше данных в каждом действии. Например, лучше отправить
+    <mark>index</mark>, чем весь объект todo. Наконец, мы добавим еще один тип действия для редактирования видимых в
+    данный момент задач:</p>
+
+    <pre><code class="language-js">
+        {
+            type: SET_VISIBILITY_FILTER,
+            filter: SHOW_COMPLETED
+        }
+    </code></pre>
+
+    <p class="section">Генераторы действий</p>
+
+    <p>Генераторы действий (Action Creators) — не что иное, как функции, которые создают действия. Довольно просто
+    путать термины “действие” и “генератор действий”, поэтому постарайтесь использовать правильный термин.</p>
+    <p>В Redux генераторы действий просто возвращают действие:</p>
+
+    <pre><code class="language-js">
+        function addTodo(text) {
+            return {
+                type: ADD_TODO,
+                text
+            }
+        }
+    </code></pre>
+
+    <p>Это делает их более переносимыми (portable ориг.) и легкими для тестирования. В традиционной реализации Flux,
+    генераторы действий при выполнении часто вызывают <mark>dispatch</mark>, примерно так:</p>
+
+    <pre><code class="language-js">
+        function addTodoWithDispatch(text) {
+            const action = {
+                type: ADD_TODO,
+                text
+            }
+            dispatch(action)
+        }
+    </code></pre>
+
+    <p>В Redux это не так. Вместо того чтобы на самом деле начать отправку, передайте результат в функцию
+    <mark>dispatch()</mark>:</p>
+
+    <pre><code class="language-js">
+        dispatch(addTodo(text))
+        dispatch(completeTodo(index))
+    </code></pre>
+
+    <p>Кроме того, вы можете создать связанный генератор действия, который автоматически запускает отправку действия:</p>
+
+    <pre><code class="language-js">
+        const boundAddTodo = (text) => dispatch(addTodo(text))
+        const boundCompleteTodo = (index) => dispatch(completeTodo(index))
+    </code></pre>
+
+    <p>Теперь вы можете вызвать его напрямую:</p>
+
+    <pre><code class="language-js">
+        boundAddTodo(text)
+        boundCompleteTodo(index)
+    </code></pre>
+
+    <p>Доступ к функции <mark>dispatch()</mark> может быть получен непосредственно из хранилища
+    <mark>store.dispatch()</mark>, но, что более вероятно, вы будете получать доступ к ней при помощи чего-то типа
+    <mark>connect()</mark> из react-redux. Вы можете использовать функцию <mark>bindActionCreators()</mark> для
+    автоматического привязывания большого количества генераторов действий к функции <mark>dispatch()</mark>.</p>
+
+    <div class="button">
+        <a href="../../redux/introduction/">&laquo; Назад</a>
+        <a class="next" href="../../redux/reducers/">Далее &raquo;</a>
+    </div>
+
+</div>
+
+</body>
+</html>

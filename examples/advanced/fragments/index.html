@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Фрагменты</title>
+
+    <link rel="stylesheet" href="../../../../web-page/css/header.css">
+    <link rel="stylesheet" href="../../../../web-page/css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script src="../../../libraries/prism.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../../web-page/index.html">React.js</a>
+        <a href="../../../../web-page/examples.html">Содержание</a>
+        <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+
+    <p class="section">Фрагменты</p>
+
+    <p class="section">Что такое фрагменты?</p>
+
+    <p>Общим примером в React является компонент, возвращающий несколько элементов. Фрагменты позволяют группировать
+        список потомков без добавления дополнительных узлов в DOM:</p>
+
+    <pre><code class="language-js">
+      render() {
+        return (
+          &lt;React.Fragment>
+            &lt;ChildA />
+            &lt;ChildB />
+            &lt;ChildC />
+          &lt;/React.Fragment>
+        );
+      }
+    </code></pre>
+
+    <p>Существует и короткий синтаксис, но пока что его поддерживают не все популярные инструменты</p>
+
+    <p class="section">Мотивация</p>
+
+    <p>Общим примером является компонент, который возвращает список дочерних элементов. Рассмотрим пример куска кода на
+        React:</p>
+
+    <pre><code class="language-js">
+      class Table extends React.Component {
+        render() {
+          return (
+            &lt;table>
+              &lt;tr>
+                &lt;Columns />
+              &lt;/tr>
+            &lt;/table>
+          );
+        }
+      }
+    </code></pre>
+
+    <p>
+        <mark>&lt;Columns/></mark>
+        должен возвращать несколько элементов
+        <mark>&lt;td></mark>
+        , чтобы отображаемый HTML был валидным. Но в то же время, если внутри метода
+        <mark>render()</mark>
+        компонента
+        <mark>&lt;Columns/></mark>
+        будет добавлен родительский узел
+        <mark>&lt;div></mark>
+        , то
+        результирующий HTML-код будет невалидным.
+    </p>
+
+    <pre><code class="language-js">
+          class Columns extends React.Component {
+            render() {
+              return (
+                &lt;div>
+                  &lt;td>Hello&lt;/td>
+                  &lt;td>World&lt;/td>
+                &lt;/div>
+              );
+            }
+          }
+    </code></pre>
+
+    <p>Результирующий вывод компонента
+        <mark>&lt;Table/></mark>
+        будет:
+    </p>
+
+    <pre><code class="language-js">
+      &lt;table>
+        &lt;tr>
+          &lt;div>
+            &lt;td>Hello&lt;/td>
+            &lt;td>World&lt;/td>
+          &lt;/div>
+        &lt;/tr>
+      &lt;/table>
+    </code></pre>
+
+    <p>И тут на помощь приходят <b>фрагменты</b>.</p>
+
+    <p class="section">Использование</p>
+
+    <p>В следующем примере мы объявляем фрагмент:</p>
+
+    <pre><code class="language-js">
+      class Columns extends React.Component {
+        render() {
+          return (
+            &lt;React.Fragment>
+              &lt;td>Hello&lt;/td>
+              &lt;td>World&lt;/td>
+            &lt;/React.Fragment>
+          );
+        }
+      }
+    </code></pre>
+
+    <p>Который приводит к валидному выводу компонента <mark>&lt;Table/></mark>:</p>
+
+    <pre><code class="language-js">
+      &lt;table>
+        &lt;tr>
+            &lt;td>Hello&lt;/td>
+            &lt;td>World&lt;/td>
+        &lt;/tr>
+      &lt;/table>
+    </code></pre>
+
+    <div class="button">
+        <a href="../../advanced/context">&laquo; Назад</a>
+        <a class="next" href="../../advanced/portals">Далее &raquo;</a>
+    </div>
+
+</div>
+
+</body>
+</html>

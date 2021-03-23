@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>React DOM</title>
+
+  <link rel="stylesheet" href="../../../../web-page/css/header.css">
+  <link rel="stylesheet" href="../../../../web-page/css/content.css">
+  <link rel="stylesheet" href="../../../libraries/prism.css">
+
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+  <script src="../../../libraries/prism.js"></script>
+
+</head>
+
+<body>
+
+  <div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>React DOM</p>
+    </a>
+    <div class="header-right">
+      <a href="../../../../web-page/index.html">React.js</a>
+      <a href="../../../../web-page/examples.html">Содержание</a>
+      <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+  </div>
+  <div id="delimiter"></div>
+
+  <!--ВСЕ ВАШЕ ТВОРЧЕСТВО В ДИВЕ CONTENT-->
+  <div class="content">
+    <p class="section">ReactDOM</p>
+
+    <p>Если вы загружаете React c помощью тега &lt;script>, эти API верхнего уровня доступны в глобальном ReactDOM. Если вы используете ES6 с npm, вы можете написать <mark>import ReactDOM from 'react-dom'</mark>. Если вы используете ES5 с npm, вы можете
+      написать <mark>var ReactDOM = require ('react -dom')</mark>.</p>
+
+    <p class="section">Обзор</p>
+
+    <p>Пакет <mark>react-dom</mark> предоставляет методы, специфичные для DOM, которые можно использовать на верхнем уровне вашего приложения и в качестве аварийного люка, чтобы выйти за пределы модели React, если это необходимо. Большинству ваших компонентов
+      не нужно использовать этот модуль.</p>
+
+    <ul>
+      <li><span>• </span><mark>render()</mark></li>
+      <li><span>• </span><mark>unmountComponentAtNode()</mark></li>
+      <li><span>• </span><mark>findDOMNode()</mark></li>
+    </ul>
+
+    <p>
+      начиная с 16-й версии:
+    </p>
+
+    <ul>
+      <li><span>• </span><mark>hydrate()</mark></li>
+      <li><span>• </span><mark>createPortal()</mark></li>
+    </ul>
+
+    <p class="section">
+      Справка
+    </p>
+
+    <p class="section">
+      render()
+    </p>
+
+    <pre><code class="language-js">ReactDOM.render(
+    element,
+    container,
+    [callback]
+  )</code></pre>
+
+    <p>
+      Отрисовывает элемент React в DOM в предоставленном <mark>container</mark> и вернёт ссылку на компонент (или возвращает значение <mark>null</mark> для компонентов без состояния). Если элемент React ранее был отрисован в <mark>container</mark>, то
+      на нем выполнится обновление и DOM изменится только при необходимости, чтобы отобразить актуальный элемент React. Если предоставляется дополнительный коллбэк, он будет выполнен после отрисовки или обновления компонента.
+    </p>
+
+    <p class="section">
+      hydrate()
+    </p>
+
+    <pre><code class="language-js">ReactDOM.hydrate(element, container[, callback])</code></pre>
+
+    <p>
+      Добавлен в версии 16. То же, что и <mark>render()</mark>, но используется для гидратации контейнера, HTML содержимое которого было отрисовано компонентом <mark>ReactDOMServer</mark>. React попытается подключить слушатели событий к существующей разметке.
+      React ожидает, что отрисовываемый контент будет идентичным между сервером и клиентом. Он может исправлять различия в текстовом контенте (например, временные метки), но вы должны рассматривать несоответствия как ошибки и исправлять их. В режиме <mark>development</mark>      React предупреждает о несоответствиях во время гидратации. Нет никаких гарантий того, что различия атрибутов будут исправлены в случае несоответствий. Это важно по соображениям производительности, потому что в большинстве приложений несоответствия
+      встречаются редко, и поэтому проверка всей разметки будет чрезмерно дорогостоящей. Если вам необходимо отрисовать что-то, что отличается на сервере и клиенте, вы можете сделать двухфазную(двухпроходную) отрисовку. Компоненты, которые отрисовывают
+      что-то отличающееся на клиенте, могут считывать переменную состояния, такую как <mark>this.state.isClient</mark>, которую вы можете установить в <mark>true</mark> в методе <mark>componentDidMount()</mark>. Таким образом, отрисовка на первой фазе
+      будет отображать тот же контент, что и сервер, избегая несоответствий, но дополнительная отрисовка(на второй фазе) будет осуществляться синхронно сразу после гидратации. Обратите внимание, что этот подход сделает ваши компоненты более медленными,
+      потому что они должны отрисовываться дважды, поэтому используйте его с осторожностью. Помните, что нужно быть внимательным к удобству работы пользователя в случае медленных соединений. Код JavaScript может загружаться значительно позже, чем исходный
+      HTML-результат отрисовки, поэтому, если вы отрисовываете что-то отличающееся в клиенте на второй фазе, переход к этому результату отрисовки может раздражать. Однако, если он выполняется хорошо, может оказаться полезным отобразить «оболочку» приложения
+      на сервере и показать только некоторые дополнительные виджеты на клиенте.
+    </p>
+
+    <p class="section">
+      unmountComponentAtNode()
+    </p>
+
+    <pre><code class="language-js"> unmountComponentAtNode(container)</code></pre>
+
+    <p>
+      Удаляет установленный компонент React из DOM и очищает его обработчики событий и состояние. Если компонент не был монтирован в контейнер, вызов этой функции ничего не делает. Возвращает <mark>true</mark>, если компонент был демонтирован и <mark>false</mark>,
+      если не найдено компонента для демонтирования.
+    </p>
+
+    <p class="section">
+      findDOMNode()
+    </p>
+
+    <pre><code class="language-js"> ReactDOM.findDOMNode(component)</code></pre>
+
+    <p>Если компонент был монтирован в DOM, этот метод возвращает соответствующий нативный элемент DOM браузера. Этот метод полезен для считывания значений из DOM, таких как значения полей формы и выполнения измерений DOM. В большинстве случаев вы можете
+      прикреплять ссылку <mark>ref</mark> на узел DOM и избегать использования <mark>findDOMNode</mark>.
+      <br /> Когда <mark>render</mark> возвращает <mark>null</mark> или <mark>false</mark>, <mark>findDOMNode</mark> возвращает значение <mark>null</mark>.
+    </p>
+
+    <p class="section">
+      createPortal()
+    </p>
+
+    <pre><code class="language-js"> ReactDOM.createPortal(child, container)</code></pre>
+
+    <p>Создает портал. Порталы предоставляют способ отображения дочерних элементов в узел DOM, который существует вне иерархии DOM-компонента</p>
+
+  </div>
+
+</body>
+
+</html>

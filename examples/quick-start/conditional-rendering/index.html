@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Выборочный рендеринг</title>
+
+    <link rel="stylesheet" href="../../../css/header.css">
+    <link rel="stylesheet" href="../../../css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script src="../../../libraries/prism.js"></script>
+
+    <script type="text/babel" src="script.js"></script>
+    <script type="text/babel" src="script2.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../index.html">React.js</a>
+        <a href="../../../examples.html">Содержание</a>
+        <a href="../../../info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+    <p class="section">Выборочный рендеринг</p>
+
+    <p>В React вы можете создавать отдельные компоненты, которые будут воплощать нужную вам модель поведения. Затем вы
+    можете использовать только те, которые необходимы для данного случая в приложении.</p>
+    <p>Выборочный рендеринг в React работает как и условия в JavaScript. Используйте операторы JavaScript, такие
+    как <mark class="markJSX">if</mark> или <mark>условный тернарный оператор</mark>, чтобы создавать элементы, которые
+    будут отражать текущее состояние и позволять React обновлять UI, чтобы он соответствовал нужному состоянию.</p>
+    <p>Рассмотрим эти два компонента:</p>
+
+    <pre><code class="language-js">
+        function UserGreeting(props) {
+            return &lt;h1&gt;С возвращением!&lt;/h1&gt;;
+        }
+
+        function GuestGreeting(props) {
+            return &lt;h1&gt;Пожалуйста, войдите в свой профиль.&lt;/h1&gt;;
+        }
+    </code></pre>
+
+    <p>Что ж, создадим компонент <mark>Greeting</mark>, который будет отображать оба эти компонента, в зависимости от
+    того, зашел в систему пользователь или нет:</p>
+
+    <pre><code class="language-js">
+        function Greeting(props) {
+            const isLoggedIn = props.isLoggedIn;
+            if (isLoggedIn) {
+                return &lt;UserGreeting /&gt;;
+            }
+            return &lt;GuestGreeting /&gt;;
+        }
+
+        ReactDOM.render(
+            // Попробуйте изменить на isLoggedIn={true}:
+            &lt;Greeting isLoggedIn={false} /&gt;,
+            document.getElementById('root')
+        );
+    </code></pre>
+
+    <p>В этом примере создаётся приветствие, которое зависит от значения свойства <mark>isLoggedIn</mark>.</p>
+
+    <p class="section">Элементные переменные</p>
+
+    <p>Вы можете использовать переменные для хранения элементов. Это может помочь вам выборочно вынести части компонента
+    и не затронуть остальные.</p>
+    <p>Разберем эти два новых компонента, представляющие собой кнопки "Вход" и "Выход":</p>
+
+    <pre><code class="language-js">
+        function LoginButton(props) {
+            return (
+                &lt;button onClick={props.onClick}&gt;
+                    Вход
+                &lt;/button&gt;
+            );
+        }
+
+        function LogoutButton(props) {
+            return (
+                &lt;button onClick={props.onClick}&gt;
+                    Выход
+                &lt;/button&gt;
+            );
+        }
+    </code></pre>
+
+    <p>В примере ниже мы создадим компонент <mark>LoginControl</mark> с состоянием.</p>
+    <p>Он будет создавать один из компонентов: <mark>&lt;LoginButton /&gt;</mark> или
+    <mark>&lt;LogoutButton /&gt;</mark>, в зависимости от текущего состояния кнопки. Также, он добавит приветствие из
+    предыдущего примера:</p>
+
+    <pre><code class="language-js">
+        class LoginControl extends React.Component {
+            constructor(props) {
+                super(props);
+                this.handleLoginClick = this.handleLoginClick.bind(this);
+                this.handleLogoutClick = this.handleLogoutClick.bind(this);
+                this.state = {isLoggedIn: false};
+            }
+
+            handleLoginClick() {
+                this.setState({isLoggedIn: true});
+            }
+
+            handleLogoutClick() {
+                this.setState({isLoggedIn: false});
+            }
+
+            render() {
+                const isLoggedIn = this.state.isLoggedIn;
+
+                const button = isLoggedIn ? (
+                    &lt;LogoutButton onClick={this.handleLogoutClick} /&gt;
+            ) : (
+                    &lt;LoginButton onClick={this.handleLoginClick} /&gt;
+            );
+
+                return (
+                    &lt;div>
+                        &lt;Greeting isLoggedIn={isLoggedIn} /&gt;
+                            {button}
+                    &lt;/div&gt;
+                );
+            }
+        }
+
+        ReactDOM.render(
+            &lt;LoginControl /&gt;,
+            document.getElementById('root')
+        );
+    </code></pre>
+
+    <p>Результат:</p>
+    <div class="example">
+        <div id="root"></div>
+    </div>
+
+    <p>Объявление переменной и использование условного оператора <mark>if</mark> - это отличный способ реализации
+    выборочного рендеринга компонента, но иногда нам может понадобиться использовать более короткий синтаксис. Есть несколько
+    способов внедрения условий в JSX. Они объяснены ниже.</p>
+
+    <p class="section">Встраивание If в логический оператор &&</p>
+
+    <p>Вы можете встроить любые выражения в JSX с помощью заключения их в фигурные скобки. В данном примере мы внедрили
+    логический оператор <mark>&&</mark> из JavaScript. Это может быть удобно для выборочной вставки элемента:</p>
+
+    <pre><code class="language-js">
+        function Mailbox(props) {
+            const unreadMessages = props.unreadMessages;
+            return (
+                &lt;div&gt;
+                    &lt;h1&gt;Привет!&lt;/h1&gt;
+                    {unreadMessages.length &gt; 0 &&
+                        &lt;h2&gt;
+                            У вас {unreadMessages.length} непрочитанных сообщений.
+                        &lt;/h2&gt;
+                    }
+                &lt;/div&gt;
+            );
+        }
+
+        const messages = ['React', 'Re: React', 'Re:Re: React'];
+        ReactDOM.render(
+            &lt;Mailbox unreadMessages={messages} /&gt;,
+            document.getElementById('root')
+        );
+    </code></pre>
+
+    <p>Это работает благодаря тому, что связка <mark>true && выражение</mark> всегда сводится к <mark>выражению</mark>,
+    и <mark>false && выражение</mark> сводится к <mark>false</mark>.</p>
+    <p>Подведем итог: если условие <mark>истинно (true)</mark>, то элемент справа от <mark>&&</mark> будет создан. Если
+    же оно <mark>ложно (false)</mark>, то React проигнорирует элемент.</p>
+
+    <p class="section">Замена If-Else на тернарный условный оператор</p>
+
+    <p>Другой способ для выборочного рендеринга элементов - использование оператора <mark class="markJSX">условие ?
+    истинна : ложь</mark>.</p>
+    <p>В примере ниже, мы выборочно отобразим небольшой кусок текста:</p>
+
+    <pre><code class="language-js">
+        render() {
+            const isLoggedIn = this.state.isLoggedIn;
+            return (
+                &lt;div&gt;
+                    Пользователь &lt;b>{isLoggedIn ? 'сейчас в' : 'вышел из'}&lt;/b&gt; сети.
+                &lt;/div&gt;
+            );
+        }
+    </code></pre>
+
+    <p>Также мы можем использовать этот способ и для более сложных выражений, хотя в таком случае менее очевидно, что
+    происходит:</p>
+
+    <pre><code class="language-js">
+        render() {
+            const isLoggedIn = this.state.isLoggedIn;
+            return (
+                &lt;div&gt;
+                    {isLoggedIn ? (
+                        &lt;LogoutButton onClick={this.handleLogoutClick} /&gt;
+                    ) : (
+                        &lt;LoginButton onClick={this.handleLoginClick} /&gt;
+                    )}
+                &lt;/div&gt;
+            );
+        }
+    </code></pre>
+
+    <p>Как и в JavaScript, вы сами решаете какой из способов лучше. Также помните, что если построение условий становится
+    слишком сложным, то, возможно, вам стоит разделить компоненты.</p>
+
+    <p class="section">Предотвращение отображения компонента</p>
+
+    <p>В редких случаях вы можете захотеть спрятать компонент, даже если он используется другим компонентом. Чтобы это
+    сделать, верните значение <mark>null</mark>, вместо его реального значения.</p>
+    <p>В примере ниже, компонент <mark>&lt;WarningBanner /&gt;</mark> зависит от значения его свойства <mark>warn</mark>.
+    Если значение этого свойства <mark>false</mark>, то компонент не отобразится на экране:</p>
+
+    <pre><code class="language-js">
+        function WarningBanner(props) {
+            if (!props.warn) {
+                return null;
+            }
+
+            return (
+                &lt;div className="warning"&gt;
+                    Внимание!
+                &lt;/div&gt;
+            );
+        }
+
+        class Page extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {showWarning: true};
+                this.handleToggleClick = this.handleToggleClick.bind(this);
+            }
+
+            handleToggleClick() {
+                this.setState(prevState => ({
+                    showWarning: !prevState.showWarning
+                }));
+            }
+
+            render() {
+                return (
+                    &lt;div&gt;
+                        &lt;WarningBanner warn={this.state.showWarning} /&gt;
+                        &lt;button onClick={this.handleToggleClick}&gt;
+                            {this.state.showWarning ? 'Скрыть' : 'Показать'}
+                        &lt;/button&gt;
+                    &lt;/div&gt;
+                );
+            }
+        }
+
+        ReactDOM.render(
+            &lt;Page /&gt;,
+            document.getElementById('root')
+        );
+    </code></pre>
+
+    <p>Результат:</p>
+
+    <div class="example">
+        <div id="root2"></div>
+    </div>
+
+    <p>Возврат значения <mark>null</mark> из метода компонента <mark>render</mark> не влияет на другие методы. Например,
+    <mark>componentWillUpdate</mark> и <mark>componentDidUpdate</mark> будут нормально работать.</p>
+
+    <div class="button">
+        <a href="../../quick-start/handling-events/">&laquo; Назад</a>
+        <a class="next" href="../../quick-start/lists-and-keys/">Далее &raquo;</a>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello, World!</title>
+
+    <link rel="stylesheet" href="../../../css/header.css">
+    <link rel="stylesheet" href="../../../css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script src="../../../libraries/prism.js"></script>
+
+    <script type="text/babel" src="script.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../index.html">React.js</a>
+        <a href="../../../examples.html">Содержание</a>
+        <a href="../../../info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+    <p class="section">Вступление</p>
+
+    <p>Для работы с React вы можете использовать <a href="https://codepen.io/pen?&editors=0010">CodePen</a> - платформу
+        для редактирования и хранения кода на HTML, CSS и JavaScript с просмотром готового результата в браузере. Если
+        же вы
+        предпочитаете работать с локальной средой разработки, то посетите раздел
+        <a href="../../../examples.html">Установка React</a>.</p>
+
+    <p>Рассмотрим небольшой кусочек кода:</p>
+    <pre><code class="language-js">
+        ReactDOM.render(
+         &lt;h1&gt;Hello, world!&lt;/h1&gt;,
+         document.getElementById('root')
+        );
+    </code></pre>
+
+    <p>Данный код выводит заголовок Hello, World! на страницу:</p>
+
+    <div class="example">
+        <div id="root"></div>
+    </div>
+
+    <p>В каждой главе мы будем постепенно изучать работу с React. Мы рассмотрим блоки разработки приложений React: их
+        элементы и компоненты.
+        После того, как вы освоите React, вы сможете создавать комплексные приложения из небольших повторяющихся
+        частей.</p>
+
+    <div class="button">
+        <a class="next" href="../../quick-start/introducing-jsx/">Далее &raquo;</a>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Specification</title>
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/content.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="libraries/header.js"></script>
+</head>
+<body>
+
+<section class="nav-bar">
+        <div class="nav-container">
+            <div class="brand">
+                <a href="#"><img src="images/react-logo.png">React.js</a>
+            </div>
+            <nav>
+                <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+                <ul class="nav-list">
+                    <!--<li>
+                    <a href="#">Home</a>
+                </li>-->
+
+                    <li>
+                        <a href="#">Выпадающее меню</a>
+                        <ul class="nav-dropdown">
+                            <li>
+                                <a href="#">Пункт1</a>
+                            </li>
+                            <li>
+                                <a href="#">Пункт2</a>
+                            </li>
+                            <li>
+                                <a href="#">Пункт3</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="index.html">React.js</a>
+                    </li>
+                    <li>
+                        <a href="#">Лаба 1</a>
+                    </li>
+                    <li>
+                        <a href="info.html">Справочник</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+<div id="delimiter"></div>
+
+<div class="content">
+    <p class="section">Установка React</p>
+    <ul>
+        <li><a href="examples/installation/try-react/"><span>• </span>Начало работы с React</a></li>
+        <li><a href="examples/installation/new-app/"><span>• </span>Внедряем React в новое приложение</a></li>
+        <li><a href="examples/installation/add-to-app/"><span>• </span>Внедряем React в уже существующее приложение</a></li>
+        <li><a href="examples/installation/cdn-links"><span>• </span>CDN ссылки</a></li>
+    </ul>
+    <p class="section">Основы</p>
+    <ul>
+        <li><a href="examples/quick-start/hello-world/"><span>• </span>Hello, world!</a></li>
+        <li><a href="examples/quick-start/introducing-jsx/"><span>• </span>Введение в JSX</a></li>
+        <li><a href="examples/quick-start/rendering-elements/"><span>• </span>Создание элементов</a></li>
+        <li><a href="examples/quick-start/components-and-props/"><span>• </span>Компоненты и их свойства</a></li>
+        <li><a href="examples/quick-start/state-and-lifecycle/"><span>• </span>Состояние и жизненный цикл</a></li>
+        <li><a href="examples/quick-start/handling-events/"><span>• </span>Обработка событий</a></li>
+        <li><a href="examples/quick-start/conditional-rendering/"><span>• </span>Выборочный рендеринг</a></li>
+        <li><a href="examples/quick-start/conditional-rendering/"><span>• </span>Списки и ключи</a></li>
+        <li><a href="examples/quick-start/forms/index.html"><span>• </span>Формы</a></li>
+        <li><a href="examples/quick-start/lifting-state-up/"><span>• </span>Передача состояния наверх</a></li>
+        <li><a href="examples/quick-start/composition-vs-inheritance/"><span>• </span>Композиция вместо наследования</a></li>
+        <li><a href="examples/quick-start/thinking-in-react/"><span>• </span>Мышление в React</a></li>
+    </ul>
+
+    <p class="section">Продвинутый React.js</p>
+    <ul>
+        <li><a href="examples/advanced/jsx-in-depth/"><span>• </span>JSX подробнее</a></li>
+        <li><a href="examples/advanced/typechecking-with-proptypes/"><span>• </span>Проверка типов с помощью PropTypes</a></li>
+        <li><a href="examples/advanced/static-typechecking/"><span>• </span>Статическая проверка типов</a></li>
+        <li><a href="examples/advanced/refs-and-dom/"><span>• </span>Ссылки Ref и DOM</a></li>
+        <li><a href="examples/advanced/uncontrolled-components/"><span>• </span>Неконтролируемые компоненты</a></li>
+        <li><a href="examples/advanced/optimizing-perfomance/"><span>• </span>Оптимизация производительности</a></li>
+        <li><a href="examples/advanced/react-without-jsx"><span>• </span>React без JSX</a></li>
+        <li><a href="examples/advanced/reconciliation"><span>• </span>Согласование</a></li>
+        <li><a href="examples/advanced/context"><span>• </span>Контекст</a></li>
+        <li><a href="examples/advanced/fragments"><span>• </span>Фрагменты</a></li>
+        <li><a href="examples/advanced/portals/"><span>• </span>Порталы</a></li>
+        <li><a href="examples/advanced/error-boundaries"><span>• </span>Границы ошибок</a></li>
+        <li><a href="examples/advanced/web-components"><span>• </span>Web-компоненты</a></li>
+        <li><a href="examples/advanced/higher-order-comp"><span>• </span>Компоненты высшего уровня</a></li>
+        <li><a href="examples/advanced/forwarding-refs"><span>• </span>Пересылки</a></li>
+        <li><a href="examples/advanced/render-props"><span>• </span>Props'ы рендера</a></li>
+        <li><a href="examples/advanced/integrating-with-lib"><span>• </span>Интеграция с другими библиотеками</a></li>
+        <li><a href="examples/advanced/strict-mode"><span>• </span>Строгий режим</a></li>
+    </ul>
+
+    <p class="section">Справочник</p>
+    <ul>
+        <li><a href="#"><span>• </span>React</a></li>
+        <li><a href="#"><span>• </span>React.Component</a></li>
+        <li><a href="#"><span>• </span>ReactDOM</a></li>
+        <li><a href="#"><span>• </span>ReactDOMServer</a></li>
+        <li><a href="#"><span>• </span>Элементы DOM</a></li>
+        <li><a href="#"><span>• </span>SyntheticEvent</a></li>
+        <li><a href="#"><span>• </span>Утилиты тестирования</a></li>
+        <li><a href="#"><span>• </span>Поверхностный рендеринг</a></li>
+        <li><a href="#"><span>• </span>Тестовый отрисовщик</a></li>
+        <li><a href="#"><span>• </span>Требования к среде JavaScript</a></li>
+        <li><a href="#"><span>• </span>Словарь</a></li>
+    </ul>
+
+    <p class="section">Redux.js</p>
+    <ul>
+        <li><a href="examples/redux/about-redux/"><span>• </span>О Redux</a></li>
+        <li><a href="examples/redux/install/"><span>• </span>Установка</a></li>
+        <li><a href="examples/redux/introduction/"><span>• </span>Введение</a></li>
+        <li><a href="examples/redux/actions/"><span>• </span>Действия</a></li>
+        <li><a href="examples/redux/reducers/"><span>• </span>Редюсеры</a></li>
+        <li><a href="examples/redux/store/"><span>• </span>Хранилище</a></li>
+        <li><a href="examples/redux/data-flow/"><span>• </span>Поток данных</a></li>
+        <li><a href="examples/redux/usage-with-react/"><span>• </span>Использование с React</a></li>
+        <li><a href="examples/redux/async-actions/"><span>• </span>Асинхронные действия</a></li>
+        <li><a href="examples/redux/async-flow/"><span>• </span>Асинхронный поток</a></li>
+        <li><a href="examples/redux/middleware/"><span>• </span>Связующее ПО</a></li>
+    </ul>
+</div>
+
+</body>
+</html>

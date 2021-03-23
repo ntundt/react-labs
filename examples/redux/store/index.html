@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Хранилище</title>
+
+    <link rel="stylesheet" href="../../../../web-page/css/header.css">
+    <link rel="stylesheet" href="../../../../web-page/css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="../../../libraries/prism.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../../web-page/index.html">React.js</a>
+        <a href="../../../../web-page/examples.html">Содержание</a>
+        <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+    <p class="section">Хранилище</p>
+
+    <p>В предыдущих разделах мы определили действия, которые представляют факт того, что "что-то случилось" и редюсеры,
+    которые обновляют состояние в соответствии с этими действиями.</p>
+    <p>Хранилище — это объект, который соединяет эти части вместе. Хранилище берет на себя следующие задачи:</p>
+
+    <ul>
+        <li>• содержит состояние приложения;</li>
+        <li>• предоставляет доступ к состоянию с помощью <mark>getState()</mark>;</li>
+        <li>• предоставляет возможность обновления состояния с помощью <mark>dispatch(action)</mark>;</li>
+        <li>• регистрирует слушателей c помощью <mark>ubscribe(listener)</mark>.</li>
+    </ul>
+
+    <p>Важно отметить, что у Вас будет только одно хранилище в Redux-приложении. Если Вы захотите разделить логику
+    обработки данных, то нужно будет использовать компоновку редюсеров вместо использования множества хранилищ.</p>
+    <p>Очень легко создать Хранилище, если у Вас есть редюсер. В предыдущем разделе мы использовали
+    <mark>combineReducers()</mark> для комбинирования редюсеров в один глобальный редюсер. Теперь мы их импортируем и
+    передадим в <mark>createStore()</mark>.</p>
+
+    <pre><code class="language-js">
+        import { createStore } from 'redux'
+        import todoApp from './reducers'
+        let store = createStore(todoApp)
+    </code></pre>
+
+    <p>Вы можете объявить начальное состояние, передав его вторым аргументом в <mark>createStore()</mark>. Это полезно
+    для пробрасывания состояния на клиент из состояния приложения Redux, работающего на сервере, когда вы пишете
+    универсальное приложение.</p>
+
+    <pre><code class="language-js">
+        let store = createStore(todoApp, window.STATE_FROM_SERVER)
+    </code></pre>
+
+    <p class="section">Отправка действий</p>
+
+    <p>На текущий момент у нас есть созданное хранилище, давайте проверим, как работает наше приложение! Даже без
+    UI-части мы уже можем проверить логику обновления состояния.</p>
+
+    <pre><code class="language-js">
+        import { addTodo, toggleTodo, setVisibilityFilter, VisibilityFilters } from './actions'
+
+        // Выведем в консоль начальное состояние
+        console.log(store.getState())
+
+        // Каждый раз при обновлении состояния - выводим его
+        // Отметим, что subscribe() возвращает функцию для отмены регистрации слушателя
+        let unsubscribe = store.subscribe(() =>
+            console.log(store.getState())
+        )
+
+        // Отправим несколько действий
+        store.dispatch(addTodo('Изучить действия'))
+        store.dispatch(addTodo('Изучить редюсеры'))
+        store.dispatch(addTodo('Изучить хранилище'))
+        store.dispatch(toggleTodo(0))
+        store.dispatch(toggleTodo(1))
+        store.dispatch(setVisibilityFilter(VisibilityFilters.SHOW_COMPLETED))
+
+        // Прекратим слушать обновление состояния
+        unsubscribe()
+    </code></pre>
+
+    <p>Мы смогли определить поведение нашего приложения даже до того, как начали создавать какой-то UI. Мы не будем
+    делать этого в этом руководстве, но с этого момента Вы можете писать тесты для редюсеров и генераторов действий.
+    Вызывайте редюсеры и делайте проверку того, что они возвращают.</p>
+
+    <div class="button">
+        <a href="../../redux/reducers/">&laquo; Назад</a>
+        <a class="next" href="../../redux/data-flow/">Далее &raquo;</a>
+    </div>
+
+</div>
+
+</body>
+</html>

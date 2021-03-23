@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>ReactDOMServer</title>
+
+  <link rel="stylesheet" href="../../../../web-page/css/header.css">
+  <link rel="stylesheet" href="../../../../web-page/css/content.css">
+  <link rel="stylesheet" href="../../../libraries/prism.css">
+
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+  <script src="../../../libraries/prism.js"></script>
+
+</head>
+
+<body>
+
+  <div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>ReactDOMServer</p>
+    </a>
+    <div class="header-right">
+      <a href="../../../../web-page/index.html">React.js</a>
+      <a href="../../../../web-page/examples.html">Содержание</a>
+      <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+  </div>
+  <div id="delimiter"></div>
+
+  <!--ВСЕ ВАШЕ ТВОРЧЕСТВО В ДИВЕ CONTENT-->
+  <div class="content">
+    <p class="section">ReactDOMServer</p>
+
+    <p>Объект <mark>ReactDOMServer</mark> позволяет отрисовывать компоненты в статическую разметку. Как правило, он используется на сервере <mark>Node</mark>:</p>
+
+    <pre><code class="language-js">// ES модули
+  import ReactDOMServer from 'react-dom/server';
+  // CommonJS
+  var ReactDOMServer = require('react-dom/server');</code></pre>
+
+    <p class="section">Обзор</p>
+
+    <p>Следующие методы могут использоваться в средах сервера и браузера:</p>
+    <ul>
+      <li><span>• </span><mark>renderToString()</mark></li>
+      <li><span>• </span><mark>renderToStaticMarkup()</mark></li>
+    </ul>
+    <p>
+      Следующие дополнительные методы зависят от пакета <mark>stream</mark>, который доступен только на сервере и не будет работать в браузере.
+    </p>
+    <ul>
+      <li><span>• </span><mark>renderToNodeStream()</mark></li>
+      <li><span>• </span><mark>renderToStaticNodeStream()</mark></li>
+    </ul>
+
+    <p class="section">
+      Справка
+    </p>
+
+    <p class="section">renderToString()</p>
+
+    <pre><code class="language-js">ReactDOMServer.renderToString(element)</code></pre>
+
+    <p>Отрисовывает элемент React в его исходный HTML. Это следует использовать только на сервере. React вернет HTML-строку. Вы можете использовать этот метод для генерации HTML-кода на сервере и отправки разметки по первоначальному запросу для более быстрой
+      загрузки страниц и для того, чтобы поисковые системы могли сканировать ваши страницы для целей SEO. Если вы вызываете <mark>ReactDOM.render()</mark> в версиях ранее 16 или <mark>ReactDOM.hydrate()</mark> начиная с 16 версии на узле, который уже
+      содержит эту отрисованную сервером разметку, React сохранит его и только присоединит обработчики событий, позволяя вам получить очень производительную первую загрузку.
+    </p>
+
+    <p class="section">renderToStaticMarkup()</p>
+
+    <pre><code class="language-js">ReactDOMServer.renderToStaticMarkup(element)</code></pre>
+
+    <p>Подобен <mark>renderToString</mark>, за исключением того, что это не создает дополнительных атрибутов DOM, таких как <mark>data-reactid</mark>, которые React использует внутри. Он полезен, если вы хотите использовать React как простой статический
+      генератор страниц, так как удаление лишних атрибутов может сэкономить множество байт.</p>
+
+    <p class="section">renderToNodeStream()</p>
+
+    <pre><code class="language-js">ReactDOMServer.renderToNodeStream(element)</code></pre>
+
+    <p>Доступен с 16 версии. Отрисовывает элемент React в его исходный HTML. Возвращает поток <mark>Readable</mark>, который выводит строку HTML. Вывод HTML этим потоком в точности равен результату, возвращаемому <mark>ReactDOMServer.renderToString</mark>.
+      Вы можете использовать этот метод для генерации HTML-кода на сервере и отправки разметки по первоначальному запросу для более быстрой загрузки страниц и для того, чтобы поисковые системы могли сканировать ваши страницы для целей SEO. Если вы вызываете
+      <mark>ReactDOM.hydrate()</mark> на узле, который уже имеет эту, отрисованную сервером, разметку, React сохранит его и присоединит только обработчики событий, позволяя вам иметь очень производительную первоначальную загрузку.</p>
+
+    <p class="section">renderToStaticNodeStream()</p>
+
+    <pre><code class="language-js">ReactDOMServer.renderToStaticNodeStream(element)</code></pre>
+
+    <p>Доступен с 16 версии. Подобен <mark>renderToNodeStream</mark>, за исключением того, что это не создает дополнительные атрибуты DOM, которые React использует внутренне, такие как <mark>data-reactroot</mark>. Это полезно, если вы хотите использовать
+      React как простой генератор статических страниц, так как удаление лишних атрибутов может сэкономить байты. HTML-вывод этого потока в точности равен результату, возвращаемому <mark>ReactDOMServer.renderToStaticMarkup</mark>. Если вы планируете использовать
+      React на клиенте, чтобы сделать разметку интерактивной, не используйте этот метод. Вместо этого, используйте <mark>renderToNodeStream</mark> на сервере и <mark>ReactDOM.hydrate()</mark> на клиенте.</p>
+
+
+  </div>
+
+</body>
+
+</html>

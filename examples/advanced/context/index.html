@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Контекст</title>
+
+    <link rel="stylesheet" href="../../../../web-page/css/header.css">
+    <link rel="stylesheet" href="../../../../web-page/css/content.css">
+    <link rel="stylesheet" href="../../../libraries/prism.css">
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script src="../../../libraries/prism.js"></script>
+
+</head>
+<body>
+
+<div class="header">
+    <a href="./../../../examples.html" class="logo">
+        <img src="../../../../web-page/images/react-logo.png">
+        <p>React.js</p>
+    </a>
+    <div class="header-right">
+        <a href="../../../../web-page/index.html">React.js</a>
+        <a href="../../../../web-page/examples.html">Содержание</a>
+        <a href="../../../../web-page/info.html">Информация</a>
+    </div>
+</div>
+<div id="delimiter"></div>
+
+<div class="content">
+
+    <p class="section">Контекст</p>
+
+    <p>Контекст обеспечивает способ передачи данных через дерево компонентов без необходимости передавать свойства
+        вручную на каждом уровне.</p>
+
+    <p>В типичном приложении React данные передаются сверху вниз (от родителя к потомку) через свойства
+        <mark>props</mark>
+        .
+        Однако это может оказаться громоздким для определенных типов свойств (тема UI; предпочтения, связанные с
+        локалью),
+        которые требуются для многих компонентов в приложении. Контекст предоставляет способ совместного использования
+        таких значений между компонентами без необходимости явно передавать свойство через каждый уровень дерева.
+    </p>
+
+    <p class="section">Когда следует использовать контекст?</p>
+
+    <p>Контекст разработан для совместного использования данных, которые можно рассматривать «глобальными» для дерева
+        React компонентов, например таких как текущий аутентифицированный пользователь, тема или предпочтительный язык.
+        В приведенном ниже коде мы вручную передаем свойство «theme», чтобы стилизовать компонент
+        <mark>Button</mark>
+        :
+    </p>
+
+    <pre><code class="language-js">
+      class App extends React.Component {
+        render() {
+          return &lt;Toolbar theme="dark" />;
+        }
+      }
+
+      function Toolbar(props) {
+        // Компонент Toolbar должен принимать дополнительное свойство "theme"
+        // и передавать его в компонент ThemedButton. Это может стать настоящей головной болью
+        // если каждая отдельная кнопка в приложении нуждается в значении свойства theme,
+        // потому что оно должно быть передано через все компоненты.
+        return (
+          &lt;div>
+            &lt;ThemedButton theme={props.theme} />
+          &lt;/div>
+        );
+      }
+
+      function ThemedButton(props) {
+        return &lt;Button theme={props.theme} />;
+      }
+    </code></pre>
+
+    <p>Используя контекст, мы можем избежать передачи свойств через промежуточные элементы:</p>
+
+    <pre><code class="language-js">
+        // Контекст позволяет нам передавать значение глубоко в дерево компонентов
+        // без его явной передачи через каждый компонент.
+        // Создайте контекст для текущей темы (значение "light" по умолчанию).
+      const ThemeContext = React.createContext('light');
+
+      class App extends React.Component {
+        render() {
+          // Используйте Provider, чтобы передать текущую тему вглубь дерева.
+          // Любой компонент может считать её, вне зависимости от того как глубоко она находится.
+          // В данном примере, мы передаем "dark" как текущее значение.
+          return (
+            &lt;ThemeContext.Provider value="dark">
+              &lt;Toolbar />
+            &lt;/ThemeContext.Provider>
+          );
+        }
+      }
+
+      // Промежуточному компоненту необязательно
+      // явно передавать тему кому-либо далее.
+      function Toolbar(props) {
+        return (
+          &lt;div>
+            &lt;ThemedButton />
+          &lt;/div>
+        );
+      }
+
+      function ThemedButton(props) {
+        // Используйте Consumer, чтобы считать текущий контекст темы.
+        // React будет искать выше ближайший поставщик (Provider) темы и использует его значение.
+        // В данном примере текущая тема имеет значение "dark".
+        return (
+          &lt;ThemeContext.Consumer>
+            {theme => &lt;Button {...props} theme={theme} />}
+          &lt;/ThemeContext.Consumer>
+        );
+      }
+    </code></pre>
+
+    <div class="warning">
+        <p><b>Внимание!</b></p>
+        <p>Не используйте контекст, чтобы избежать передачи свойств на несколько уровней ниже. Реальная необходимость
+            возникает в случаях, когда одни и те же данные должны быть доступны во многих компонентах на разных
+            уровнях.</p>
+    </div>
+
+    <div class="button">
+        <a href="../../advanced/reconciliation">&laquo; Назад</a>
+        <a class="next" href="../../advanced/fragments">Далее &raquo;</a>
+    </div>
+
+</div>
+
+</body>
+</html>
