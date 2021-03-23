@@ -2,102 +2,143 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello, World!</title>
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/content.css">
-    <link rel="stylesheet" href="../libraries/prism.css">
-    <!--React.js-->
-    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
-    <!--Prism.js Демо для кода-->
-    <script src="../libraries/prism.js"></script>
-    <script type="text/babel" src="script.js"></script>
-    <!--jQuery-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="../libraries/header.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Hello, World!</title>
+	<link rel="stylesheet" href="../css/header.css">
+	<link rel="stylesheet" href="../css/content.css">
+	<link rel="stylesheet" href="../libraries/prism.css">
+	<!--React.js-->
+	<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+	<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+	<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	<!--Prism.js Демо для кода-->
+	<script src="../libraries/prism.js"></script>
+	<script type="text/babel" src="script.js"></script>
+	<!--jQuery-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="../libraries/header.js"></script>
 </head>
 
 <body>
-    <section class="nav-bar">
-        <div class="nav-container">
-            <div class="brand">
-                <a href="#"><img src="../images/react-logo.png">React.js</a>
-            </div>
-            <nav>
-                <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
-                <ul class="nav-list">
-                    <!--<li>
-                    <a href="#">Home</a>
-                </li>-->
+	<section class="nav-bar">
+		<div class="nav-container">
+			<div class="brand">
+				<a href="#"><img src="../images/react-logo.png">React.js</a>
+			</div>
+			<nav>
+				<div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+				<ul class="nav-list">
+					<!--<li>
+					<a href="#">Home</a>
+				</li>-->
 
-                    <li>
-                        <a href="#">Выпадающее меню</a>
-                        <ul class="nav-dropdown">
-                            <li>
-                                <a href="#">Пункт1</a>
-                            </li>
-                            <li>
-                                <a href="#">Пункт2</a>
-                            </li>
-                            <li>
-                                <a href="#">Пункт3</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="../index.html">React.js</a>
-                    </li>
-                    <li>
-                        <a href="#">Лаба 1</a>
-                    </li>
-                    <li>
-                        <a href="../info.html">Справочник</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </section>
+					<li>
+						<a href="#">Выпадающее меню</a>
+						<ul class="nav-dropdown">
+							<li>
+								<a href="#">Пункт1</a>
+							</li>
+							<li>
+								<a href="#">Пункт2</a>
+							</li>
+							<li>
+								<a href="#">Пункт3</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="../index.html">React.js</a>
+					</li>
+					<li>
+						<a href="#">Лаба 1</a>
+					</li>
+					<li>
+						<a href="../info.html">Справочник</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</section>
 
-    <div id="delimiter"></div>
+	<div id="delimiter"></div>
 
-    <div class="content">
+	<div class="content">
 
-        <p class="section">Задание 1</p>
+		<p class="section">Задание 1</p>
+		
+		<p>Выберите и, при необходимости, установите рабочее окружение для разработки с React. В первых лабораторных работах для этого можно использовать любой текстовый редактор. В дальнейшем вам понадобится Node.JS.</p>
+		
+		<p>Для быстрого старта можно использовать следующий шаблон:</p>
 
-        <p>Выберите и, при необходимости, установите рабочее окружение для разработки с React. В первых лабораторных работах для этого можно использовать любой текстовый редактор. В дальнейшем вам понадобится Node.JS.</p>
-
-        <p>Для быстрого старта можно использовать следующий шаблон:</p>
-
-        <pre><code class="language-html">&lt;!DOCTYPE html>
+<pre><code class="language-html">&lt;!DOCTYPE html>
 &lt;html>
 &lt;head>
-    &lt;meta charset="UTF-8" />
-    &lt;title>Hello World&lt;/title>
-    &lt;script src="https://unpkg.com/react@17/umd/react.development.js">&lt;/script>
-    &lt;script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js">&lt;/script>
-    &lt;script src="https://unpkg.com/@babel/standalone/babel.min.js">&lt;/script>
+	&lt;meta charset="UTF-8" />
+	&lt;title>Hello World&lt;/title>
+	&lt;script src="https://unpkg.com/react@17/umd/react.production.js">&lt;/script>
+	&lt;script src="https://unpkg.com/react-dom@17/umd/react-dom.production.js">&lt;/script>
+	&lt;script src="https://unpkg.com/@babel/standalone/babel.min.js">&lt;/script>
 &lt;/head>
 &lt;body>
-    &lt;div id="root">&lt;/div>
-    &lt;script type="text/babel">
-
-        ReactDOM.render(
-            &lt;h1>Hello, world!&lt;/h1>,
-            document.getElementById('root')
-        );
-
-    &lt;/script>
-    
+	&lt;div id="root">&lt;/div>
+	&lt;script type="text/babel">
+		ReactDOM.render(
+			&lt;h1>Hello, world!&lt;/h1>,
+			document.getElementById('root')
+		);
+	&lt;/script>
 &lt;/body>
 &lt;/html></code></pre>
 
-        <div class="button">
-            <a class="next" href="../../quick-start/introducing-jsx/">Далее &raquo;</a>
-        </div>
-    </div>
+		<p>Скопируйте его и убедитесь, что при открытии страницы в браузере появляется надпись "Hello, world!"</p>
+
+		<p>Создайте отдельный файл для скрипта. Перенесите в него весь код из исходного файла. Продемонстрируйте подключение к HTML скрипта, содержащего JSX-код.</p>
+
+		<p>Измените код в файле так, чтобы при открытии страницы отображалась сегодняшняя дата.</p>
+
+		<div class="section">Задание 2</div>
+
+		<p>В ответ на запрос сервер фондовой биржи вернул следующий объект:</p>
+
+		<pre><code class="language-js">[
+	{
+		name: "EFX",
+		company_name: "Equifax Inc",
+		price: "USD 163.55",
+		change: "+9.03",
+		percent_change: "+5.84%"
+	},
+	{
+		name: "IRM",
+		company_name: "Iron Mountain Inc",
+		price: "USD 33.21",
+		change: "+1.42",
+		percent_change: "+4.47%"
+	},
+	{
+		name: "NTAP",
+		company_name: "NetApp Inc",
+		price: "USD 54.81",
+		change: "-6.01",
+		percent_change: "-9.88%"
+
+	},
+	{
+		name: "CTL",
+		company_name: "Centurylink Inc",
+		price: "USD 13.79",
+		change: "-1.37",
+		percent_change: "-9.04%"
+
+	}
+]</code></pre>
+
+		<p>Динамически сгенерируйте на его основании таблицу с условным форматированием: положительное изменение должно быть окрашено в зелёный, а отрицательное — в красный.</p>
+		<div class="button">
+			<a class="next" href="#">Лабораторная работа №2 &raquo;</a>
+		</div>
+	</div>
 
 </body>
 
