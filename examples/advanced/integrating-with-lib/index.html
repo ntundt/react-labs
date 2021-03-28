@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../../css/header.css">
     <link rel="stylesheet" href="../../../css/content.css">
     <link rel="stylesheet" href="../../../libraries/prism.css">
+    <link rel="stylesheet" href="../../../libraries/font-awesome/css/font-awesome.css">
 
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
@@ -271,9 +272,9 @@ class Dialog extends React.Component {
         <CustomButton color="red"/>
     </code></pre>
     <p>Вы можете иметь столько изолированных компонентов, сколько захотите, и использовать ReactDOM.render() для рендеринга их в разные контейнеры DOM. Постепенно при преобразовании всё большего количества вашего приложения в React вы сможете объединить их в более крупные компоненты и переместить некоторые из ReactDOM.render() вызовов выше по иерархии.</p>
-    <div class="button">
-    <a href="../../advanced/render-props/">&laquo; Назад</a>
-    <a class="next" href="../../advanced/strict-mode/">Далее &raquo;</a>
+    <div class="lr-btn">
+        <button class="atuin-btn" onclick="window.location.href = '../../advanced/render-props/index.html';"><i class="fa fa-chevron-circle-left" aria-hidden="true"> </i><span>_</span>Назад</button>
+        <button class="atuin-btn" onclick="window.location.href = '../../advanced/strict-mode/index.html';">Далее<span>_</span><i class="fa fa-chevron-circle-right" aria-hidden="true"></i> </button>
     </div>
 </div>
 

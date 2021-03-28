@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../../css/header.css">
     <link rel="stylesheet" href="../../../css/content.css">
     <link rel="stylesheet" href="../../../libraries/prism.css">
+    <link rel="stylesheet" href="../../../libraries/font-awesome/css/font-awesome.css">
 
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
@@ -127,8 +128,9 @@
     </code></pre>
     <p>На первый взгляд данный код может не показаться проблемным. Но если метод SharedApplicationState.recordEvent не является идемпотентным, то создание экземпляра этого компонента несколько раз может привести к недопустимому состоянию приложения. Такая тонкая ошибка может не проявляться во время разработки, или же она может возникать очень непоследовательно, и поэтому может быть упущена из виду.</p>
     <p>Умышленно производя двойные вызовы методов, таких как конструктор компонента, строгий режим делает такие проблемные шаблоны более легкими для обнаружения.</p>
-    <div class="button">
-    <a href="../../advanced/integrating-with-lib/">&laquo; Назад</a>
+    
+    <div class="lr-btn">
+        <button class="atuin-btn" onclick="window.location.href = '../../advanced/integrating-with-lib/index.html';"><i class="fa fa-chevron-circle-left" aria-hidden="true"> </i><span>_</span>Назад</button>
     </div>
 </div>
 
