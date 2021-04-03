@@ -64,7 +64,6 @@ body {
 }
 
 .content img {
-    width: 90%;
     display: block;
     margin: 0 auto;
 }
@@ -161,7 +160,7 @@ th {
     padding: .4em .4em .4em .8em;
     margin: .5em 0 .5em 2.5em;
     background: #D3D4DA;
-    color: #444;
+    color: #000;
     text-decoration: none;
     transition: all .3s ease-out;
 }
@@ -200,6 +199,10 @@ th {
     border-left-color: #9097A2;
 }
 
+.content img{
+    max-width: 50%;
+}
+
 @media only screen and (max-width: 798px) {
     .content {
         margin: 0;
@@ -214,6 +217,9 @@ th {
     .brand {
         font-size: 18px;
     }
+    .content img{
+    max-width: 90% !important;
+}
 }
 
 /*Стили кнопок для перехода между лабами*/
