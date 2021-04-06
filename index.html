@@ -1,64 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
     <title>БГТУ &#124; REACT.JS</title>
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/content.css">
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="libraries/header.js"></script>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="libraries/background/style.css">
+    <link rel="stylesheet" type="text/css" href="css/chapters.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/menu.css">
 </head>
 
 <body>
-    <section class="nav-bar">
-        <div class="nav-container">
-            <div class="brand">
-                <a href="index.html"><img src="images/react-logo.png">React.js</a>
+    <script type="text/javascript" src="libraries/background/background.js" id="rectangle"></script>
+    <div id="blackscreen"></div>
+    <div id="main">
+        <h1 id="name">Методическое пособие по <mark> React.js УО «БГТУ» </mark></h1>
+        <div id="menu">
+            <div class="element" onclick="window.location.href = 'labs.html'">
+                <img src="images/menu/labs.png">
+                <p>ЛАБАРАТОРНЫЕ РАБОТЫ</p>
             </div>
-            <nav>
-                <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
-                <ul class="nav-list">
-                    <!--Выпадающий пункт меню-->
-                    <!--<li>
-                        <a href="#">Выпадающее меню</a>
-                        <ul class="nav-dropdown">
-                            <li>
-                                <a href="labs/index.html">Пункт1</a>
-                            </li>
-                            <li>
-                                <a href="index.html">Пункт2</a>
-                            </li>
-                            <li>
-                                <a href="info.html">Пункт3</a>
-                            </li>
-                        </ul>
-                    </li>-->
-                    <li>
-                        <a href="index.html">Главная</a>
-                    </li>
-                    <li>
-                        <a href="labs.html">Лабораторные работы</a>
-                    </li>
-                    <li>
-                        <a href="examples.html">Содержание</a>
-                    </li>
-                    <li>
-                        <a href="info.html">Справочник</a>
-                    </li>
-                </ul>
-            </nav>
+            <div class="element" onclick="react_1()">
+                <img src="images/menu/react.png">
+                <p>РАЗДЕЛ 1</p>
+                <p>[ВВЕДЕНИЕ В REACT.JS]</p>
+            </div>
+            <div class="element" onclick="react_2()">
+                <img src="images/menu/react.png">
+                <p>РАЗДЕЛ 2</p>
+                <p>[ОСНОВЫ REACT.JS]</p>
+            </div>
+            <div class="element" onclick="react_3()">
+                <img src="images/menu/react.png">
+                <p>РАЗДЕЛ 3</p>
+                <p>[REDUX.JS]</p>
+            </div>
+            <div class="element" onclick="window.location.href = 'theory.html'">
+                <img src="images/menu/theory.png">
+                <p>ТЕОРИЯ</p>
+            </div>
+            <div class="element" onclick="window.location.href = 'info.html'">
+                <img src="images/menu/guide.png">
+                <p>СПРАВОЧНИК</p>
+            </div>
         </div>
-    </section>
-    <div id="delimiter"></div>
 
-    <div class="content">
-        <p class="section">Методическое пособие по React.js УО «БГТУ»</p>
-
+        <div class="chapter" id="react_1">
+            <h1>РАЗДЕЛ 1. ВВЕДЕНИЕ В REACT.JS</h1>
+            <hr noshade>
+            <a href="labs/lab01/index.html">
+                <p>Лабараторная работа №1</p>
+            </a>
+            <a href="labs/lab02/index.html">
+                <p>Лабараторная работа №2</p>
+            </a>
+            <a href="labs/lab03/index.html">
+                <p>Лабараторная работа №3</p>
+            </a>
+            <a href="labs/lab04/index.html">
+                <p>Лабараторная работа №4</p>
+            </a>
+            <a href="labs/lab05/index.html">
+                <p>Лабараторная работа №5</p>
+            </a>
+            <a href="labs/lab06/index.html">
+                <p>Лабараторная работа №6</p>
+            </a>
+            <a href="labs/lab07/index.html">
+                <p>Лабараторная работа №7</p>
+            </a>
+            <p class="back" onclick="react_1()">Главное меню</p>
+        </div>
+        <div class="chapter" id="react_2">
+            <h1>РАЗДЕЛ 2. ОСНОВЫ REACT.JS</h1>
+            <hr noshade>
+            <a href="labs/lab08/index.html">
+                <p>Лабараторная работа №8</p>
+            </a>
+            <a href="labs/lab09/index.html">
+                <p>Лабараторная работа №9</p>
+            </a>
+            <a href="labs/lab10/index.html">
+                <p>Лабараторная работа №10</p>
+            </a>
+            <a href="labs/lab11/index.html">
+                <p>Лабараторная работа №11</p>
+            </a>
+            <a href="labs/lab12/index.html">
+                <p>Лабараторная работа №12</p>
+            </a>
+            <a href="labs/lab13/index.html">
+                <p>Лабараторная работа №13</p>
+            </a>
+            <a href="labs/lab14/index.html">
+                <p>Лабараторная работа №14</p>
+            </a>
+            <p class="back" onclick="react_2()">Главное меню</p>
+        </div>
+        <div class="chapter" id="react_3">
+            <h1>РАЗДЕЛ 3. REDUX.JS</h1>
+            <hr noshade>
+            <a href="labs/lab15/index.html">
+                <p>Лабараторная работа №15</p>
+            </a>
+            <a href="labs/lab16/index.html">
+                <p>Лабараторная работа №16</p>
+            </a>
+            <a href="labs/lab17/index.html">
+                <p>Лабараторная работа №17</p>
+            </a>
+            <a href="labs/lab18/index.html">
+                <p>Лабараторная работа №18</p>
+            </a>
+            <a href="labs/lab19/index.html">
+                <p>Лабараторная работа №19</p>
+            </a>
+            <a href="labs/lab20/index.html">
+                <p>Лабараторная работа №20</p>
+            </a>
+            <p class="back" onclick="react_3()">Главное меню</p>
+        </div>
     </div>
-
+    <script type="text/javascript" src="libraries/chapter.js"></script>
 </body>
 
 </html>
