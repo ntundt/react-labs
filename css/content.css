@@ -1,3 +1,6 @@
+/*Импорт стилей*/
+@import url("theme.css");
+
 html,
 body {
     margin: 0;
@@ -32,6 +35,13 @@ body {
     padding: 10px 5%;
 }
 
+.content .section-title-left {
+    font-size: 26px;
+    margin: 0;
+    text-align: left;
+    padding: 10px 5%;
+}
+
 .content p {
     text-indent: 50px;
     text-align: justify;
@@ -39,7 +49,7 @@ body {
     padding: 10px 20px;
 }
 
-.content ul {
+.content ul{
     list-style-type: none;
 
     padding: 10px 8%;
@@ -200,7 +210,7 @@ th {
 }
 
 .content img{
-    max-width: 50%;
+    max-width: 70%;
 }
 
 @media only screen and (max-width: 798px) {
@@ -220,66 +230,4 @@ th {
     .content img{
     max-width: 90% !important;
 }
-}
-
-/*Стили кнопок для перехода между лабами*/
-
-.button{
-    display: flex;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.atuin-btn {
-    display: inline-flex;
-    margin: 10px;
-    text-decoration: none;
-    position: relative;
-    font-size: 20px;
-    line-height: 20px;
-    padding: 12px 30px;
-    color: #FFF;
-    font-weight: bold;
-    text-transform: uppercase;
-    background: #337AB7;
-    cursor: pointer;
-    border: 2px solid #BFE2FF;
-    overflow: hidden;
-    z-index: 1;
-}
-
-.atuin-btn:hover,
-.atuin-btn:active,
-.atuin-btn:focus {
-    color: #FFF;
-}
-
-.atuin-btn:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: -50px;
-    bottom: 0;
-    left: 0;
-    border-right: 50px solid transparent;
-    border-top: 50px solid #2D6B9F;
-    transition: transform 0.5s;
-    transform: translateX(-100%);
-    z-index: -1;
-}
-
-.atuin-btn:hover:before,
-.atuin-btn:active:before,
-.atuin-btn:focus:before {
-    transform: translateX(0);
-}
-
-.atuin-btn span{
-    visibility: hidden;
-}
-
-.lr-btn{
-    margin-left: auto;
-    margin-right: auto;
-    display: table;
 }

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СПРАВОЧНИК &#124; REACT.JS</title>
+    <link rel="stylesheet" href="../../css/header.css">
+    <link rel="stylesheet" href="../../css/content.css">
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../libraries/font-awesome/css/font-awesome.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="../../libraries/header.js"></script>
+    <link rel="stylesheet" href="../../libraries/prism.css">
+    <script src="../../libraries/prism.js"></script>
+</head>
+
+<body>
+
+    <section class="nav-bar">
+        <div class="nav-container">
+            <div class="brand">
+                <a href="index.html"><img src="../../images/react-logo.png">Справочник</a>
+            </div>
+            <nav>
+                <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+                <ul class="nav-list">
+                    <li>
+                        <a href="../../index.html">Главная</a>
+                    </li>
+                    <li>
+                        <a href="../../labs.html">Лабораторные работы</a>
+                    </li>
+                    <li>
+                        <a href="../../theory.html">Теория</a>
+                    </li>
+                    <li>
+                        <a href="../../info.html">Справочник</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+    <div id="delimiter"></div>
+
+    <div class="content">
+        <p class="section">Установка Командной строки</p>
+        <p>В операционной системе Microsoft Windows есть предустановленный терминал, который называется cmd.exe. Использовать его в качестве основного терминала не рекомендуется, так как он слабее аналогов. Для стандартного терминала Windows существует 2 альтернативы в виде эмуляторов консоли под названием cmder и Windows Terminal. </p>
+        <p class="section-title">О эмуляторах</p>
+        <p><b>Windows Terminal</b> — приложение Терминал от Microsoft. Предлагает вкладочный интерфейс и объединяет инструменты Командная строка (CMD), PowerShell, Azure Cloud Shell и Подсистема Windows для Linux (WSL)</p>
+        <img src="win_terminal.png" alt="Windows Terminal">
+        <p><b>Cmder</b> — это эмулятор консоли, который отличается простотой и удобством работы. В отличие от стандартной командной строки cmd в Windows, данная программа предоставляет больше функционала, а ее интерфейс удобнее и привлекательнее. По сути, Cmder — это целый программный пакет, который включает командную строку, консоль, макрос и DosBox.</p>
+        <img src="cmder.jpg" alt="cmder">
+        <p class="section">Установка CMDER</p>
+        <p>Скачать cmder можно на официальном сайте <a href="http://cmder.net/">http://cmder.net/</a>.</p>
+        <img src="cmder1.png" alt="Официальный сайт cmder">
+        <p>На сайте есть две версии для скачивания: минимальная и полная.</p>
+        <img src="cmder2.png" alt="Скачиваем cmder">
+        <p>Полная отличается от минимальной тем, что в неё вшита поддержка системы контроля версий git. Скачиваем необходимую версию в виде архива и распаковываем его. Cmder не требует установки. Достаточно запустить файл «cmder.exe».</p>
+        <p>Запущенная командная строка cmder должна выглядеть следующим образом.</p>
+        <img src="cmder3.png" alt="">
+        <p>В вашем случае внешний вид может отличаться, в зависимости от настроек системы.</p>
+        <p class="section">Установка Windows Terminal</p>
+        <p>На данный момент Windows Terminal уже можно установить через магазин приложений Microsoft Store. Чтобы запустить данный магазин откройте меню «Пуск», введите в поиск слово «store» и запустите найденную программу.</p>
+        <img src="win_terminal1.png" alt="Windows Terminal Search">
+        <p>После запуска Microsoft Store, в нем нужно найти приложение Windows Terminal (Preview). Для этого можно воспользоваться поиском по магазину приложений. Введите в поисковую строку слово «terminal» и нажмите на верхнее приложение.</p>
+        <img src="win_terminal2.png" alt="Windows Terminal Store">
+        <p>Если с поиском возникают трудности, то можете воспользоваться <a target="_blank" href="https://www.microsoft.com/ru-ru/p/windows-terminal-preview/9n0dx20hk701">веб-версию магазина Microsoft</a>. Здесь нужно будет нажать на кнопку «Получить» и подтвердить переход в приложение.</p>
+        <img src="win_terminal3.png" alt="Windows Terminal Web-Store">
+        <p>Так или иначе, вы попадете в Microsoft Store на страницу приложения Windows Terminal (Preview). Здесь нужно нажать на кнопку «Install» и дождаться завершения установки приложения.</p>
+        <img src="win_terminal4.png" alt="Windows Terminal Web-Store Download">
+        <p>После установки можно сразу начинать пользоваться Windows Terminal, перезагрузка компьютера не требуется. Чтобы запустить приложение нужно нажать на кнопку «Launch» в Microsoft Store или воспользоваться поиском в меню «Пуск».</p>
+        <div class="block-info-btn">
+           <button class="info-btn" onclick="window.location.href = '../../index.html';"><i class="fa fa-home" aria-hidden="true"></i><span>_</span>ГЛАВНАЯ</button>
+           <button class="info-btn" onclick="window.location.href = '../../info.html';">Справочник<span>_</span><i class="fa fa-question-circle" aria-hidden="true"></i></button>
+        </div>
+    </div>
+    
+</body>
+
+</html>

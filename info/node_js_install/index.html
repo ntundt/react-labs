@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СПРАВОЧНИК &#124; REACT.JS</title>
+    <link rel="stylesheet" href="../../css/header.css">
+    <link rel="stylesheet" href="../../css/content.css">
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../libraries/font-awesome/css/font-awesome.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="../../libraries/header.js"></script>
+    <link rel="stylesheet" href="../../libraries/prism.css">
+    <script src="../../libraries/prism.js"></script>
+</head>
+
+<body>
+
+    <section class="nav-bar">
+        <div class="nav-container">
+            <div class="brand">
+                <a href="index.html"><img src="../../images/react-logo.png">Справочник</a>
+            </div>
+            <nav>
+                <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+                <ul class="nav-list">
+                    <li>
+                        <a href="../../index.html">Главная</a>
+                    </li>
+                    <li>
+                        <a href="../../labs.html">Лабораторные работы</a>
+                    </li>
+                    <li>
+                        <a href="../../theory.html">Теория</a>
+                    </li>
+                    <li>
+                        <a href="../../info.html">Справочник</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+    <div id="delimiter"></div>
+
+    <div class="content">
+        <p class="section">Установка Node.js</p>
+        <p>Устанавливаем программную платформу Node.js, для того чтобы дать JavaScript возможность взаимодействовать с устройствами ввода-вывода через свой API и подключать разные внешние библиотеки.</p>
+        <p>Перейдем к установке Node.js. Для Windows есть только один способ.</p>
+        <p>Необходимо перейти на официальный сайт <a target="_blank" href="https://nodejs.org/en/">https://nodejs.org</a> и на главной странице скачать последнюю стабильную версию.</p>
+        <img src="node_js1.png" alt="Установка Node.js">
+        <p>После загрузки инсталлятор следует запустить и установить Node.js, как любую другую программу.</p>
+        <p>Убедимся, что всё установилось. Для этого в командной строке проверим версию Node.js с помощью следующих команд:</p>
+        <pre class="line-numbers">
+        <code class="language-html">node -v
+        nmp -v</code></pre>
+        <p>Результат выполнение команд:</p>
+        <img src="node_js2.svg" alt="Результат выполнения консоли">
+        <p>Если результат выполнения команд в консоли схож с данным, то вы всё сделали правильно, Node.js установлен и функционирует правильно.</p>
+        <div class="block-info-btn">
+           <button class="info-btn" onclick="window.location.href = '../../index.html';"><i class="fa fa-home" aria-hidden="true"></i><span>_</span>ГЛАВНАЯ</button>
+           <button class="info-btn" onclick="window.location.href = '../../info.html';">Справочник<span>_</span><i class="fa fa-question-circle" aria-hidden="true"></i></button>
+        </div>
+    </div>
+
+</body>
+
+</html>

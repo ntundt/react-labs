@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СПРАВОЧНИК &#124; REACT.JS</title>
+    <link rel="stylesheet" href="../../css/header.css">
+    <link rel="stylesheet" href="../../css/content.css">
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../libraries/font-awesome/css/font-awesome.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="../../libraries/header.js"></script>
+    <link rel="stylesheet" href="../../libraries/prism.css">
+    <script src="../../libraries/prism.js"></script>
+</head>
+
+<body>
+
+    <section class="nav-bar">
+        <div class="nav-container">
+            <div class="brand">
+                <a href="index.html"><img src="../../images/react-logo.png">Справочник</a>
+            </div>
+            <nav>
+                <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+                <ul class="nav-list">
+                    <li>
+                        <a href="../../index.html">Главная</a>
+                    </li>
+                    <li>
+                        <a href="../../labs.html">Лабораторные работы</a>
+                    </li>
+                    <li>
+                        <a href="../../theory.html">Теория</a>
+                    </li>
+                    <li>
+                        <a href="../../info.html">Справочник</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+    <div id="delimiter"></div>
+
+    <div class="content">
+        <p class="section">Создание React приложения (NPX, NPM, YARN)</p>
+        <p class="section-title">Create React App</p>
+        <p>Пример <a target="_blank" href="https://github.com/facebook/create-react-app"><b>Create React App</b></a> - это лучший способ начать разработку нового одностраничного приложения React. Он настраивает вашу среду разработки, чтобы вы могли использовать новейшие функции JavaScript, предоставляет хороший опыт разработки и оптимизирует ваше приложение для продакшен. Вам понадобится Node >= 6 на вашем компьютере.</p>
+        <p>Создавайте приложения React без конфигурации сборки. Приложение Create React работает на MacOS, Windows и Linux. Если что-то не работает или есть вопросы и нужна помощь, обращайтесь в сообщество Spectrum по адресу — <a target="_blank" href="//spectrum.chat/create-react-app">spectrum.chat/create-react-app</a>.</p>
+        <p class="section-title">Краткий обзор</p>
+        <p>Если вы ранее устанавливали create-Reaction-app глобально с помощью npm install -g create-Reaction-app, мы рекомендуем вам удалить пакет с помощью npm uninstall -g create-Reaction-app, чтобы npx всегда использовал последнюю версию.</p>
+        <div class="note note-info">(NPX поставляется с NPM 5.2+ и выше, см. инструкции для более старых версий npm)</div>
+        <pre class="line-numbers">
+        <code class="language-html">npx create-react-app my-app
+        cd my-app
+        npm start</code></pre>
+        <p>Затем откройте http://localhost:3000/, чтобы увидеть ваше приложение. Когда вы будете готовы к развертыванию в рабочей среде, создайте минимизированный пакет с помощью npm run build.</p>
+        <img class="lazy-loaded" style="max-width: 100%;" src="https://camo.githubusercontent.com/e4f2feecb8bc0d58c1f2e31f97b2856a04b50ef3/68747470733a2f2f63646e2e6a7364656c6976722e6e65742f67682f66616365626f6f6b2f6372656174652d72656163742d61707040323762343261633765666130313866323534313135336162333064363331383066356661333965302f73637265656e636173742e737667" data-lazy-type="image" data-src="https://camo.githubusercontent.com/e4f2feecb8bc0d58c1f2e31f97b2856a04b50ef3/68747470733a2f2f63646e2e6a7364656c6976722e6e65742f67682f66616365626f6f6b2f6372656174652d72656163742d61707040323762343261633765666130313866323534313135336162333064363331383066356661333965302f73637265656e636173742e737667" alt="npm запуск" width="600" data-canonical-src="https://cdn.jsdelivr.net/gh/facebook/create-react-app@27b42ac7efa018f2541153ab30d63180f5fa39e0/screencast.svg">
+        <p>Вам не нужно устанавливать или настраивать такие инструменты, как веб-пакет или Babel. Они предварительно настроены и скрыты, так что вы можете сосредоточиться только на коде.</p>
+        <p class="section-title">Создание приложения</p>
+        <p>Вам понадобится Node 8.16.0 или Node 10.16.0 или более поздняя версия на локальном компьютере. Вы можете использовать nvm(macOS / Linux) или nvm-windows для переключения версий Node между различными проектами.</p>
+        <p><a target="_blank" href="../node_js_install/index.html"><b>Инструкция как установить Node.js на ваше стройство</b></a></p>
+        <p>Чтобы создать новое приложение, вы можете выбрать один из следующих методов:</p>
+        <p class="section-title-left">NPX</p>
+        <pre class="line-numbers">
+        <code class="language-html-left">npx create-react-app my-app</code></pre>
+        <p>(npx — это инструмент для запуска пакетов, который поставляется с npm 5.2+ и выше)</p>
+        <p class="section-title-left">npm</p>
+        <pre class="line-numbers">
+        <code class="language-html">npm init react-app my-app</code></pre>
+        <p>npm init initializer доступно в нпм 6+</p>
+        <p class="section-title-left">Yarn</p>
+        <pre class="line-numbers">
+        <code class="language-html">yarn create react-app my-app</code></pre>
+        <p>Он создаст каталог с именем my-app внутри текущей папки. Внутри этого каталога он сгенерирует исходную структуру проекта и установит переходные зависимости:</p>
+        <img src="cra-struct.svg" alt="Каталог файлов my-app">
+        <p>Нет конфигурации или сложной структуры папок, только файлы, необходимые для создания приложения. После завершения установки вы можете открыть папку вашего проекта:</p>
+        <pre class="line-numbers">
+        <code class="language-html">cd my-app</code></pre>
+        <p>Внутри недавно созданного проекта вы можете запустить несколько встроенных команд:</p>
+        <p class="section-title-left">npm start или yarn start</p>
+        <p>Запускает приложение в режиме разработки. Откройте http: // localhost: 3000, чтобы просмотреть его в браузере.</p>
+        <p>Страница автоматически перезагрузится, если вы внесете изменения в код. Вы увидите ошибки сборки и предупреждения lint в консоли.</p>
+        <img src="cra-console-log.svg" alt="Информация о сборке">
+        <p class="section-title-left">npm test или yarn test</p>
+        <p>Запускает тестовый наблюдатель в интерактивном режиме. По умолчанию запускаются тесты, связанные с файлами, измененными с момента последней фиксации.</p>
+        <p class="section-title-left">npm run build или yarn build</p>
+        <p>Создает приложение для производства в папке сборки. Он корректно объединяет React в производственном режиме и оптимизирует сборку для лучшей производительности.</p>
+        <p>Сборка сводится к минимуму, а имена файлов содержат хэши. Ваше приложение готово к развертыванию.</p>
+        <p class="section-title">Что входит в Create React App?
+        <p>В вашей среде будет все необходимое для создания современного одностраничного приложения React:</p>
+        <ul class="th-list-item">
+            <li>Поддержка синтаксиса React, JSX, ES6, TypeScript и Flow.</li>
+            <li>Языковые дополнения за пределами ES6, такие как оператор распространения объектов.</li>
+            <li>CSS с автопрефиксом, поэтому вам не нужны -webkit- или другие префиксы.</li>
+            <li>Быстрый интерактивный тестовый модуль со встроенной поддержкой отчетов о покрытии.</li>
+            <li>Живой сервер разработки, который предупреждает об общих ошибках.</li>
+            <li>Сценарий сборки для объединения JS, CSS и изображений для производства с хешами и исходными картами.</li>
+            <li>Работник сервиса, работающий в автономном режиме, и манифест веб-приложения, удовлетворяющий всем критериям Progressive Web App(Примечание: использование работника сервиса является обязательным по адресу response-scripts@2.0.0 и выше)</li>
+            <li>Беспроблемные обновления для вышеперечисленных инструментов с одной зависимостью.</li>
+        </ul>
+        <div class="note note-warning">Эти инструменты предварительно настроены для работы определенным образом. Если ваш проект требует дополнительной настройки, вы можете «извлечь» и настроить его, но тогда вам нужно будет поддерживать эту конфигурацию.</div>
+        </p>
+
+        <div class="block-info-btn">
+            <button class="info-btn" onclick="window.location.href = '../../index.html';"><i class="fa fa-home" aria-hidden="true"></i><span>_</span>ГЛАВНАЯ</button>
+            <button class="info-btn" onclick="window.location.href = '../../info.html';">Справочник<span>_</span><i class="fa fa-question-circle" aria-hidden="true"></i></button>
+        </div>
+    </div>
+
+</body>
+
+</html>
