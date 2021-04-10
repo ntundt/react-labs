@@ -220,6 +220,10 @@ th {
         padding-bottom: 80px;
     }
 
+    .content .section, .content .section-title {
+        text-indent: 0;
+    }
+
     .lr-list {
         padding-right: 40px;
     }
