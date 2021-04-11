@@ -6,11 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Добавьте React</title>
   <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
-  <link rel="stylesheet" href="../../../css/header.css">
-  <link rel="stylesheet" href="../../../css/content.css">
-  <link rel="stylesheet" href="../../../libraries/prism.css">
-  <link rel="stylesheet" href="../../../libraries/font-awesome/css/font-awesome.css">
-
+  <link rel="stylesheet" href="../../../css/general.css">
   <link rel="stylesheet" href="style.css">
 
   <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
@@ -50,8 +46,8 @@
     </div>
   </section>
 
-  <div id="delimiter"></div>
-
+  
+    <div class="general">
   <div class="content">
     <p class="section">Как добавить React к приложению</p>
     <p>
@@ -158,12 +154,20 @@
       страницу для <a href="../cdn-links/index.html">CDN</a> ссылок.
     </p>
 
-    <div class="lr-btn">
-        <button class="atuin-btn" onclick="window.location.href = '../../installation/new-app/index.html';"><i class="fa fa-chevron-circle-left" aria-hidden="true"> </i><span>_</span>Назад</button>
-        <button class="atuin-btn" onclick="window.location.href = '../../installation/cdn-links/index.html';">Далее<span>_</span><i class="fa fa-chevron-circle-right" aria-hidden="true"></i> </button>
-    </div>
   </div>
-
+    <div class="site-nav">
+            <p class="site-nav-name">
+                Установка React
+            </p>
+            <ul class="site-nav-list">
+                <li><a href="../try-react/index.html">Начало работы с React</a></li>
+                <li><a href="../new-app/index.html">Внедряем React в новое приложение</a></li>
+                <li><a href="index.html">Внедряем React в уже существующее приложение</a></li>
+                <li><a href="../cdn-links/index.html">CDN ссылки</a></li>
+            </ul>
+        <script type="text/babel" src="../../../libraries/navigator.js"></script>
+    </div>
+</div>
 </body>
 
 </html>

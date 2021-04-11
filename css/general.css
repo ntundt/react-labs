@@ -8,6 +8,8 @@
 @import url("content.css");
 /*Стили для главного меню всех страниц*/
 @import url("header.css");
+@import url("navigator.css");
+
 
 
 /*-----ДОПОЛНИТЕЛЬНЫЕ СТИЛИ-----*/
