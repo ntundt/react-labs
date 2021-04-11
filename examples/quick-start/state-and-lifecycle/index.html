@@ -60,7 +60,7 @@
     <p>На данный момент мы знаем только один способ обновления UI. Мы вызывали <mark>ReactDOM.render()</mark>, чтобы
     изменить созданный элемент:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function tick() {
             const element = (
                 &lt;div&gt;
@@ -81,7 +81,7 @@
     инкапсулированным. Он будет запускать собственный таймер и обновлять себя каждую секунду. Мы можем начать с
     инкапсуляции и это будет выглядеть так:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function Clock(props) {
             return (
                 &lt;div&gt;
@@ -104,7 +104,7 @@
     внедрены в компонент. В идеале, мы хотим написать этот код один раз и получить компонент, который будет
     самообновляться:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         ReactDOM.render(
             &lt;Clock /&gt;,
             document.getElementById('root')
@@ -129,7 +129,7 @@
         <li>Удаляем пустое объявление функции.</li>
     </ol>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         class Clock extends React.Component {
             render() {
                 return (
@@ -152,7 +152,7 @@
     <ol>
         <li>Заменяем <mark>this.props.date</mark> на <mark>this.state.date</mark> в методе <mark>render()</mark>:
 
-            <pre><code class="language-js">
+            <pre><code class="language-jsx">
                 class Clock extends React.Component {
                     render() {
                         return (
@@ -168,7 +168,7 @@
         </li>
         <li>Добавляем конструктор класса, который будет устанавливать значение <mark>this.state</mark>:
 
-            <pre><code class="language-js">
+            <pre><code class="language-jsx">
                 class Clock extends React.Component {
                     constructor(props) {
                         super(props);
@@ -188,7 +188,7 @@
 
             <p>Обратите внимание на то, как мы передаём <mark>props</mark> в основной конструктор:</p>
 
-            <pre><code class="language-js">
+            <pre><code class="language-jsx">
                 constructor(props) {
                     super(props);
                     this.state = {date: new Date()};
@@ -200,7 +200,7 @@
         </li>
         <li>Удаляем свойство <mark>date</mark> из элемента <mark>&lt;Clock /&gt;</mark>:
 
-            <pre><code class="language-js">
+            <pre><code class="language-jsx">
                 ReactDOM.render(
                     &lt;Clock /&gt;,
                     document.getElementById('root')
@@ -213,7 +213,7 @@
 
     <p>Результат выглядит так:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         class Clock extends React.Component {
             constructor(props) {
                 super(props);
@@ -245,7 +245,7 @@
     <mark>Clock</mark>, удаляется. Это называется «выгрузка». Мы можем объявить специальные методы для
     компонентов-классов, чтобы запускать некий код, когда компонент загружается и выгружается:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         class Clock extends React.Component {
             constructor(props) {
                 super(props);
@@ -273,7 +273,7 @@
     <p>Эти методы называются «привязки жизненного цикла». Метод <mark>componentDidMount()</mark> запускается после
     того, как компонент внедрится в DOM. Это отличное место для установки таймера:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         componentDidMount() {
             this.timerID = setInterval(
                 () => this.tick(),
@@ -288,7 +288,7 @@
     с информацией (например, ID таймера).</p>
     <p>Мы уничтожаем таймер в методе <mark>componentWillUnmount()</mark>:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         componentWillUnmount() {
             clearInterval(this.timerID);
         }
@@ -298,7 +298,7 @@
     секунду. Он будет использовать <mark>this.setState()</mark> для планирования обновления локального состояния
     компонента:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         class Clock extends React.Component {
             constructor(props) {
                 super(props);
@@ -365,14 +365,14 @@
 
     <p>Например, этот код не пересоздаст компонент:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         // Неправильно
         this.state.comment = 'Hello';
     </code></pre>
 
     <p>Используйте <mark>setState()</mark>:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         // Правильно
         this.setState({comment: 'Hello'});
     </code></pre>
@@ -386,7 +386,7 @@
     обновлены асинхронно, так что вы можете не основываться на их значениях для вычисления следующего состояния.</p>
     <p>Например, этот код может нарушить обновление счетчика:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         // Неправильно
         this.setState({
             counter: this.state.counter + this.props.increment,
@@ -397,7 +397,7 @@
         объект. Эта функция получает предыдущее состояние в качестве своего первого параметра, и свойства
         применяемого обновления в данный момент времени в качестве второго параметра:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         // Правильно
         this.setState((prevState, props) => ({
             counter: prevState.counter + props.increment
@@ -406,7 +406,7 @@
 
     <p>Мы использовали стрелочную функцию, но это прекрасно работает и с обычными функциями:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         // Правильно
         this.setState(function(prevState, props) {
             return {
@@ -420,7 +420,7 @@
     <p>Когда вы вызываете <mark>setState()</mark>, React переводит объект, который вы передаёте, в текущее состояние.</p>
     <p>Например, ваше состояние содержит несколько независимых переменных:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         constructor(props) {
             super(props);
             this.state = {
@@ -432,7 +432,7 @@
 
     <p>Затем вы можете обновить их независимо с помощью отдельных вызовов <mark>setState()</mark>:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         componentDidMount() {
             fetchPosts().then(response => {
                 this.setState({
@@ -458,20 +458,20 @@
     инкапсулированным. Оно не доступно ни одному другому компоненту, кроме собственного. Компонент может передать своё
     состояние вниз&nbsp;— к своим потомкам&nbsp;— в качестве свойства:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         &lt;h2&gt;Сейчас {this.state.date.toLocaleTimeString()}.&lt;/h2&gt;
     </code></pre>
 
     <p>Это также работает для компонентов, объявленных пользователем:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         &lt;FormattedDate date={this.state.date} /&gt;
     </code></pre>
 
     <p>Компонент <mark>FormattedDate</mark> получает <mark>date</mark> в свои свойства и не будет знать, откуда оно
     пришло: из состояния компонента <mark>Clock</mark>, из его свойств или установлено вручную:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function FormattedDate(props) {
             return <h2>It is {props.date.toLocaleTimeString()}.</h2>;
         }
@@ -483,7 +483,7 @@
     <p>Продемонстрируем, что все компоненты действительно изолированы. Для этого мы создадим компонент <mark>App</mark>,
     который будет создавать три компонента <mark>Clock</mark>:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function App() {
             return (
                 &lt;div&gt;

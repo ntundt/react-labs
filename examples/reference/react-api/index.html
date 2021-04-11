@@ -130,7 +130,7 @@
 
       <p><mark>React.Component</mark> является базовым классом для компонентов React, когда они определены с использованием классов ES6 :</p>
 
-      <pre><code class="language-js">class Greeting extends React.Component {
+      <pre><code class="language-jsx">class Greeting extends React.Component {
     render() {
       return <h1>Hello, {this.props.name}</h1>;
     }
@@ -144,7 +144,7 @@
         createElement()
       </p>
 
-      <pre><code class="language-js">React.createElement(
+      <pre><code class="language-jsx">React.createElement(
   type,
   [props],
   [...children]
@@ -160,7 +160,7 @@
         cloneElement()
       </p>
 
-      <pre><code class="language-js">React.cloneElement(
+      <pre><code class="language-jsx">React.cloneElement(
   element,
   [props],
   [...children]
@@ -176,7 +176,7 @@
         isValidElement()
       </p>
 
-      <pre><code class="language-js">React.isValidElement(object)</code></pre>
+      <pre><code class="language-jsx">React.isValidElement(object)</code></pre>
 
       <p>
         Проверяет объект как элемент React. Возвращает <mark>true</mark> или <mark>false</mark>.
@@ -194,7 +194,7 @@
         React.Children.map
       </p>
 
-      <pre><code class="language-js">React.Children.map(children, function[(thisArg)])</code></pre>
+      <pre><code class="language-jsx">React.Children.map(children, function[(thisArg)])</code></pre>
 
       <p>
         Вызывает функцию для каждого дочернего элемента, содержащегося внутри
@@ -206,7 +206,7 @@
         React.Children.forEach
       </p>
 
-      <pre><code class="language-js">React.Children.forEach(children, function[(thisArg)])</code></pre>
+      <pre><code class="language-jsx">React.Children.forEach(children, function[(thisArg)])</code></pre>
 
       <p>
         Подобна <mark>React.Children.map()</mark> но не возвращает массив.
@@ -216,7 +216,7 @@
         React.Children.count
       </p>
 
-      <pre><code class="language-js">React.Children.count(children)</code></pre>
+      <pre><code class="language-jsx">React.Children.count(children)</code></pre>
 
       <p>
         Возвращает общее количество компонентов в <mark>children</mark>, равное количеству раз, когда обратный вызов был передан <mark>map</mark> или был вызван <mark>forEach</mark>.
@@ -227,7 +227,7 @@
         React.Children.only
       </p>
 
-      <pre><code class="language-js">React.Children.only(children)</code></pre>
+      <pre><code class="language-jsx">React.Children.only(children)</code></pre>
 
       <p>
         Проверяет, что <mark>children</mark> имеет только один дочерний элемент (элемент React) и возвращает его. В противном случае этот метод выдает ошибку.
@@ -237,7 +237,7 @@
         React.Children.toArray
       </p>
 
-      <pre><code class="language-js">React.Children.toArray(children)</code></pre>
+      <pre><code class="language-jsx">React.Children.toArray(children)</code></pre>
 
       <p>
         Возвращает структуру данных как плоский массив с ключами, назначенными каждому ребенку. Полезно, если вы хотите манипулировать коллекциями детей в ваших методах рендеринга, особенно если вы хотите изменить порядок или <mark>this.props.children</mark>        перед его передачей.
@@ -251,7 +251,7 @@
         Позволяет возвращать несколько элементов в <mark>render()</mark> методе, не создавая дополнительный элемент DOM:
       </p>
 
-      <pre><code class="language-js">render() {
+      <pre><code class="language-jsx">render() {
   return (
     &lt;React.Fragment>
       Some text.
@@ -272,7 +272,7 @@
         <mark>React.createRef</mark> создает ссылку ref, которая может быть присоединена к элементам React через атрибут <mark>ref</mark>.
       </p>
 
-      <pre><code class="language-js">class MyComponent extends React.Component {
+      <pre><code class="language-jsx">class MyComponent extends React.Component {
   constructor(props) {
     super(props);
 
@@ -305,7 +305,7 @@
         <mark>React.forwardRef</mark> принимает функцию рендеринга в качестве аргумента. React вызовет эту функцию с помощью <mark>props</mark> и <mark>ref</mark> двумя аргументами. Эта функция должна возвращать узел React.
       </p>
 
-      <pre><code class="language-js">const FancyButton = React.forwardRef((props, ref) => (
+      <pre><code class="language-jsx">const FancyButton = React.forwardRef((props, ref) => (
   &lt;button ref={ref} className="FancyButton">
     {props.children}
   &lt;/button>

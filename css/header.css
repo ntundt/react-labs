@@ -3,9 +3,7 @@ body {
 	margin: 0;
 	padding: 0;
 }
-* {
-	font-family: 'Helvetica';
-}
+
 .nav-bar {
   height: 70px;
   background: #262626;

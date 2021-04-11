@@ -60,7 +60,7 @@
     <p>• С помощью JSX функция передаётся как обработчик события, а не как строка.</p>
     <p>Например, в HTML:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         &lt;button onclick="activateLasers()"&gt;
             Активировать лазеры
         &lt;/button&gt;
@@ -68,7 +68,7 @@
 
     <p>В React это выглядит так:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         &lt;button onclick={activateLasers}&gt;
             Активировать лазеры
         &lt;/button&gt;
@@ -78,7 +78,7 @@
     по умолчанию в React. Вы должны явно вызвать <mark>preventDefault</mark>. Например, в простом HTML для
     предотвращения открытия по умолчанию новой страницы вы можете написать такой код:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         &lt;a href="#" onclick="console.log('Ссылка была нажата.'); return false"&gt;
             Нажми на меня
         &lt;/a&gt;
@@ -86,7 +86,7 @@
 
     <p>В React это будет так:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function ActionLink() {
             function handleClick(e) {
                 e.preventDefault();
@@ -112,7 +112,7 @@
     является метод класса. Допустим, что у нас есть компонент <mark>Toggle</mark>, который создаёт кнопку,
     позволяющую пользователю переключать её состояние с «ВКЛЮЧЕНО» на «ВЫКЛЮЧЕНО» и наоборот:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         class Toggle extends React.Component {
             constructor(props) {
                 super(props);
@@ -161,7 +161,7 @@
     Class properties transform</a>, в котором вы можете использовать поля класса для корректной привязки функций
     обратного вызова:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         class LoggingButton extends React.Component {
             // Этот синтаксис обеспечивает 'this' привязку в handleClick.
             // Внимание: это 'экспериментальный' синтаксис.
@@ -182,7 +182,7 @@
     <p>React поддерживает данный синтаксис по умолчанию.</p>
     <p>Второй путь&nbsp;— использование стрелочных функций в обратных вызовах:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         class LoggingButton extends React.Component {
             handleClick() {
                 console.log('this is:', this);
@@ -210,7 +210,7 @@
     <p>Обычно внутри цикла требуется передать дополнительный параметр обработчику событий. Например, если
     <mark>id</mark> является идентификатором строки, то эти оба варианта будут работать:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         &lt;button onClick={(e) => this.deleteRow(id, e)}>Удалить строку&lt;/button&gt;
         &lt;button onClick={this.deleteRow.bind(this, id)}>Удалить строку&lt;/button&gt;
     </code></pre>

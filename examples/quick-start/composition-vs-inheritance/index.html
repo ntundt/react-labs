@@ -66,7 +66,7 @@
     <p>Некоторые компоненты не могут узнать о своих потомках раньше времени. Это обычно свойственно компонентам,
     которые имеют особое свойство <mark>children</mark> для передачи дочерних элементов непосредственно на выход:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function FancyBorder(props) {
             return (
                 &lt;div className={'FancyBorder FancyBorder-' + props.color}&gt;
@@ -78,7 +78,7 @@
 
     <p>Это позволяет другим компонентам передавать им произвольные дочерние элементы, используя вложения JSX:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function WelcomeDialog() {
             return (
                 &lt;FancyBorder color="blue"&gt;
@@ -105,7 +105,7 @@
     <p>Хоть это и менее распространено, иногда вам может понадобиться несколько «дыр» в вашем компоненте. В таких
     случаях вы можете придумать собственное решение проблем, вместо использования <mark>children</mark>:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function SplitPane(props) {
             return (
                 &lt;div className="SplitPane"&gt;
@@ -143,7 +143,7 @@
     <p>В React, это также достигается с помощью композиции, в которой «частные» компоненты создают более «общие» и
     управляют их свойствами:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
             function Dialog(props) {
                 return (
                     &lt;FancyBorder color="blue">
@@ -169,7 +169,7 @@
 
     <p>Композиция работает также хорошо и для компонентов-классов:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function Dialog(props) {
             return (
                 &lt;FancyBorder color="blue"&gt;

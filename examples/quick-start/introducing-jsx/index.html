@@ -55,7 +55,7 @@
     <p class="section">Знакомство с JSX</p>
 
     <p>Взгляните на это объявление переменной:</p>
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         const element = &lt;h1&gtHello, world!&lt;/h1&gt;;
     </code></pre>
 
@@ -81,25 +81,25 @@
 
     <p>В JSX вы можете поместить любое JavaScript выражение в фигурные скобки. Выражения в примере ниже являются
     допустимыми:</p>
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function formatName(user) {
-         return user.firstName + ' ' + user.lastName;
+            return user.firstName + ' ' + user.lastName;
         }
 
         const user = {
-        firstName: 'Иван',
-        lastName: 'Иванов'
+            firstName: 'Иван',
+            lastName: 'Иванов'
         };
 
         const element = (
-        &lt;h1&gt;
-         Привет, {formatName(user)}!
-        &lt;h1&gt;
+            &lt;h1&gt;
+                Привет, {formatName(user)}!
+            &lt;h1&gt;
         );
 
         ReactDOM.render(
-        element,
-        document.getElementById('root')
+            element,
+            document.getElementById('root')
         );
     </code></pre>
     <p>Выглядит результат следующим образом:</p>
@@ -118,12 +118,12 @@
         <mark>for</mark>, объявлять его как переменную, принимать как аргумент и возвращать его из
     функций:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
        function getGreeting(user) {
             if (user) {
-             return &lt;h1&gt;Привет, {formatName(user)}!&lt;/h1&gt;;
+                return &lt;h1&gt;Привет, {formatName(user)}!&lt;/h1&gt;;
             }
-        return &lt;h1&gt;Привет, незнакомец!&lt;/h1&gt;;
+            return &lt;h1&gt;Привет, незнакомец!&lt;/h1&gt;;
         }
     </code></pre>
 
@@ -132,13 +132,13 @@
 
     <p>Вы можете использовать угловые скобки для определения строковой величины в качестве атрибута:</p>
 
-    <pre><code class="language-js">
-       const element = &lt;div tabIndex="0"&gt;&lt;/div&gt;;
+    <pre><code class="language-jsx">
+        const element = &lt;div tabIndex="0"&gt;&lt;/div&gt;;
     </code></pre>
 
     <p>Также можно использовать фигурные скобки для вставки выражения JavaScript в атрибуте:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         const element = &lt;img src={user.avatarUrl}>&lt;/img&gt;;
     </code></pre>
 
@@ -158,13 +158,13 @@
 
     <p>Если тэг пуст, вы можете закрыть его сразу с помощью <mark>/></mark> (также, как и в XML):</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         const element = &lt;img src={user.avatarUrl} /&gt;;
     </code></pre>
 
     <p>Теги в JSX могут содержать дочерние элементы:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         const element = (
          &lt;div&gt;
             &lt;h1&gt;Hello!&lt;/h1&gt;
@@ -177,9 +177,9 @@
 
     <p>В JSX можно безопасно использовать пользовательский ввод:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         const title = response.potentiallyMaliciousInput;
-        // Это безоапасно:
+        // Это безопасно:
         const element = &lt;h1&gt;{title}&lt;/h1&gt;;
     </code></pre>
 
@@ -193,7 +193,7 @@
     <p>Babel компилирует JSX в вызовах <mark>React.createElement()</mark>.</p>
     <p>Эти два примера идентичны:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         const element = (
             &lt;h1 className="greeting"&gt;
              Hello, world!
@@ -212,15 +212,15 @@
     <p><mark>React.createElement()</mark> выполняет несколько проверок, чтобы помочь вам написать код без ошибок.
     По существу&nbsp;— создает вот такой объект:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         // Note: Эта структура упрощена
         const element = {
             type: 'h1',
             props: {
-             className: 'greeting',
-             children: 'Hello, world!'
-         }
-    };
+                className: 'greeting',
+                children: 'Hello, world!'
+            }
+        };
     </code></pre>
 
     <p>Такие объекты называются «элементы React». Вы можете представить себе их как описание того, что вы видите

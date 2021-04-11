@@ -56,7 +56,7 @@
 
     <p>Элементы&nbsp;— наименьшие составные части React приложения. Элемент описывает то, что вы хотите видеть на экране:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
        const element = &lt;h1&gt;Hello, world!&lt;/h1&gt;;
     </code></pre>
 
@@ -73,7 +73,7 @@
 
     <p>Предположим, что у нас где-то в HTML документе есть тег <mark>&lt;div&gt;:</mark></p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
        &lt;div id="root"&gt;&lt;/div&gt;
     </code></pre>
 
@@ -83,7 +83,7 @@
     элемент в корневой узел DOM, то необходимо и элемент, и узел передать в функцию
     <mark>ReactDOM.render()</mark>:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         const element = &lt;h1&gt;Hello, world!&lt;/h1&gt;;
         ReactDOM.render(element, document.getElementById('root'));
     </code></pre>
@@ -100,7 +100,7 @@
     нового элемента с последующей его передачей в  <mark>ReactDOM.render()</mark>. Покажем это на примере отсчета
     времени:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function tick() {
          const element = (
           &lt;div&gt;

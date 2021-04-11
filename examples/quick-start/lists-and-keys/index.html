@@ -60,7 +60,7 @@
     <mark>numbers</mark> и удвоить его величины. Для этого мы создаем новый массив <mark>double</mark> и возвращаем в
     него результат выполнения функции <mark>map()</mark> и затем выводим его:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         const numbers = [1, 2, 3, 4, 5];
         const doubled = numbers.map((number) => number * 2);
         console.log(doubled);
@@ -76,7 +76,7 @@
     <mark class="markJSX">map()</mark>. Для каждого значения мы добавляем элемент <mark>&lt;li&gt;</mark>. И в конце, мы
     возвращаем результат в массив элементов <mark>listItems</mark>.</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         const numbers = [1, 2, 3, 4, 5];
         const listItems = numbers.map((number) =>
             &lt;li&gt;{number}&lt;/li&gt;
@@ -85,7 +85,7 @@
 
     <p>Затем мы включим весь массив <mark>listItems</mark> в элемент <mark>&lt;ul&gt;</mark> и добавим его в DOM:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         ReactDOM.render(
             &lt;ul&gt;{listItems}&lt;/ul&gt;,
             document.getElementById('root')
@@ -100,7 +100,7 @@
     <p>Мы можем переработать предыдущий пример, создав компонент, который будет принимать массив <mark>numbers</mark> и
     выводить неупорядоченный список элементов:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function NumberList(props) {
             const numbers = props.numbers;
             const listItems = numbers.map((number) =>
@@ -123,7 +123,7 @@
     <p>Давайте объявим <mark>ключ</mark> в нашем списке внутри <mark>numbers.map()</mark>, тем самым исправив проблему
     недостатка ключа:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function NumberList(props) {
             const numbers = props.numbers;
             const listItems = numbers.map((number) =>
@@ -148,7 +148,7 @@
     <p>Ключи помогают React идентифицировать элементы, которые подверглись изменению, добавились или удалились. Ключи
     должны быть присвоены элементам, заключенным в массивы, чтобы у них была стабильная идентифицируемость:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         const numbers = [1, 2, 3, 4, 5];
         const listItems = numbers.map((number) =>
             &lt;li key={number.toString()}&gt;
@@ -160,7 +160,7 @@
     <p>Лучший способ подобрать ключ — использовать строку, которая однозначно идентифицирует элемент списка. Чаще
     всего, в качестве ключей вы будете использовать ID ваших данных:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         const todoItems = todos.map((todo) =>
             &lt;li key={todo.id}&gt;
                 {todo.text}
@@ -171,7 +171,7 @@
     <p>Если у вас нет стабильных ID для созданных значений, то вы можете использовать индекс значения в качестве ключа
     (как крайний случай):</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         const todoItems = todos.map((todo, index) =>
             // Только если у вас нет стабильных ID
             &lt;li key={index}&gt;
@@ -192,7 +192,7 @@
 
     <p class="section">Пример: неправильное применение ключа</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function ListItem(props) {
             const value = props.value;
             return (
@@ -225,7 +225,7 @@
 
     <p class="section">Пример: правильное применение ключа</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function ListItem(props) {
             // Правильно! Нет нужды объявлять ключ здесь:
             return &lt;li&gt;{props.value}&lt;/li&gt;;
@@ -264,7 +264,7 @@
     <p>Ключи, используемые в массивах, должны быть уникальными среди им подобных. Однако, они не должны быть глобально
     уникальными. Мы можем использовать те же ключи для разных массивов:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function Blog(props) {
             const sidebar = (
                 &lt;ul&gt;
@@ -309,7 +309,7 @@
     <p>Ключи служат для React подсказками, но они не передаются компонентам. Если вам необходимо их значения для ваших
     компонентов, то передайте их явно как свойство с другим именем:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         const content = posts.map((post) =>
             &lt;Post
                 key={post.id}
@@ -325,7 +325,7 @@
 
     <p>В примерах выше, мы отдельно объявляли переменную <mark>listItems</mark> и затем включали её в JSX:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function NumberList(props) {
             const numbers = props.numbers;
             const listItems = numbers.map((number) =>
@@ -343,7 +343,7 @@
     <p>JSX позволяет внедрять любые выражения с помощью фигурных скобок, так что мы внедрим результат функции
     <mark>map()</mark>:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function NumberList(props) {
             const numbers = props.numbers;
             return (

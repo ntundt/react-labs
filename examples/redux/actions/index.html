@@ -52,7 +52,7 @@
     <mark>store.dispatch()</mark>.</p>
     <p>Например, вот действие, которое представляет добавление нового пункта в список дел:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         const ADD_TODO = 'Добавить дело'
         {
             type: ADD_TODO,
@@ -64,7 +64,7 @@
     исполняемого действия. Типы должны, как правило, определяться, как строковые константы. После того, как ваше
     приложение разрастется, вы можете захотеть переместить их в отдельный модуль:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         import { ADD_TODO, REMOVE_TODO } from '../actionTypes'
     </code></pre>
 
@@ -73,7 +73,7 @@
     потому что мы храним их в виде массива. В реальном приложении разумнее генерировать уникальный ID каждый раз, когда
     что-то новое создается:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         {
             type: TOGGLE_TODO,
             index: 5
@@ -84,7 +84,7 @@
     <mark>index</mark>, чем весь объект todo. Наконец, мы добавим еще один тип действия для редактирования видимых в
     данный момент задач:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         {
             type: SET_VISIBILITY_FILTER,
             filter: SHOW_COMPLETED
@@ -97,7 +97,7 @@
     путать термины “действие” и “генератор действий”, поэтому постарайтесь использовать правильный термин.</p>
     <p>В Redux генераторы действий просто возвращают действие:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function addTodo(text) {
             return {
                 type: ADD_TODO,
@@ -109,7 +109,7 @@
     <p>Это делает их более переносимыми (portable ориг.) и легкими для тестирования. В традиционной реализации Flux,
     генераторы действий при выполнении часто вызывают <mark>dispatch</mark>, примерно так:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function addTodoWithDispatch(text) {
             const action = {
                 type: ADD_TODO,
@@ -122,21 +122,21 @@
     <p>В Redux это не так. Вместо того чтобы на самом деле начать отправку, передайте результат в функцию
     <mark>dispatch()</mark>:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         dispatch(addTodo(text))
         dispatch(completeTodo(index))
     </code></pre>
 
     <p>Кроме того, вы можете создать связанный генератор действия, который автоматически запускает отправку действия:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         const boundAddTodo = (text) => dispatch(addTodo(text))
         const boundCompleteTodo = (index) => dispatch(completeTodo(index))
     </code></pre>
 
     <p>Теперь вы можете вызвать его напрямую:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         boundAddTodo(text)
         boundCompleteTodo(index)
     </code></pre>

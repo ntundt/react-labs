@@ -57,7 +57,7 @@
 
     <p>React bindings не включены в Redux по умолчанию. Вам нужно установить их явно:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         npm install --save react-redux
     </code></pre>
 
@@ -186,7 +186,7 @@
 
     <p><mark>components/Todo.js</mark></p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         import React, { PropTypes } from 'react'
 
         const Todo = ({ onClick, completed, text }) => (
@@ -211,7 +211,7 @@
 
     <p><mark>components/TodoList.js</mark></p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         import React, { PropTypes } from 'react'
         import Todo from './Todo'
 
@@ -241,7 +241,7 @@
 
     <p><mark>components/Link.js</mark></p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         import React, { PropTypes } from 'react'
 
         const Link = ({ active, children, onClick }) => {
@@ -272,7 +272,7 @@
 
     <p><mark>components/Footer.js</mark></p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         import React from 'react'
         import FilterLink from '../containers/FilterLink'
 
@@ -299,7 +299,7 @@
 
     <p><mark>components/App.js</mark></p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         import React from 'react'
         import Footer from './Footer'
         import AddTodo from '../containers/AddTodo'
@@ -330,7 +330,7 @@
     передачи в <mark>TodoList</mark>, так что нам нужно определить функцию, которая фильтрует <mark>state.todos</mark>
     согласно <mark>state.visibilityFilter</mark>, и использовать ее в <mark>mapStateToProps</mark>:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         const getVisibleTodos = (todos, filter) => {
             switch (filter) {
                 case 'SHOW_ALL':
@@ -355,7 +355,7 @@
     <mark>VisibleTodoList</mark> вставил <mark>prop onTodoClick</mark> в представление <mark>TodoList</mark> и еще мы
     хотим, чтобы <mark>onTodoClick</mark> отправлял <mark>TOGGLE_TODO</mark> действие:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         const mapDispatchToProps = (dispatch) => {
             return {
                 onTodoClick: (id) => {
@@ -367,7 +367,7 @@
 
     <p>Наконец, вызовом <mark>connect()</mark> мы создаем <mark>VisibleTodoList</mark> и передаем эти две функции:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         import { connect } from 'react-redux'
 
         const VisibleTodoList = connect(
@@ -382,7 +382,7 @@
 
     <p><mark>containers/FilterLink.js</mark></p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         import { connect } from 'react-redux'
         import { setVisibilityFilter } from '../actions'
         import Link from '../components/Link'
@@ -411,7 +411,7 @@
 
     <p><mark>containers/VisibleTodoList.js</mark></p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         import { connect } from 'react-redux'
         import { toggleTodo } from '../actions'
         import TodoList from '../components/TodoList'
@@ -453,7 +453,7 @@
 
     <p><mark>containers/AddTodo.js</mark></p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         import React from 'react'
         import { connect } from 'react-redux'
         import { addTodo } from '../actions'
@@ -498,7 +498,7 @@
 
     <p><mark>index.js</mark></p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         import React from 'react'
         import { render } from 'react-dom'
         import { Provider } from 'react-redux'
@@ -512,8 +512,8 @@
             &lt;Provider store={store}&gt;
                 &lt;App /&gt;
             &lt;/Provider&gt;,
-        document.getElementById('root')
-    )
+            document.getElementById('root')
+        )
     </code></pre>
 
     <p>Пример работы нашего разработанного списка дел можно посмотреть на

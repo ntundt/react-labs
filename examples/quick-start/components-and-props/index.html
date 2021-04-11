@@ -62,7 +62,7 @@
 
     <p>Простейший способ создания компонента&nbsp;— это написание JavaScript-функции:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function Welcome(props) {
             return &lt;h1&gt;Hello, {props.name}&lt;/h1&gt;;
         }
@@ -73,7 +73,7 @@
     функциям JavaScript.</p>
     <p>Для создания этого же компонента можно также использовать классы ES6:</p>
 
-    <pre><code class="language-js">
+    <pre class="line-numbers"><code class="language-jsx">
         class Welcome extends React.Component {
             render() {
                 return &lt;h1&gt;Hello, {this.props.name}&lt;/h1&gt;;
@@ -88,20 +88,20 @@
 
     <p>Ранее, мы встречали только те элементы React, которые представляли собой теги DOM:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         const element = &lt;div /&gt;;
     </code></pre>
 
     <p>Однако, элементы могут также представлять собой компоненты, описанные пользователем:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         const element = &lt;Welcome name="Sara" /&gt;;
     </code></pre>
 
     <p>Когда React обнаруживает такой элемент, то он передает JSX атрибуты компоненту как отдельному объекту.
     Такой объект называется «свойство».</p>
     <p>Приведем пример программы, которая выводит на экран надпись «Привет, Сара!»:</p>
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function Welcome(props) {
             return &lt;h1&gt;Привет, {props.name}!&lt;/h1&gt;;
         }
@@ -135,7 +135,7 @@
     <p>Для примера, создадим компонент <mark>App</mark>, который будет создавать компонент <mark>Welcome</mark> несколько
     раз:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function Welcome(props) {
             return &lt;h1&gt;Привет, {props.name}!&lt;/h1&gt;;
         }
@@ -169,7 +169,7 @@
 
     <p>Не бойтесь разбивать свои компоненты на более мелкие. Рассмотрим это на примере компонента <mark>Comment</mark>:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
        function Comment(props) {
          return (
             &lt;div className="Comment"&gt;
@@ -199,7 +199,7 @@
     использовать отдельные его фрагменты. Так давайте же извлечем некоторые компоненты из него. Сперва, мы извлечем
     <mark>Avatar</mark>:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function Avatar(props) {
             return (
                 &lt;img className="Avatar"
@@ -214,7 +214,7 @@
     его свойству более общее имя:<mark>user</mark> вместо <mark>author</mark>. Мы рекомендуем давать имена свойствам
     компонентов исходя из их функции, а не их использования. Теперь, мы можем немного упростить <mark>Comment</mark>:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function Comment(props) {
             return (
                 &lt;div className="Comment"&gt;
@@ -237,7 +237,7 @@
 
     <p>Далее, мы извлечем компонент <mark>UserInfo</mark>, который создаёт <mark>Avatar</mark> с именем пользователя:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function UserInfo(props) {
             return (
                 &lt;div className="UserInfo"&gt;
@@ -252,7 +252,7 @@
 
     <p>Это позволяет нам ещё сильнее упростить <mark>Comment</mark>:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function Comment(props) {
             return (
                 &lt;div className="Comment"&gt;
@@ -279,7 +279,7 @@
     <p>Когда вы создаёте компонент (функциональный или класса), то он не должен изменять свои собственные свойства.
     Взгляните на эту функцию <mark>sum</mark>:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function sum(a, b) {
             return a + b;
         }
@@ -289,7 +289,7 @@
     результат для одних и тех же данных. Для сравнения, это примесная функция, потому что она меняет принимаемые данные:
     </p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function withdraw(account, amount) {
             account.total -= amount;
         }

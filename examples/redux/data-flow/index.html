@@ -60,7 +60,7 @@
             <p>Хранилище передаст два аргумента при вызове редюсера: текущее дерево состояния (current state tree) и
             действие. Например, в todo-приложении главный редюсер может принимать что-то такое:</p>
 
-            <pre><code class="language-js">
+            <pre><code class="language-jsx">
                 // Текущее состояние приложения (список дел и выбранный фильтр)
                 let previousState = {
                     visibleTodoFilter: 'SHOW_ALL',
@@ -97,7 +97,7 @@
             образом. Допустим, у Вас есть два редюсера: один для списка todo-дел, второй — для выбранного сейчас режима
             отображения этого списка:</p>
 
-            <pre><code class="language-js">
+            <pre><code class="language-jsx">
                 function todos(state = [], action) {
                     // как-то вычисляет nextState...
                     return nextState
@@ -117,14 +117,14 @@
             <p>Когда вы инициируете действие, todoApp, которое вернул <mark>combineReducers</mark>, вызовет оба
             редюсера:</p>
 
-            <pre><code class="language-js">
+            <pre><code class="language-jsx">
                  let nextTodos = todos(state.todos, action)
                  let nextVisibleTodoFilter = visibleTodoFilter(state.visibleTodoFilter, action)
             </code></pre>
 
             <p>Затем оба набора состояний будут снова собраны в единое состояние:</p>
 
-            <pre><code class="language-js">
+            <pre><code class="language-jsx">
                  return {
                     todos: nextTodos,
                     visibleTodoFilter: nextVisibleTodoFilter

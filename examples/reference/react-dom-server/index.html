@@ -56,7 +56,7 @@
 
     <p>Объект <mark>ReactDOMServer</mark> позволяет отрисовывать компоненты в статическую разметку. Как правило, он используется на сервере <mark>Node</mark>:</p>
 
-    <pre><code class="language-js">// ES модули
+    <pre><code class="language-jsx">// ES модули
   import ReactDOMServer from 'react-dom/server';
   // CommonJS
   var ReactDOMServer = require('react-dom/server');</code></pre>
@@ -82,7 +82,7 @@
 
     <p class="section">renderToString()</p>
 
-    <pre><code class="language-js">ReactDOMServer.renderToString(element)</code></pre>
+    <pre><code class="language-jsx">ReactDOMServer.renderToString(element)</code></pre>
 
     <p>Отрисовывает элемент React в его исходный HTML. Это следует использовать только на сервере. React вернет HTML-строку. Вы можете использовать этот метод для генерации HTML-кода на сервере и отправки разметки по первоначальному запросу для более быстрой
       загрузки страниц и для того, чтобы поисковые системы могли сканировать ваши страницы для целей SEO. Если вы вызываете <mark>ReactDOM.render()</mark> в версиях ранее 16 или <mark>ReactDOM.hydrate()</mark> начиная с 16 версии на узле, который уже
@@ -91,14 +91,14 @@
 
     <p class="section">renderToStaticMarkup()</p>
 
-    <pre><code class="language-js">ReactDOMServer.renderToStaticMarkup(element)</code></pre>
+    <pre><code class="language-jsx">ReactDOMServer.renderToStaticMarkup(element)</code></pre>
 
     <p>Подобен <mark>renderToString</mark>, за исключением того, что это не создает дополнительных атрибутов DOM, таких как <mark>data-reactid</mark>, которые React использует внутри. Он полезен, если вы хотите использовать React как простой статический
       генератор страниц, так как удаление лишних атрибутов может сэкономить множество байт.</p>
 
     <p class="section">renderToNodeStream()</p>
 
-    <pre><code class="language-js">ReactDOMServer.renderToNodeStream(element)</code></pre>
+    <pre><code class="language-jsx">ReactDOMServer.renderToNodeStream(element)</code></pre>
 
     <p>Доступен с 16 версии. Отрисовывает элемент React в его исходный HTML. Возвращает поток <mark>Readable</mark>, который выводит строку HTML. Вывод HTML этим потоком в точности равен результату, возвращаемому <mark>ReactDOMServer.renderToString</mark>.
       Вы можете использовать этот метод для генерации HTML-кода на сервере и отправки разметки по первоначальному запросу для более быстрой загрузки страниц и для того, чтобы поисковые системы могли сканировать ваши страницы для целей SEO. Если вы вызываете
@@ -106,7 +106,7 @@
 
     <p class="section">renderToStaticNodeStream()</p>
 
-    <pre><code class="language-js">ReactDOMServer.renderToStaticNodeStream(element)</code></pre>
+    <pre><code class="language-jsx">ReactDOMServer.renderToStaticNodeStream(element)</code></pre>
 
     <p>Доступен с 16 версии. Подобен <mark>renderToNodeStream</mark>, за исключением того, что это не создает дополнительные атрибуты DOM, которые React использует внутренне, такие как <mark>data-reactroot</mark>. Это полезно, если вы хотите использовать
       React как простой генератор статических страниц, так как удаление лишних атрибутов может сэкономить байты. HTML-вывод этого потока в точности равен результату, возвращаемому <mark>ReactDOMServer.renderToStaticMarkup</mark>. Если вы планируете использовать

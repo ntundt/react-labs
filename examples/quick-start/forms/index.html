@@ -58,7 +58,7 @@
     <p>В React, формы HTML работают немного по-другому, по сравнению с другими элементами DOM, потому что формы сохраняют
     некоторое внутреннее состояние. Например, эта форма в простом HTML принимает одно имя:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         &lt;form&gt;
             &lt;label&gt;
                 Имя:
@@ -86,7 +86,7 @@
     <p>Например, если мы хотим заставить предыдущий пример выводить имя после его ввода, то мы можем сделать форму
     управляемого компонента:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         class NameForm extends React.Component {
             constructor(props) {
                 super(props);
@@ -132,7 +132,7 @@
     изменение и проверку ввода. Для примера, если мы хотим навязать ввод имени только из больших букв, то следует
     описать <mark>handleChange</mark> следующим образом:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         handleChange(event) {
             this.setState({value: event.target.value.toUpperCase()});
         }
@@ -142,7 +142,7 @@
 
     <p>В HTML <mark>&lt;textarea&gt;</mark> является родителем помещаемого в него текста:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         &lt;textarea&gt;
             Привет, это текст в нашей текстовой области
         &lt;textarea&gt;
@@ -151,7 +151,7 @@
     <p>В React <mark>&lt;textarea&gt;</mark> использует <mark>value</mark>. Таким образом, тег
     <mark>&lt;textarea&gt;</mark> может быть описан как одностроковое поле для ввода:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         class EssayForm extends React.Component {
             constructor(props) {
                 super(props);
@@ -193,7 +193,7 @@
 
     <p>В HTML <mark>&lt;select&gt;</mark> создаёт выпадающий список. Для примера, здесь создаётся список фруктов:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         &lt;select&gt;
             &lt;option value="Грейпфрут"&gt;Грейпфрут&lt;/option&gt;
             &lt;option value="Лайм"&gt;Лайм&lt;/option&gt;
@@ -206,7 +206,7 @@
     этого атрибута, использует атрибут <mark>value</mark> в корне тега <mark>select</mark>. Так намного удобнее для
     управляемых компонентов, потому что вам нужно обновить его только в одном месте. Покажем на примере:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         class FlavorForm extends React.Component {
             constructor(props) {
                 super(props);
@@ -258,7 +258,7 @@
         <p>Вы можете передать атрибуту <mark>value</mark> массив. Это позволяет выбрать несколько вариантов в теге
         <mark>&lt;select&gt;</mark>:</p>
 
-        <pre><code class="language-js">
+        <pre><code class="language-jsx">
             &lt;select multiple={true} value={['B', 'C']}&gt;
         </code></pre>
     </div>
@@ -268,7 +268,7 @@
     <p>В HTML тег <mark>&lt;input type="file"&gt;</mark> позволяет пользователю выбрать один или несколько файлов с
     накопителя для загрузки на сервер или для манипуляций с ними, используя Javascript с File API.</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         &lt;input type="file"&gt;
     </code></pre>
 
@@ -282,7 +282,7 @@
     <mark>event.target.name</mark>.</p>
     <p>Например:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         class Reservation extends React.Component {
             constructor(props) {
                 super(props);
@@ -333,7 +333,7 @@
     <p>Обратите внимание на то, что мы использовали синтаксис вычислительного имени ES6 для обновления состояния ключа,
     соответствующего данному имени input:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         this.setState({
             [name]: value
         });
@@ -341,7 +341,7 @@
 
     <p>Эквивалент на ES5:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         var partialState = {};
         partialState[name] = value;
         this.setState(partialState);
@@ -358,7 +358,7 @@
     <p>В следующем примере это наглядно демонстрируется (сперва поле ввода заблокировано, но после небольшой задержки
     становится доступным):</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         ReactDOM.render(&lt;input value="hi" /&gt;, mountNode);
 
         setTimeout(function() {

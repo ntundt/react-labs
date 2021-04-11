@@ -55,7 +55,7 @@
 
     <p class="section">Использование веб-компонентов в React</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
   class Modal extends React.Component {
     render() {
       return &lt;brick-layout flex>{this.props.content}&lt;/brick-layout>;
@@ -65,7 +65,7 @@
     </code></pre>
     <p>Существует распространённая путаница, заключающаяся в том, что веб-компоненты используют class вместо className.</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
   function BrickMenu() {
     return (
     &lt;brick-menu class="menu">
@@ -80,7 +80,7 @@
     </code></pre>
     <p class="section">Использование React в веб-компонентах</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
   class XSearch extends HTMLElement {
     connectedCallback() {
       const mountPoint = document.createElement('span');

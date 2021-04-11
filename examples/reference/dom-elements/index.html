@@ -78,7 +78,7 @@
       скриптинга (XSS). Таким образом, вы можете установить HTML непосредственно из React. Для этого вам нужно использовать <mark>dangerouslySetInnerHTML</mark> и передать объект с помощью <mark>__html</mark>-ключа, чтобы напомнить самому себе, что это
       небезопасно. Например:</p>
 
-    <pre><code class="language-js">function CustomComponent() {
+    <pre><code class="language-jsx">function CustomComponent() {
     return &lt;div dangerouslySetInnerHTML={{__html: 'Символ левой скобки тега: &lt;'}} />;
   }</code></pre>
 

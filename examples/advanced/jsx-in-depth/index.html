@@ -55,7 +55,7 @@
         ...children)</p>
     <p>Например, данный JSX код</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         &lt;MyButton color="blue" shadowSize={2}>
             Click Me
         &lt;/MyButton>
@@ -63,7 +63,7 @@
 
     <p>Будет преобразован в:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         React.createElement(
             MyButton,
             {color: 'blue', shadowSize: 2},
@@ -73,13 +73,13 @@
 
     <p>Так же вы можете использовать самозакрывающуюся форму тега, если у него нет потомков:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         &lt;div className="sidebar" />
     </code></pre>
 
     <p>Что будет преобразовано в:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         React.createElement(
             'div',
             {className: 'sidebar'},
@@ -93,20 +93,20 @@
 
     <p>Выражения JavaScript</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         &lt;MyComponent foo={1 + 2 + 3 + 4} />
     </code></pre>
 
     <p>Строковые литералы (оба выражения эквивалентны)</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         &lt;MyComponent message="hello world" />
         &lt;MyComponent message={'hello world'} />
     </code></pre>
 
     <p>Свойства со стандартным значением "true" (оба выражения эквивалентны)</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         &lt;MyTextBox autocomplete />
         &lt;MyTextBox autocomplete={true} />
     </code></pre>
@@ -115,7 +115,7 @@
     <p>Если вы уже имеете объект "props" и хотите передать его в JSX,
         вы можете использовать «оператор распространения»: ...</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function App1() {
             return &lt;Greeting firstName="Ben" lastName="Hector" />;
         }

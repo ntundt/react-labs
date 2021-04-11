@@ -62,7 +62,7 @@
     <p>А начнем мы с создания компонента <mark>BoilingVerdict</mark>. Он принимает свойство <mark>celsius</mark>,
     отражающее температуру, и выводит ответ на нашу задачу:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function BoilingVerdict(props) {
             if (props.celsius >= 100) {
                 return &lt;p&gt;Вода будет кипеть.&lt;/p&gt;;
@@ -75,7 +75,7 @@
     позволит пользователю вводить температуру и хранить её значение в <mark>this.state.temperature</mark>.</p>
     <p>Дополнительно он создаёт <mark>BoilingVerdict</mark> для текущего значения температуры.</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         class Calculator extends React.Component {
             constructor(props) {
                 super(props);
@@ -118,7 +118,7 @@
     <p>Мы можем начать с извлечения компонента <mark>TemperatureInput</mark> из <mark>Calculator</mark>. Также, добавим
     новое свойство <mark>scale</mark>, хранящее или <mark>"c"</mark>, или <mark>"f"</mark>.</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         const scaleNames = {
             c: 'Цельсию',
             f: 'Фаренгейту'
@@ -151,7 +151,7 @@
 
     <p>Теперь можно изменить <mark>Calculator</mark> так, чтобы он создавал два отдельных поля для температуры:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         class Calculator extends React.Component {
             render() {
                 return (
@@ -174,7 +174,7 @@
 
     <p>Сперва, мы напишем две функции для конвертации градусов по Цельсию в градусы по Фаренгейту, и наоборот:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function toCelsius(fahrenheit) {
             return (fahrenheit - 32) * 5 / 9;
         }
@@ -190,7 +190,7 @@
     <p>В следующем примере, возвращается пустая строка при некорректном значении <mark>temperature</mark>, и
     значение округляется до третьего знака после запятой:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function tryConvert(temperature, convert) {
             const input = parseFloat(temperature);
             if (Number.isNaN(input)) {
@@ -209,7 +209,7 @@
 
     <p>Сейчас, оба компонента <mark>TemperatureInput</mark> независимо хранят свои значения в локальном состоянии:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         class TemperatureInput extends React.Component {
             constructor(props) {
                 super(props);
@@ -240,7 +240,7 @@
     <mark>TemperatureInput</mark>. Пока что, давайте представим, что <mark>this.props.temperature</mark> уже существует,
     хотя нам и надо передать его из <mark>Calculator</mark> в будущем:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         render() {
             // Было: const temperature = this.state.temperature;
             const temperature = this.props.temperature;
@@ -258,7 +258,7 @@
     <p>Теперь, когда <mark>TemperatureInput</mark> хочет обновить температуру, он вызывает
     <mark>this.props.onTemperatureChange</mark>:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         handleChange(e) {
             // Было: this.setState({temperature: e.target.value});
             this.props.onTemperatureChange(e.target.value);
@@ -282,7 +282,7 @@
     функции <mark>this.setState()</mark> для изменения свойств, мы вызываем функцию
     <mark>this.props.onTemperatureChange()</mark>, которая будет передана с помощью <mark>Calculator</mark>:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         class TemperatureInput extends React.Component {
             constructor(props) {
             super(props);
@@ -314,7 +314,7 @@
     чтобы отобразить оба входных значения.</p>
     <p>Например, если мы введем "37" в поле Цельсия, то состояние компонента <mark>Calculator</mark> будет следующим:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         {
             temperature: '37',
             scale: 'c'
@@ -323,7 +323,7 @@
 
     <p>Если потом мы введем в поле Фаренгейта "212", то состояние <mark>Calculator</mark> станет:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         {
             temperature: '212',
             scale: 'а'
@@ -335,7 +335,7 @@
     значениях <mark>temperature</mark> и <mark>alone</mark>.</p>
     <p>Поля входных значений синхронизированы потому, что они вычисляются по общему состоянию:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         class Calculator extends React.Component {
             constructor(props) {
                 super(props);

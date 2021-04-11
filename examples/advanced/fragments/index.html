@@ -57,7 +57,7 @@
     <p>Общим примером в React является компонент, возвращающий несколько элементов. Фрагменты позволяют группировать
         список потомков без добавления дополнительных узлов в DOM:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
       render() {
         return (
           &lt;React.Fragment>
@@ -76,7 +76,7 @@
     <p>Общим примером является компонент, который возвращает список дочерних элементов. Рассмотрим пример куска кода на
         React:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
       class Table extends React.Component {
         render() {
           return (
@@ -104,7 +104,7 @@
         результирующий HTML-код будет невалидным.
     </p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
           class Columns extends React.Component {
             render() {
               return (
@@ -122,7 +122,7 @@
         будет:
     </p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
       &lt;table>
         &lt;tr>
           &lt;div>
@@ -139,7 +139,7 @@
 
     <p>В следующем примере мы объявляем фрагмент:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
       class Columns extends React.Component {
         render() {
           return (
@@ -154,7 +154,7 @@
 
     <p>Который приводит к валидному выводу компонента <mark>&lt;Table/></mark>:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
       &lt;table>
         &lt;tr>
             &lt;td>Hello&lt;/td>
