@@ -64,7 +64,7 @@
     <mark>combineReducers()</mark> для комбинирования редюсеров в один глобальный редюсер. Теперь мы их импортируем и
     передадим в <mark>createStore()</mark>.</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         import { createStore } from 'redux'
         import todoApp from './reducers'
         let store = createStore(todoApp)
@@ -74,7 +74,7 @@
     для пробрасывания состояния на клиент из состояния приложения Redux, работающего на сервере, когда вы пишете
     универсальное приложение.</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         let store = createStore(todoApp, window.STATE_FROM_SERVER)
     </code></pre>
 
@@ -83,7 +83,7 @@
     <p>На текущий момент у нас есть созданное хранилище, давайте проверим, как работает наше приложение! Даже без
     UI-части мы уже можем проверить логику обновления состояния.</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         import { addTodo, toggleTodo, setVisibilityFilter, VisibilityFilters } from './actions'
 
         // Выведем в консоль начальное состояние

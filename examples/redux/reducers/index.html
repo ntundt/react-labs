@@ -59,7 +59,7 @@
     относятся к состоянию UI. Это нормально, только старайтесь такие данные не смешивать с данными, которые описывают
     состояние UI.</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         {
             visibilityFilter: 'Показать всё',
             todos: [
@@ -92,7 +92,7 @@
     них. Редюсер — это чистая функция, которая принимает предыдущее состояние и действие  и возвращает следующее
     состояние:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
             (previousState, action) => newState
     </code></pre>
 
@@ -115,7 +115,7 @@
     неопределенным состоянием <mark>(state === undefined)</mark>. Это наш шанс инициализировать начальное состояние
     приложения:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         import { VisibilityFilters } from './actions'
 
         const initialState = {
@@ -137,7 +137,7 @@
     <p>Использование синтаксиса аргументов по умолчанию из ES6 для более компактного написания — просто аккуратный
     трюк:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function todoApp(state = initialState, action) {
             // Пока не обрабатываем никаких действий
             // и просто возвращаем состояние, которое приняли в качестве параметра
@@ -148,7 +148,7 @@
     <p>Теперь давайте начнем обрабатывать действие <mark>SET_VISIBILITY_FILTER</mark>. Все, что нужно сделать — это
     изменить <mark>visibilityFilter</mark> в состоянии приложения. Это просто:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function todoApp(state = initialState, action) {
             switch (action.type) {
                 case SET_VISIBILITY_FILTER:
@@ -191,7 +191,7 @@
     <p>У нас есть еще два действия, которые должны быть обработаны! Давайте расширим наш редюсер так, чтобы он мог
     обрабатывать действие <mark>ADD_TODO</mark>.</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function todoApp(state = initialState, action) {
             switch (action.type) {
                 case SET_VISIBILITY_FILTER:
@@ -220,7 +220,7 @@
     использованием информации, полученной из <mark>action</mark>. Ну и наконец, имплементация обработчика для действия
     <mark>TOGGLE_TODO</mark> не должна стать для Вас большим сюрпризом:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         case TOGGLE_TODO:
             return Object.assign({}, state, {
                 todos: state.todos.map((todo, index) => {
@@ -246,7 +246,7 @@
 
     <p>Вот так выглядит наш код на данный момент. Выглядит излишне многословным:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function todoApp(state = initialState, action) {
             switch (action.type) {
                 case SET_VISIBILITY_FILTER:
@@ -285,7 +285,7 @@
     требуется большая связанность, но в нашем случаем мы безболезненно можем вынести обновление <mark>todos</mark> в
     отдельную функцию:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function todos(state = [], action) {
             switch (action.type) {
                 case ADD_TODO:
@@ -336,7 +336,7 @@
     <p>Давайте рассмотрим это подробнее. Можем ли мы извлечь редюсер, который будет управлять только
     <mark>visibilityFilter</mark>? Конечно можем:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function visibilityFilter(state = SHOW_ALL, action) {
             switch (action.type) {
                 case SET_VISIBILITY_FILTER:
@@ -356,7 +356,7 @@
       начальное состояние, если при первом вызове получает <mark>undefined</mark> вместо <mark>state</mark>.</li>
     </ul>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function todos(state = [], action) {
             switch (action.type) {
                 case ADD_TODO:
@@ -407,7 +407,7 @@
     логический шаблон, который мы только что реализовали в todoApp. С ее помощью мы можем переписать todoApp следующим
     образом:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         import { combineReducers } from 'redux'
 
         const todoApp = combineReducers({
@@ -420,7 +420,7 @@
 
     <p>Обратите внимание, что это полностью эквивалентно такому коду:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         export default function todoApp(state = {}, action) {
             return {
                 visibilityFilter: visibilityFilter(state.visibilityFilter, action),
@@ -431,7 +431,7 @@
 
     <p>Есть два совершенно равноценных способа писать комбинированные редюсеры:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         const reducer = combineReducers({
             a: doSomethingWithA,
             b: processB,
@@ -457,7 +457,7 @@
         разные файлы, экспортировать каждую функцию-редюсер и использовать <mark>import *</mark> as редюсеры</mark> для
         получения их в формате объекта, ключами которого будут имена экспортируемых функций.</p>
 
-        <pre><code class="language-js">
+        <pre><code class="language-jsx">
             import { combineReducers } from 'redux'
             import * as reducers from './reducers'
 

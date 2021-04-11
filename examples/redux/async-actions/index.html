@@ -73,7 +73,7 @@
 
     <p>Для всего этого вы можете использовать поле <mark>status</mark> в действиях:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         { type: 'FETCH_POSTS' }
         { type: 'FETCH_POSTS', status: 'error', error: 'Oops' }
         { type: 'FETCH_POSTS', status: 'success', response: { ... } }
@@ -81,7 +81,7 @@
 
     <p>Или вы можете объявить отдельные типы для таких действий:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         { type: 'FETCH_POSTS_REQUEST' }
         { type: 'FETCH_POSTS_FAILURE', error: 'Oops' }
         { type: 'FETCH_POSTS_SUCCESS', response: { ... } }
@@ -100,7 +100,7 @@
 
     <p><mark>actions.js</mark></p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         //тип действия
         export const SELECT_SUBREDDIT = 'SELECT_SUBREDDIT'
 
@@ -115,7 +115,7 @@
 
     <p>Также пользователь может нажать кнопку «обновить» для обновления:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         export const INVALIDATE_SUBREDDIT = 'INVALIDATE_SUBREDDIT'
 
         export function invalidateSubreddit(subreddit) {
@@ -131,7 +131,7 @@
     Когда нужно будет фетчить посты для какого-нибудь <mark>subreddit</mark> мы будем посылать действие
     <mark>REQUEST_POSTS</mark>:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         export const REQUEST_POSTS = 'REQUEST_POSTS'
 
         export function requestPosts(subreddit) {
@@ -150,7 +150,7 @@
     UI-событием.</p>
     <p>Наконец, когда сетевой запрос будет осуществлен, мы отправим действие <mark>RECEIVE_POSTS</mark>:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 
         export function receivePosts(subreddit, json) {
@@ -184,7 +184,7 @@
     обновлять данные при необходимости.</p>
     <p>Вот как может выглядеть структура состояния для нашего приложения “Reddit headlines”:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         {
             selectedSubreddit: 'frontend',
             postsBySubreddit: {
@@ -240,7 +240,7 @@
         постраничной навигации вы можете ссылаться на такие элементы только по их ID. Это позволит вам всегда держать
         их в актуальном состоянии. С подходом <mark>normalizer</mark> ваше состояние может выглядеть вот так:</p>
 
-        <pre><code class="language-js">
+        <pre><code class="language-jsx">
         {
             selectedSubreddit: 'frontend',
             entities: {
@@ -290,7 +290,7 @@
 
     <p><mark>reducers.js</mark></p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         import { combineReducers } from 'redux'
         import {
             SELECT_SUBREDDIT, INVALIDATE_SUBREDDIT,
@@ -362,7 +362,7 @@
             <mark>state[action.subreddit]</mark> с помощью <mark>Object.assign()</mark> с использованием меньшего
             количества строк кода. Вот это:
 
-            <pre><code class="language-js">
+            <pre><code class="language-jsx">
                 return Object.assign({}, state, {
                     [action.subreddit]: posts(state[action.subreddit], action)
                 })
@@ -370,7 +370,7 @@
 
             эквивалентно этому:
 
-            <pre><code class="language-js">
+            <pre><code class="language-jsx">
                 let nextState = {}
                 nextState[action.subreddit] = posts(state[action.subreddit], action)
                 return Object.assign({}, state, nextState)
@@ -401,7 +401,7 @@
 
     <p><mark>actions.js</mark></p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         import fetch from 'isomorphic-fetch'
 
         export const REQUEST_POSTS = 'REQUEST_POSTS'
@@ -467,7 +467,7 @@
         пор не поддерживают его нативно, мы полагаем, что вы для этого используете <mark>isomorphic-fetch</mark>
         библиотеку:</p>
 
-        <pre><code class="language-js">
+        <pre><code class="language-jsx">
             // Добавьте это в каждый файл, где вы используете `fetch`
             import fetch from 'isomorphic-fetch'
         </code></pre>
@@ -478,7 +478,7 @@
         убедиться, что вы подключили Promise-полифил — это подключить ES6-полифил Babel во входной точке, прежде чем
         любой другой код запустится:</p>
 
-        <pre><code class="language-js">
+        <pre><code class="language-jsx">
             // Добавьте это в самом начале вашего приложения
             import 'babel-core/polyfill'
         </code></pre>
@@ -489,7 +489,7 @@
 
     <p><mark>index.js</mark></p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         import thunkMiddleware from 'redux-thunk'
         import { createLogger } from 'redux-logger'
         import { createStore, applyMiddleware } from 'redux'
@@ -515,7 +515,7 @@
 
     <p><mark>actions.js</mark></p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         import fetch from 'isomorphic-fetch'
 
         export const REQUEST_POSTS = 'REQUEST_POSTS'
@@ -581,7 +581,7 @@
 
     <p><mark>index.js</mark></p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         store.dispatch(fetchPostsIfNeeded('reactjs')).then(() =>
             console.log(store.getState())
         )

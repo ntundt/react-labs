@@ -85,7 +85,7 @@
       render()
     </p>
 
-    <pre><code class="language-js">ReactDOM.render(
+    <pre><code class="language-jsx">ReactDOM.render(
     element,
     container,
     [callback]
@@ -100,7 +100,7 @@
       hydrate()
     </p>
 
-    <pre><code class="language-js">ReactDOM.hydrate(element, container[, callback])</code></pre>
+    <pre><code class="language-jsx">ReactDOM.hydrate(element, container[, callback])</code></pre>
 
     <p>
       Добавлен в версии 16. То же, что и <mark>render()</mark>, но используется для гидратации контейнера, HTML содержимое которого было отрисовано компонентом <mark>ReactDOMServer</mark>. React попытается подключить слушатели событий к существующей разметке.
@@ -117,7 +117,7 @@
       unmountComponentAtNode()
     </p>
 
-    <pre><code class="language-js"> unmountComponentAtNode(container)</code></pre>
+    <pre><code class="language-jsx"> unmountComponentAtNode(container)</code></pre>
 
     <p>
       Удаляет установленный компонент React из DOM и очищает его обработчики событий и состояние. Если компонент не был монтирован в контейнер, вызов этой функции ничего не делает. Возвращает <mark>true</mark>, если компонент был демонтирован и <mark>false</mark>,
@@ -128,7 +128,7 @@
       findDOMNode()
     </p>
 
-    <pre><code class="language-js"> ReactDOM.findDOMNode(component)</code></pre>
+    <pre><code class="language-jsx"> ReactDOM.findDOMNode(component)</code></pre>
 
     <p>Если компонент был монтирован в DOM, этот метод возвращает соответствующий нативный элемент DOM браузера. Этот метод полезен для считывания значений из DOM, таких как значения полей формы и выполнения измерений DOM. В большинстве случаев вы можете
       прикреплять ссылку <mark>ref</mark> на узел DOM и избегать использования <mark>findDOMNode</mark>.
@@ -139,7 +139,7 @@
       createPortal()
     </p>
 
-    <pre><code class="language-js"> ReactDOM.createPortal(child, container)</code></pre>
+    <pre><code class="language-jsx"> ReactDOM.createPortal(child, container)</code></pre>
 
     <p>Создает портал. Порталы предоставляют способ отображения дочерних элементов в узел DOM, который существует вне иерархии DOM-компонента</p>
 

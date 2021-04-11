@@ -53,7 +53,7 @@
 
     <p>Порталы предоставляют первоклассный способ отображения дочерних элементов в узел DOM, который существует вне иерархии DOM родительского компонента.</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         ReactDOM.createPortal(child, container)
         <CustomButton color="red"/>
     </code></pre>
@@ -62,7 +62,7 @@
 
     <p class="section">Использование</p>
     <p>Как правило, когда вы возвращаете элемент из метода отрисовки компонента, он монтируется в DOM как дочерний элемент ближайшего родительского узла:</p>
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         render() {
          // React mounts a new div and renders the children into it
         return (
@@ -76,7 +76,7 @@
 
     <p>Однако иногда полезно вставлять дочерний элемент в другое место в DOM:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         render() {
         // React does *not* create a new div. It renders the children into `domNode`.
         // `domNode` is any valid DOM node, regardless of its location in the DOM.
@@ -95,7 +95,7 @@
 
         Это же касается и всплытия события. Событие, созданное внутри портала, будет распространяться к предкам в объемлющем дереве React, даже если они не являются предками в дереве DOM. Представим следующую структуру HTML:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
          &lt;html>
           &lt;body>
            &lt;div id="app-root">&lt;/div>
@@ -106,7 +106,7 @@
     </code></pre>
     <p>Компонент Parent в #app-root мог бы поймать неперехваченное всплывающее событие из соседнего узла #modal-root.</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
 
         // Эти два контейнера являются соседями в DOM
   const appRoot = document.getElementById('app-root');

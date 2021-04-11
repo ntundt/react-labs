@@ -62,7 +62,7 @@
     будут отражать текущее состояние и позволять React обновлять UI, чтобы он соответствовал нужному состоянию.</p>
     <p>Рассмотрим эти два компонента:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function UserGreeting(props) {
             return &lt;h1&gt;С возвращением!&lt;/h1&gt;;
         }
@@ -75,7 +75,7 @@
     <p>Что ж, создадим компонент <mark>Greeting</mark>, который будет отображать оба эти компонента, в зависимости от
     того, зашел в систему пользователь или нет:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function Greeting(props) {
             const isLoggedIn = props.isLoggedIn;
             if (isLoggedIn) {
@@ -99,7 +99,7 @@
     и не затронуть остальные.</p>
     <p>Разберем эти два новых компонента, представляющие собой кнопки «Вход» и «Выход»:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function LoginButton(props) {
             return (
                 &lt;button onClick={props.onClick}&gt;
@@ -122,7 +122,7 @@
     <mark>&lt;LogoutButton /&gt;</mark>, в зависимости от текущего состояния кнопки. Также, он добавит приветствие из
     предыдущего примера:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         class LoginControl extends React.Component {
             constructor(props) {
                 super(props);
@@ -177,7 +177,7 @@
     <p>Вы можете встроить любые выражения в JSX с помощью заключения их в фигурные скобки. В данном примере мы внедрили
     логический оператор <mark>&&</mark> из JavaScript. Это может быть удобно для выборочной вставки элемента:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function Mailbox(props) {
             const unreadMessages = props.unreadMessages;
             return (
@@ -210,7 +210,7 @@
     истинна : ложь</mark>.</p>
     <p>В примере ниже, мы выборочно отобразим небольшой кусок текста:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         render() {
             const isLoggedIn = this.state.isLoggedIn;
             return (
@@ -224,7 +224,7 @@
     <p>Также мы можем использовать этот способ и для более сложных выражений, хотя в таком случае менее очевидно, что
     происходит:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         render() {
             const isLoggedIn = this.state.isLoggedIn;
             return (
@@ -249,7 +249,7 @@
     <p>В примере ниже, компонент <mark>&lt;WarningBanner /&gt;</mark> зависит от значения его свойства <mark>warn</mark>.
     Если значение этого свойства <mark>false</mark>, то компонент не отобразится на экране:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function WarningBanner(props) {
             if (!props.warn) {
                 return null;

@@ -91,13 +91,13 @@
 
     <p>Например, вы вызываете такой код, когда создаете todo-элемент:</p>
 
-    <pre><<code class="language-js">
+    <pre><<code class="language-jsx">
         store.dispatch(addTodo('Use Redux'))
     </code></pre>
 
     <p>Для того чтобы логировать действие и состояние, вы можете изменить код примерно так:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         let action = addTodo('Use Redux')
 
         console.log('dispatching', action)
@@ -111,7 +111,7 @@
 
     <p>Вы можете вынести логирование в функцию:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function dispatchAndLog(store, action) {
             console.log('dispatching', action)
             store.dispatch(action)
@@ -121,7 +121,7 @@
 
     <p>Вы можете использовать ее везде вместо обычного <mark>store.dispatch()</mark>:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         dispatchAndLog(store, addTodo('Use Redux'))
     </code></pre>
 
@@ -133,7 +133,7 @@
     объект с парой методов, а мы пишем на JavaScript, следовательно, мы можем применить технику monkeypatch для
     реализации <mark>dispatch</mark>:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         let next = store.dispatch
         store.dispatch = function dispatchAndLog(action) {
             console.log('dispatching', action)
@@ -158,7 +158,7 @@
     ошибку в разработке.</p>
     <p>Если логирование и сообщения об ошибках являются отдельными утилитами, то они могут выглядеть так:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function patchStoreToAddLogging(store) {
             let next = store.dispatch
             store.dispatch = function dispatchAndLog(action) {
@@ -191,7 +191,7 @@
     <p>Если эти функции опубликованы как отдельные модули, то позже мы можем использовать их для изменения нашего
     хранилища:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         patchStoreToAddLogging(store)
         patchStoreToAddCrashReporting(store)
     </code></pre>
@@ -204,7 +204,7 @@
     сути. Ранее наши функции заменяли <mark>store.dispatch</mark>. Что если бы они вместо этого возвращали новую функцию
     <mark>dispatch</mark>?</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function logger(store) {
             let next = store.dispatch
 
@@ -223,7 +223,7 @@
     <p>Мы могли бы предоставить функцию-помощник внутри Redux, которая могла бы применять актуальный monkeypatching, как
     часть имплементации:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function applyMiddlewareByMonkeypatching(store, middlewares) {
             middlewares = middlewares.slice()
             middlewares.reverse()
@@ -237,7 +237,7 @@
 
     <p>Мы можем использовать такой подход для применения нескольких связующих ПО:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         applyMiddlewareByMonkeypatching(store, [ logger, crashReporter ])
     </code></pre>
 
@@ -250,7 +250,7 @@
     есть еще и другая причина: каждое связующее ПО имеет доступ (и возможность вызвать) ранее обернутый
     <mark>store.dispatch</mark>:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function logger(store) {
             // Обязательно нужно закешировать функцию, которую вернуло предыдущее связующее ПО:
             let next = store.dispatch
@@ -271,7 +271,7 @@
     <p>Но есть еще другой метод реализации объединения связующего ПО в цепочки. Связующее ПО могло бы принимать функцию
     отправки действия <mark>next()</mark> в параметрах вместо того, чтобы читать ее из экземпляра хранилища.</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         function logger(store) {
             return function wrapDispatchToAddLogging(next) {
                 return function dispatchAndLog(action) {
@@ -287,7 +287,7 @@
     <p>Это тот момент, когда “нам нужно двигаться глубже”, так что имеет смысл потратить некоторе время на это. Каскад
     функций выглядит пугающим. Стрелочные функции из ES6 делают это каррирование чуть более простым для глаз:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         const logger = store => next => action => {
             console.log('dispatching', action)
             let result = next(action)
@@ -322,7 +322,7 @@
     которая сначала получает финальную, полностью обернутую функцию <mark>dispatch()</mark> и возвращает копию хранилища,
     которая использует эту функцию:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         // Осторожно: Простейшая имплементация!
         // Это *не* Redux API.
 
@@ -358,7 +358,7 @@
 
     <p>Дано связующее ПО, которое мы только что написали:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         const logger = store => next => action => {
             console.log('dispatching', action)
             let result = next(action)
@@ -384,7 +384,7 @@
 
     <p>Вот так можно его применить к Redux хранилищу:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         import { createStore, combineReducers, applyMiddleware } from 'redux'
 
         let todoApp = combineReducers(reducers)
@@ -398,7 +398,7 @@
     <p>Вот и все! Теперь любое действие, отправленное в экземпляр хранилища будет проходить через <mark>logger</mark> и
     <mark>crashReporter</mark>:</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         // будет проходить через `logger` и `crashReporter`!
         store.dispatch(addTodo('Use Redux'))
     </code></pre>
@@ -410,7 +410,7 @@
     валидным Redux связующим ПО. Они не являются в равной степени полезными, но, по крайней мере, они в равной степени
     забавны.</p>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         /**
         * Логирует все действия и состояния после того, как действия будут отправлены.
         */
@@ -424,7 +424,7 @@
         }
     </code></pre>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         /**
         * Отправляет отчеты об ошибках когда обновляется состояние и уведомляются слушатели.
         */
@@ -444,7 +444,7 @@
         }
     </code></pre>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         /**
         * Планирует действия с { meta: { delay: N } }, которые будут отложены на N миллисекунд.
         * Создает `dispatch`, возвращающий функцию, для отмены таймаута.
@@ -465,7 +465,7 @@
         }
     </code></pre>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         /**
         * Планирует действия с { meta: { raf: true } }, которые будут отправлены внутри
         * фрейма rAF цикла. Создает  `dispatch`, который возвращает функцию для удаления
@@ -507,7 +507,7 @@
         }
     </code></pre>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         /**
         * Позволяет вам отправлять промисы в дополнение к действиям.
         * Если промис зарезолвен, его результат будет отправлен как действие.
@@ -523,7 +523,7 @@
         }
     </code></pre>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         /**
         * Позволяет вам отправлять специальные действия с полем { promise }.
         * Это связующее ПО превратит их в единственное действие в начале,
@@ -551,7 +551,7 @@
         }
     </code></pre>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         /**
         * Позволяет вам отправлять функцию вместо действия.
         * Функция будет принимать `dispatch` и `getState` в качестве аргументов.
@@ -567,7 +567,7 @@
                 next(action)
     </code></pre>
 
-    <pre><code class="language-js">
+    <pre><code class="language-jsx">
         // Вы можете использовать их все! (Это не значит, что вы должны.)
         let todoApp = combineReducers(reducers)
         let store = createStore(
