@@ -58,3 +58,8 @@
     border-left: 7px solid rgba(97, 219, 251, 1);
     background-color: rgb(97, 218, 251, 0.2);
 }
+
+.site-nav-scroll{
+    height: 800px;
+    overflow-y: scroll;
+}
