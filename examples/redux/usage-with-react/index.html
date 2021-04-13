@@ -123,24 +123,24 @@
     <p>Из этого руководства получаются следующие представления и их свойства:</p>
 
     <ul>
-        <li><mark>• TodoList</mark> — список, показывающий видимые todos.</li>
+        <li><mark>TodoList</mark> — список, показывающий видимые todos.</li>
         <ul>
-            <li>• <mark>todos: Array</mark> — массив todo-объектов, имеющих форму
+            <li><mark>todos: Array</mark> — массив todo-объектов, имеющих форму
             <mark>{ id, text, completed }</mark>.</li>
-            <li>• <mark>onTodoClick(id: number)</mark> — колбек, который будет вызван при клике на todo.</li>
+            <li><mark>onTodoClick(id: number)</mark> — колбек, который будет вызван при клике на todo.</li>
         </ul>
-        <li>• <mark>Todo</mark> — отдельный todo.</li>
+        <li><mark>Todo</mark> — отдельный todo.</li>
         <ul>
-            <li>• <mark>text: string</mark> — текст для отображения.</li>
-            <li>• <mark>completed: boolean</mark> — должен ли todo показываться зачеркнутым.</li>
-            <li>• <mark>onClick()</mark> — колбек, который будет вызван при клике на todo.</li>
+            <li><mark>text: string</mark> — текст для отображения.</li>
+            <li><mark>completed: boolean</mark> — должен ли todo показываться зачеркнутым.</li>
+            <li><mark>onClick()</mark> — колбек, который будет вызван при клике на todo.</li>
         </ul>
-        <li>• <mark>Link</mark> — ссылка с колбеком.</li>
+        <li><mark>Link</mark> — ссылка с колбеком.</li>
         <ul>
-            <li>• <mark>onClick()</mark> — колбек, который будет вызван при клике на ссылку.</li>
+            <li><mark>onClick()</mark> — колбек, который будет вызван при клике на ссылку.</li>
         </ul>
-        <li>• <mark>Footer</mark> — область, где мы позволим пользователю менять текущую видимость todos.</li>
-        <li>• <mark>App</mark> — корневой компонент, который рендерит все остальное.</li>
+        <li><mark>Footer</mark> — область, где мы позволим пользователю менять текущую видимость todos.</li>
+        <li><mark>App</mark> — корневой компонент, который рендерит все остальное.</li>
     </ul>
 
     <p>Они описывают вид, но не знают откуда приходят данные или как изменить их. Они только рендерят то, что им дают.
@@ -156,11 +156,11 @@
     соответствующее действие при клике:</p>
 
     <ul>
-        <li>• <mark>VisibleTodoList</mark> — фильтрует todos согласно текущему фильтру видимости и рендерит
+        <li><mark>VisibleTodoList</mark> — фильтрует todos согласно текущему фильтру видимости и рендерит
         <mark>TodoList</mark>.</li>
-        <li>• <mark>FilterLink</mark> — получает текущий фильтр видимости и рендерит <mark>Link</mark>.</li>
+        <li><mark>FilterLink</mark> — получает текущий фильтр видимости и рендерит <mark>Link</mark>.</li>
         <ul>
-            <li>• <mark>filter: string</mark> — текущий фильтр видимости.</li>
+            <li><mark>filter: string</mark> — текущий фильтр видимости.</li>
         </ul>
     </ul>
 
@@ -170,7 +170,7 @@
     функция действительно соединены вместе, как в случае с этим миниатюрным компонентом:</p>
 
     <ul>
-        <li>• <mark>AddTodo</mark> — поле ввода с кнопкой «Добавить»</li>
+        <li><mark>AddTodo</mark> — поле ввода с кнопкой «Добавить»</li>
     </ul>
 
     <p>Технически мы могли бы «разбить» его на два компонента, но это может быть слишком рано на данном этапе. Вполне
