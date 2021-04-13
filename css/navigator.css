@@ -9,6 +9,7 @@
 
     .site-nav {
         border-top: 2px solid #E6ECF1;
+        min-width: 100%;
     }
 
     .site-nav {
@@ -23,7 +24,7 @@
 }
 
 .site-nav {
-    min-width: 20%;
+    min-width: 18%;
     background-color: rgb(247, 247, 247);
     border-left: 2px solid #E6ECF1;
     padding: 30px;

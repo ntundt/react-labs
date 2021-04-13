@@ -19,7 +19,7 @@
     });
 })(jQuery);*/
 
-$(function() {
+/*$(function() {
     var height = $('.content').height(); 
     $('.site-nav-scroll').height(height); 
-});
+});*/

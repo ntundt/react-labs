@@ -193,6 +193,10 @@
                         $(document).ready(function() {
                             $('.site-nav-list a[href="index.html"]').parent().toggleClass('site-nav-list-active');
                         });
+                        $(function() {
+                        var height = $('.content').height();
+                        $('.site-nav-scroll').height(height);
+                        });
                     </script>
             </div>
         </div>
