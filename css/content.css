@@ -15,16 +15,18 @@ body {
     max-width: 80%;
     height: auto;
     font-size: 20px;
+    line-height: 1.5;
     padding: 0 50px;
     padding-bottom: 80px;
     overflow-x: hidden;
 }
 
 .content .section {
+    padding: 30px 20px 10px 20px;
     font-size: 36px;
+    font-weight: 700;
     margin: 0;
-    text-align: center;
-    padding: 30px 5% 10px 5%;
+    text-align: left;
 }
 
 .content .section-title {
@@ -42,16 +44,14 @@ body {
 }
 
 .content p {
-    text-indent: 50px;
-    text-align: justify;
+    text-align: left;
     margin: 0;
     padding: 10px 20px;
 }
 
-.content ul{
-    list-style-type: none;
-
-    padding: 10px 8%;
+.content ul {
+    padding: 10px 20px;
+    padding-left: 40px;
     margin: 0;
 }
 
@@ -85,20 +85,24 @@ body {
 }
 
 .warning {
-    background-color: #fffdcb;
-    padding: 0 30px;
-    margin: 10px;
-    border-left: 20px solid #505050;
+    background-color: #fffb8b;
+    padding: 25px;
+    border-radius: 5px;
 }
 
 mark {
     background: #e4e4e4;
     border-radius: 5px;
-    padding: 0 10px;
+    padding: 3px;
+    font-family: monospace;
+    line-height: 1.5;
+    font-size: 20px;
 }
 
 .markJSX {
     background: rgb(168, 233, 255);
+    max-width: 100%;
+    overflow-y: hidden;
 }
 
 .button {
@@ -168,6 +172,13 @@ th {
         overflow-y: hidden;
     }
 
+    .warning {
+        border-radius: 0;
+    }
+
+    pre[class*="language-"] {
+        border-radius: 0 !important;
+    }
     .content .section, .content .section-title {
         text-indent: 0;
     }
@@ -179,7 +190,7 @@ th {
     .brand {
         font-size: 18px;
     }
-    .content img{
-    max-width: 90% !important;
-}
+    .content img {
+        max-width: 90% !important;
+    }
 }
