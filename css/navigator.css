@@ -55,7 +55,11 @@
     padding-left: -7px;
 }
 
-.site-nav-list-active{
+.site-nav ul li:hover, .site-nav-list-active {
+    padding-left: 13px !important;
+}
+
+.site-nav-list-active {
     padding-left: -7px !important;
     border-left: 7px solid rgba(97, 219, 251, 1);
     background-color: rgb(97, 218, 251, 0.2);

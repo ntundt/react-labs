@@ -61,7 +61,7 @@ body {
 }
 
 .content a {
-    color: black;
+    /*color: black;*/
     text-decoration-line: none;
 }
 
@@ -70,7 +70,8 @@ body {
 }
 
 .content p a:hover {
-    color: aqua;
+    /*color: aqua;*/
+    text-decoration-line: underline;
 }
 
 .content li a:hover span {
