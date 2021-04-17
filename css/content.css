@@ -9,6 +9,11 @@ body {
     height: 100%
 }
 
+.central-page{
+    max-width: 100%;
+    margin: 0 10%;
+}
+
 .content {
     background: white;
     min-height: calc(100% - 161px);
@@ -193,4 +198,8 @@ th {
     .content img {
         max-width: 90% !important;
     }
+    .central-page{
+    max-width: 100%;
+    margin: 0 0;
+}
 }

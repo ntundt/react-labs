@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Порталы</title>
     <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
-    <link rel="stylesheet" href="../../../css/header.css">
-    <link rel="stylesheet" href="../../../css/content.css">
-    <link rel="stylesheet" href="../../../libraries/prism.css">
-    <link rel="stylesheet" href="../../../libraries/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="../../../css/general.css">
 
     <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
@@ -46,7 +43,7 @@
     </div>
 </section>
 
-<div id="delimiter"></div>
+<div class="general">
 
 <div class="content">
     <p class="section">Порталы</p>
@@ -192,11 +189,95 @@
     </code></pre>
 
     <p>Захват события, всплывающего из портала в родительском компоненте, позволяет создавать более гибкие абстракции, которые по своей сути не зависят от порталов. Например, если вы отрисовываете компонент &lt;Modal />, родитель может захватывать свои события независимо от того, реализован ли он с помощью порталов.</p>
-    <div class="lr-btn">
-        <button class="atuin-btn" onclick="window.location.href = '../../advanced/context/index.html';"><i class="fa fa-chevron-circle-left" aria-hidden="true"> </i><span>_</span>Назад</button>
-        <button class="atuin-btn" onclick="window.location.href = '../../advanced/error-boundaries/index.html';">Далее<span>_</span><i class="fa fa-chevron-circle-right" aria-hidden="true"></i> </button>
     </div>
-</div>
+<div class="site-nav">
+            <div class="site-nav-scroll">
+                <p class="site-nav-name">
+                    Установка React
+                </p>
+                <ul class="site-nav-list">
+                    <li><a href="../../installation/try-react/index.html">Начало работы с React</a></li>
+                    <li><a href="../../installation/new-app/index.html">Внедряем React в новое приложение</a></li>
+                    <li><a href="../../installation/add-to-app/index.html">Внедряем React в уже существующее приложение</a></li>
+                    <li><a href="../../installation/cdn-links/index.html">CDN ссылки</a></li>
+                </ul>
+                <p class="site-nav-name">Основы</p>
+                <ul class="site-nav-list">
+                    <li><a href="../../quick-start/hello-world/index.html">Hello, world!</a></li>
+                    <li><a href="../../quick-start/introducing-jsx/index.html">Введение в JSX</a></li>
+                    <li><a href="../../quick-start/rendering-elements/index.html">Создание элементов</a></li>
+                    <li><a href="../../quick-start/components-and-props/index.html">Компоненты и их свойства</a></li>
+                    <li><a href="../../quick-start/state-and-lifecycle/index.html">Состояние и жизненный цикл</a></li>
+                    <li><a href="../../quick-start/handling-events/index.html">Обработка событий</a></li>
+                    <li><a href="../../quick-start/conditional-rendering/index.html">Выборочный рендеринг</a></li>
+                    <li><a href="../../quick-start/lists-and-keys/index.html">Списки и ключи</a></li>
+                    <li><a href="../../quick-start/forms/index.html">Формы</a></li>
+                    <li><a href="../../quick-start/lifting-state-up/index.html">Передача состояния наверх</a></li>
+                    <li><a href="../../quick-start/composition-vs-inheritance/index.html">Композиция вместо наследования</a></li>
+                    <li><a href="../../quick-start/thinking-in-react/index.html">Мышление в React</a></li>
+                </ul>
+                <p class="site-nav-name">Продвинутый React.js</p>
+                <ul class="site-nav-list">
+                    <li><a href="../../advanced/jsx-in-depth/index.html">JSX подробнее</a></li>
+                    <li><a href="../../advanced/typechecking-with-proptypes/index.html">Проверка типов с помощью PropTypes</a></li>
+                    <li><a href="../../advanced/static-typechecking/index.html">Статическая проверка типов</a></li>
+                    <li><a href="../../advanced/refs-and-dom/index.html">Ссылки Ref и DOM</a></li>
+                    <li><a href="../../advanced/uncontrolled-components/index.html">Неконтролируемые компоненты</a></li>
+                    <li><a href="../../advanced/optimizing-perfomance/index.html">Оптимизация производительности</a></li>
+                    <li><a href="../../advanced/react-without-jsx/index.html">React без JSX</a></li>
+                    <li><a href="../../advanced/reconciliation/index.html">Согласование</a></li>
+                    <li><a href="../../advanced/context/index.html">Контекст</a></li>
+                    <li><a href="../../advanced/fragments/index.html">Фрагменты</a></li>
+                    <li><a href="index.html">Порталы</a></li>
+                    <li><a href="../../advanced/error-boundaries/index.html">Границы ошибок</a></li>
+                    <li><a href="../../advanced/web-components/index.html">Web-компоненты</a></li>
+                    <li><a href="../../advanced/higher-order-comp/index.html">Компоненты высшего уровня</a></li>
+                    <li><a href="../../advanced/forwarding-refs/index.html">Пересылки</a></li>
+                    <li><a href="../../advanced/render-props/index.html">Props'ы рендера</a></li>
+                    <li><a href="../../advanced/integrating-with-lib/index.html">Интеграция с другими библиотеками</a></li>
+                    <li><a href="../../advanced/strict-mode/index.html">Строгий режим</a></li>
+                </ul>
+
+                <p class="site-nav-name">Справочник</p>
+                <ul class="site-nav-list">
+                    <li><a href="../../reference/react-api/index.html">React</a></li>
+                    <li><a href="../../reference/react-component/index.html">React.Component</a></li>
+                    <li><a href="../../reference/react-dom/index.html">ReactDOM</a></li>
+                    <li><a href="../../reference/react-dom-server/index.html">ReactDOMServer</a></li>
+                    <li><a href="../../reference/dom-elements/index.html">Элементы DOM</a></li>
+                    <li><a href="../../reference/synthetic-event/index.html">SyntheticEvent</a></li>
+                    <li><a href="#">Утилиты тестирования</a></li>
+                    <li><a href="#">Поверхностный рендеринг</a></li>
+                    <li><a href="#">Тестовый отрисовщик</a></li>
+                    <li><a href="#">Требования к среде JavaScript</a></li>
+                    <li><a href="#">Словарь</a></li>
+                </ul>
+
+                <p class="site-nav-name">Redux.js</p>
+                <ul class="site-nav-list">
+                    <li><a href="../../redux/about-redux/index.html">О Redux</a></li>
+                    <li><a href="../../redux/install/index.html">Установка</a></li>
+                    <li><a href="../../redux/introduction/index.html">Введение</a></li>
+                    <li><a href="../../redux/actions/index.html">Действия</a></li>
+                    <li><a href="../../redux/reducers/index.html">Редюсеры</a></li>
+                    <li><a href="../../redux/store/index.html">Хранилище</a></li>
+                    <li><a href="../../redux/data-flow/index.html">Поток данных</a></li>
+                    <li><a href="../../redux/usage-with-react/index.html">Использование с React</a></li>
+                    <li><a href="../../redux/async-actions/index.html">Асинхронные действия</a></li>
+                    <li><a href="../../redux/async-flow/index.html">Асинхронный поток</a></li>
+                    <li><a href="../../redux/middleware/index.html">Связующее ПО</a></li>
+                    <script type="text/babel" src="../../../libraries/navigator.js"></script>
+                    <script>
+                        $(document).ready(function() {
+                            $('.site-nav-list a[href="index.html"]').parent().toggleClass('site-nav-list-active');
+                        });
+                        $(function() {
+                        var height = $('.content').height();
+                        $('.site-nav-scroll').height(height);
+                        });
+                    </script>
+            </div>
+        </div>
 
 </body>
 </html>

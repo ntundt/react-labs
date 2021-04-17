@@ -46,12 +46,48 @@
         </div>
     </section>
 
-    <div id="delimiter"></div>
+    <div class="general">
 
     <div class="content">
-    <p class="section">Лабаратоная работа №3</p>
+    <p class="section">Лабаратоная работа №16</p>
 
     </div>
+    <div class="site-nav">
+    <div class="site-nav-scroll">
+        <ul class="site-nav-list">
+            <p class="site-nav-name">Раздел 1. Установка и введение в React</p>
+            <li><a href="../lab01/index.html">Лабораторная работа №1</a></li>
+            <li><a href="./lab02/index.html">Лабораторная работа №2</a></li>
+            <li><a href="../lab03/index.html">Лабораторная работа №3</a></li>
+            <li><a href="../lab04/index.html">Лабораторная работа №4</a></li>
+            <li><a href="../lab05/index.html">Лабораторная работа №5</a></li>
+            <p class="site-nav-name">Раздел 2. Основы React</p>
+            <li><a href="../lab06/index.html">Лабораторная работа №6</a></li>
+            <li><a href="../lab07/index.html">Лабораторная работа №7</a></li>
+            <li><a href="../lab08/index.html">Лабораторная работа №8</a></li>
+            <li><a href="../lab09/index.html">Лабораторная работа №9</a></li>
+            <li><a href="../lab10/index.html">Лабораторная работа №10</a></li>
+            <p class="site-nav-name">Раздел 3. Redux.js</p>
+            <li><a href="../lab11/index.html">Лабораторная работа №11</a></li>
+            <li><a href="../lab12/index.html">Лабораторная работа №12</a></li>
+            <li><a href="../lab13/index.html">Лабораторная работа №13</a></li>
+            <li><a href="../lab14/index.html">Лабораторная работа №14</a></li>
+            <li><a href="../lab15/index.html">Лабораторная работа №15</a></li>
+            <li><a href="index.html">Лабораторная работа №16</a></li>
+            <li><a href="../lab17/index.html">Лабораторная работа №17</a></li>
+        </ul>
+        <script type="text/babel" src="../../libraries/navigator.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('.site-nav-list a[href="index.html"]').parent().toggleClass('site-nav-list-active');
+            });
+            $(function() {
+                var height = $('.content').height();
+                $('.site-nav-scroll').height(height);
+            });
+        </script>
+    </div>
+</div>
 
 </body>
 
