@@ -239,7 +239,6 @@
     transform: translateX(-50%) translateY(-50%) scale(1);
 }    
 
-
 /*Стили списков лабораторных работ*/
 
 .lr-list {
@@ -254,8 +253,8 @@
     padding: .4em .4em .4em .8em;
     margin: .5em 0 .5em 2.5em;
     background: #D3D4DA;
-    color: #000;
-    text-decoration: none;
+    color: #000 !important;
+    text-decoration: none !important;
     transition: all .3s ease-out;
 }
 
