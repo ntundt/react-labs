@@ -61,22 +61,22 @@ body {
 }
 
 .content a {
-    /*color: black;*/
+    color: black;
     text-decoration-line: none;
 }
 
-.content p a {
+.content p a, .content li a {
     color: #0077aa;
 }
 
-.content p a:hover {
+.content p a:hover, .content li a:hover {
     /*color: aqua;*/
     text-decoration-line: underline;
 }
 
-.content li a:hover span {
+/* .content li a:hover span {
     color: #71ebff;
-}
+} */
 
 .content img {
     display: block;
