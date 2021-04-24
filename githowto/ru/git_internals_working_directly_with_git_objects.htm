@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head lang="ru" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
+    <meta charset="utf-8">
+    <title>23. Git внутри: Работа непосредственно с объектами git</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+            <link rel="alternate" href="../git_internals_working_directly_with_git_objects.htm" hreflang="x-default"/>
+        <link rel="alternate" href="git_internals_working_directly_with_git_objects.htm" hreflang="ru"/>
+        <link rel="alternate" href="../uk/git_internals_working_directly_with_git_objects.htm" hreflang="uk"/>
+        <link rel="alternate" href="../pt-BR/git_internals_working_directly_with_git_objects.htm" hreflang="pt-BR"/>
+    
+            <link rel="canonical" href="git_internals_working_directly_with_git_objects.htm"/>
+    
+    
+    <link rel="shortcut icon" href="../favicon.png" />
+
+    <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700&amp;subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+<link href="../release/css/output.min.css" rel="stylesheet">
+</head>
+<body class="git_internals_working_directly_with_git_objects">
+<div id="skip-link">
+    <a href="git_internals_working_directly_with_git_objects.htm#main" class="element-invisible element-focusable">Skip to main content</a>
+</div>
+<div id="wrap">
+    
+    <nav class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+                <span class="sr-only">Toggle navigation</span>
+            </button>
+            <a class="navbar-brand" href="../ru.htm">GitHowTo - Обучение Git</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse-01">
+            <div class="social-likes" data-url="http://githowto.com/">
+    
+</div>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown dropdown-menu-scrollable">
+                    <a href="git_internals_working_directly_with_git_objects.htm#" title="Содержание" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-list"></i> <span class="visible-inline-xs hidden-sm hidden-md hidden-lg">Содержание</span></a>
+                    <div class="dropdown-menu">
+                    </div>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+    <div class="cart-placeholder"></div>
+
+    <div id="main" class="container">
+        <article class="text">
+    <div class="container">
+                <h1 class="title">23. Git внутри: Работа непосредственно с объектами git</h1>
+
+                    
+
+                
+
+        <h3>Цели</h3>
+
+<ul><li>Исследовать структуру базы данных объектов</li>
+<li>Научиться использовать SHA1 хэши для поиска содержимого в репозитории</li></ul>
+
+<p>Давайте исследуем объекты git с помощью некоторых инструментов.</p>
+
+<h2><em>01</em> Поиск последнего коммита</h2>
+
+<h4 class="h4-pre">Выполните:</h4>
+
+<pre class="instructions">git hist --max-count=1</pre>
+
+<p>Эта команда должна показать последний коммит в репозиторий. SHA1 хэш в вашей системе, вероятно, отличается от моего, но вы увидите что-то наподобие этого.</p>
+
+<h4 class="h4-pre">Результат:</h4>
+
+<pre class="sample">$ git hist --max-count=1
+* 8029c07 2011-03-09 | Added index.html. (HEAD, master) [Alexander Shvets]</pre>
+
+<h2><em>02</em> Вывод последнего коммита</h2>
+
+<p>С помощью SHA1 хэша из коммита,  указанного выше…</p>
+
+<h4 class="h4-pre">Выполните:</h4>
+
+<pre class="instructions">git cat-file -t &lt;hash&gt;
+git cat-file -p &lt;hash&gt;</pre>
+
+<p>Вот что выходит у меня…</p>
+
+<h4 class="h4-pre">Результат:</h4>
+
+<pre class="sample">$ git cat-file -t 8029c07
+commit
+$ git cat-file -p 8029c07
+tree 096b74c56bfc6b40e754fc0725b8c70b2038b91e
+parent 567948ac55daa723807c0c16e34c76797efbcbed
+author Alexander Shvets &lt;alex@githowto.com&gt; 1299684476 -0500
+committer Alexander Shvets &lt;alex@githowto.com&gt; 1299684476 -0500
+
+Added index.html.</pre>
+
+<p class="note"><strong><span class="caps">Примечание</span>:</strong> Если вы задали алиасы «type» и «dump», как описано в <a href="aliases.htm">уроке об алиасах</a>, можете вводить команды <code>git type</code> и <code>git dump</code> вместо длинных команд (которые я никогда не запоминаю).</p>
+
+<p>Это вывод объекта коммита, который находится во главе ветки master.</p>
+
+<h2><em>03</em> Поиск дерева</h2>
+
+<p>Мы можем вывести дерево каталогов, ссылка на который идет в коммите. Это должно быть описание файлов (верхнего уровня) в нашем проекте (для конкретного коммита). Используйте SHA1 хэш из строки «дерева», из списка выше.</p>
+
+<h4 class="h4-pre">Выполните:</h4>
+
+<pre class="instructions">git cat-file -p &lt;treehash&gt;</pre>
+
+<p>Вот как выглядит мое дерево…</p>
+
+<h4 class="h4-pre">Результат:</h4>
+
+<pre class="sample">$ git cat-file -p 096b74c
+100644 blob 28e0e9d6ea7e25f35ec64a43f569b550e8386f90    index.html
+040000 tree e46f374f5b36c6f02fb3e9e922b79044f754d795    lib</pre>
+
+<p>Да, я вижу index.html и каталог lib.</p>
+
+<h2><em>04</em> Вывод каталога lib</h2>
+
+<h4 class="h4-pre">Выполните:</h4>
+
+<pre class="instructions">git cat-file -p &lt;libhash&gt;</pre>
+
+<h4 class="h4-pre">Результат:</h4>
+
+<pre class="sample">$ git cat-file -p e46f374
+100644 blob c45f26b6fdc7db6ba779fc4c385d9d24fc12cf72    hello.html</pre>
+
+<p>Существует файл <code>hello.html</code>.</p>
+
+<h2><em>05</em> Вывод файла <code>hello.html</code></h2>
+
+<h4 class="h4-pre">Выполните:</h4>
+
+<pre class="instructions">git cat-file -p &lt;hellohash&gt;</pre>
+
+<h4 class="h4-pre">Результат:</h4>
+
+<pre class="sample">$ git cat-file -p c45f26b
+&lt;!-- Author: Alexander Shvets (alex@githowto.com) --&gt;
+&lt;html&gt;
+  &lt;head&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello, World!&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+
+<p>А вот и он. Мы вывели объекты коммитов, объекты деревьев и объекты блобов непосредственно из репозитория git. Это все, что есть – блобы, деревья и коммиты.</p>
+
+<h2><em>06</em> Исследуйте самостоятельно</h2>
+
+<p>Исследуйте git репозиторий вручную самостоятельно. Смотрите, удастся ли вам найти оригинальный файл hello.html с самого первого коммита вручную по ссылкам SHA1 хэша в последнем коммите.</p>
+
+
+        
+        <nav class="prev-next">
+                    <div class="next">
+                <a href="creating_a_branch.htm" class="btn">24. Создание ветки <span class="fa fa-arrow-right"></span></a>
+            </div>
+                            <div class="prev">
+                <a href="git_internals_git_directory.htm" class="btn"><span class="fa fa-arrow-left"></span> 22. Git внутри: Каталог .git </a>
+            </div>
+            </nav>
+    </div>
+</article>
+
+<div class="site-index row" style="display: none;">
+    <div class="row">
+        <div class="col-sm-3">
+            <ul>
+                                                <li class="leaf"><a href="setup.htm">1. Подготовка</a></li>
+                                                    <li class="leaf"><a href="more_setup.htm">2. Финальные приготовления</a></li>
+                                                    <li class="leaf"><a href="create_a_project.htm">3. Создание проекта</a></li>
+                                                    <li class="leaf"><a href="checking_status.htm">4. Проверка состояния</a></li>
+                                                    <li class="leaf"><a href="making_changes.htm">5. Внесение изменений</a></li>
+                                                    <li class="leaf"><a href="staging_changes.htm">6. Индексация изменений</a></li>
+                                                    <li class="leaf"><a href="staging_and_committing.htm">7. Индексация и коммит</a></li>
+                                                    <li class="leaf"><a href="commiting_changes.htm">8. Коммит изменений</a></li>
+                                                    <li class="leaf"><a href="changes_not_files.htm">9. Изменения, а не файлы</a></li>
+                                                    <li class="leaf"><a href="history.htm">10. История</a></li>
+                                                    <li class="leaf"><a href="aliases.htm">11. Алиасы</a></li>
+                                                    <li class="leaf"><a href="getting_old_versions.htm">12. Получение старых версий</a></li>
+                                                    <li class="leaf"><a href="tagging_versions.htm">13. Создание тегов версий</a></li>
+                                                    </ul>
+        </div>
+        <div class="col-sm-3">
+            <ul>
+                        <li class="leaf"><a href="undoing_local_changes.htm">14. Отмена локальных изменений (до индексации)</a></li>
+                                                    <li class="leaf"><a href="undoing_staged_changes.htm">15. Отмена проиндексированных изменений (перед коммитом)</a></li>
+                                                    <li class="leaf"><a href="undoing_committed_changes.htm">16. Отмена коммитов</a></li>
+                                                    <li class="leaf"><a href="removing_commits_from_a_branch.htm">17. Удаление коммитов из ветки</a></li>
+                                                    <li class="leaf"><a href="remove_the_oops_tag.htm">18. Удаление тега oops</a></li>
+                                                    <li class="leaf"><a href="amending_commits.htm">19. Внесение изменений в коммиты</a></li>
+                                                    <li class="leaf"><a href="moving_files.htm">20. Перемещение файлов</a></li>
+                                                    <li class="leaf"><a href="more_structure.htm">21. Подробнее о структуре</a></li>
+                                                    <li class="leaf"><a href="git_internals_git_directory.htm">22. Git внутри: Каталог .git</a></li>
+                                                    <li class="leaf"><a href="git_internals_working_directly_with_git_objects.htm">23. Git внутри: Работа непосредственно с объектами git</a></li>
+                                                    <li class="leaf"><a href="creating_a_branch.htm">24. Создание ветки</a></li>
+                                                    <li class="leaf"><a href="navigating_branches.htm">25. Навигация по веткам</a></li>
+                                                    <li class="leaf"><a href="changes_in_master.htm">26. Изменения в ветке master</a></li>
+                                                    </ul>
+        </div>
+        <div class="col-sm-3">
+            <ul>
+                        <li class="leaf"><a href="viewing_diverging_branches.htm">27. Просмотр отличающихся веток</a></li>
+                                                    <li class="leaf"><a href="merging.htm">28. Слияние</a></li>
+                                                    <li class="leaf"><a href="creating_a_conflict.htm">29. Создание конфликта</a></li>
+                                                    <li class="leaf"><a href="resolving_conflicts.htm">30. Разрешение конфликтов</a></li>
+                                                    <li class="leaf"><a href="rebasing_vs_merging.htm">31. Перебазирование как альтернатива слиянию</a></li>
+                                                    <li class="leaf"><a href="resetting_the_greet_branch.htm">32. Сброс ветки style</a></li>
+                                                    <li class="leaf"><a href="resetting_the_master_branch.htm">33. Сброс ветки master</a></li>
+                                                    <li class="leaf"><a href="rebasing.htm">34. Перебазирование</a></li>
+                                                    <li class="leaf"><a href="merging_back_to_master.htm">35. Слияние в ветку master</a></li>
+                                                    <li class="leaf"><a href="mutliple_repositories.htm">36. Несколько репозиториев</a></li>
+                                                    <li class="leaf"><a href="cloningrepositories.htm">37. Клонирование репозиториев</a></li>
+                                                    <li class="leaf"><a href="review_the_cloned_repository.htm">38. Просмотр клонированного репозитория</a></li>
+                                                    <li class="leaf"><a href="what_is_origin.htm">39. Что такое origin?</a></li>
+                                                    </ul>
+        </div>
+        <div class="col-sm-3">
+            <ul>
+                        <li class="leaf"><a href="remote_branches.htm">40. Удаленные ветки</a></li>
+                                                    <li class="leaf"><a href="change_the_original_repository.htm">41. Изменение оригинального репозитория</a></li>
+                                                    <li class="leaf"><a href="fetching_changes.htm">42. Извлечение изменений</a></li>
+                                                    <li class="leaf"><a href="merging_pulled_changes.htm">43. Слияние извлеченных изменений</a></li>
+                                                    <li class="leaf"><a href="pulling_changes.htm">44. Извлечение и слияние изменений</a></li>
+                                                    <li class="leaf"><a href="adding_a_tracking_branch.htm">45. Добавление ветки наблюдения</a></li>
+                                                    <li class="leaf"><a href="bare_repositories.htm">46. Чистые репозитории</a></li>
+                                                    <li class="leaf"><a href="adding_a_remote_repository.htm">47. Добавление удаленного репозитория</a></li>
+                                                    <li class="leaf"><a href="pushing_a_change.htm">48. Отправка изменений</a></li>
+                                                    <li class="leaf"><a href="pulling_shared_changes.htm">49. Извлечение общих изменений</a></li>
+                                                    <li class="leaf"><a href="hosting_your_git_repositories.htm">50. Размещение ваших git репозиториев</a></li>
+                                                    <li class="leaf"><a href="sharing_repos.htm">51. Расшаривание репозиториев</a></li>
+                                                    <li class="leaf"><a href="thank_you.htm">Спасибо!</a></li>
+                                        </ul>
+        </div>
+    </div>
+</div>    </div>
+</div>
+
+
+<script>
+    window.socialLikesButtons = {
+        plusone: {counterUrl: null},
+        vkontakte: {counterUrl: null}
+    };
+</script>
+
+<script src="../release/js/output.min.js"></script>
+
+
+</body>
+</html>
