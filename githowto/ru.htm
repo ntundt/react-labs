@@ -1,212 +1,192 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="ru" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
     <meta charset="utf-8">
-    <title>Git How To: курс обучения Git на русском</title>
+    <title>Обучение Git: курс обучения Git на русском</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-            <link rel="alternate" href="githowto_default.html" hreflang="x-default"/>
-        <link rel="alternate" href="ru.htm" hreflang="ru"/>
-        <link rel="alternate" href="uk.htm" hreflang="uk"/>
-        <link rel="alternate" href="pt-BR.htm" hreflang="pt-BR"/>
-    
-            <link rel="canonical" href="ru.htm"/>
-    
-            <meta name="description" content="Git How To &mdash; это интерактивный тур, который познакомит вас с основами Git. Тур создан с пониманием того, что лучшим способом научиться использовать Git &mdash; попробовать его своими руками.">
-    
+    <link rel="canonical" href="ru.htm" />
+
+    <meta name="description" content="Обучение Git &mdash; это интерактивный тур, который познакомит вас с основами Git. Тур создан с пониманием того, что лучшим способом научиться использовать Git &mdash; попробовать его своими руками.">
+
     <link rel="shortcut icon" href="favicon.png" />
 
     <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700&amp;subset=latin,cyrillic' rel='stylesheet' type='text/css'>
-<link href="release/css/output.min.css" rel="stylesheet">
+    <link href="release/css/output.min.css" rel="stylesheet">
 </head>
+
 <body class="index">
-<div id="skip-link">
-    <a href="ru.htm#main" class="element-invisible element-focusable">Skip to main content</a>
-</div>
-<div id="wrap">
-    
-    <nav class="navbar navbar-inverse" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
-                <span class="sr-only">Toggle navigation</span>
-            </button>
-            <a class="navbar-brand" href="ru.htm">GitHowTo - Обучение Git</a>
-        </div>
-        <div class="collapse navbar-collapse" id="navbar-collapse-01">
-            <div class="social-likes" data-url="http://githowto.com/">
-    
-</div>
-
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown dropdown-menu-scrollable">
-                    <a href="ru.htm#" title="Содержание" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-list"></i> <span class="visible-inline-xs hidden-sm hidden-md hidden-lg">Содержание</span></a>
-                    <div class="dropdown-menu">
-                    </div>
-                </li>
-                
-            </ul>
-        </div>
+    <div id="skip-link">
+        <a href="ru.htm#main" class="element-invisible element-focusable">Skip to main content</a>
     </div>
-</nav>
-    <div class="cart-placeholder"></div>
+    <div id="wrap">
 
-    <div id="main" class="container">
-        <article class="text">
-    <div class="container">
-                <h1 class="title">Git How To: курс обучения Git на русском</h1>
+        <nav class="navbar navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+                        <span class="sr-only">Toggle navigation</span>
+                    </button>
+                    <a class="navbar-brand" href="ru.htm">Обучение Git</a>
+                </div>
+                <div class="collapse navbar-collapse" id="navbar-collapse-01">
 
-                
-
-        <div class="row">
-<div class="col-sm-6">
-<h1 class="title-big">Что это?</h1>
-
-<p><b class="inline">Git How To</b> — это интерактивный тур, который познакомит вас с основами Git. Тур создан с пониманием того, что лучшим способом научиться чему-нибудь — сделать это своими руками.</p>
-<p>Кстати, если вы знаете английский и Ruby, вам может быть удобней пройти курс на <a href="http://gitimmersion.com/">Git Immersion</a>.</p>
-</div>
-<div class="col-sm-6">
-<h1 class="title-big">Git?</h1>
-
-<p class=""><b class="inline">Git</b> — мощная и сложная распределенная система контроля версий. Понимание всех возможностей git открывает для разработчика новые горизонты в управлении исходным кодом. Самый верный способ обучиться владению Git — испытать его своими руками.</p>
-</div>
-</div>
-
-<h2>Для начала установите Git-клиент</h2>
-
-<div class="row">
-<div class="col-sm-4">
-<h3><i class="fa fa-linux"></i> Linux</h3>
-<code>yum install git</code><br/>
-<code>apt-get install git</code><br/>
-<code>zypper in git</code>
-</div>
-
-
-<div class="col-sm-4">
-<h3><i class="fa fa-apple"></i> Mac</h3>
-<a href="https://git-scm.com/download/mac">Git for Mac OS X</a><br/>
-<code>brew install git</code><br/>
-</div>
-
-<div class="col-sm-4">
-<h3><i class="fa fa-windows"></i> Windows</h3>
-<a href="https://git-scm.com/download/win">Git for windows</a>
-</div>
-
-</div>
-
-<div class="row go-block">
-  <div class="col-xs-12 col-sm-6 col-md-4">
-    <a class="btn btn-hg btn-primary go" href="ru/setup.htm"><i class="fa fa-flag"></i> Поехали!</a>
-  </div>
-  
-  <div class="col-xs-12 col-sm-6 col-md-8">
-
-
-<div class="carbon-index">
-    <script async type="text/javascript" src="https://cdn.carbonads.com/carbon.js?serve=CK7DTK3W&amp;placement=githowtocom" id="_carbonads_js"></script>
-</div>
-
-
-  </div>
-</div>
-
-
-        
-        <nav class="prev-next">
-                    <div class="next">
-                <a href="ru/setup.htm" class="btn">1. Подготовка <span class="fa fa-arrow-right"></span></a>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown dropdown-menu-scrollable">
+                            <a href="ru.htm#" title="Содержание" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-list"></i> <span class="visible-inline-xs hidden-sm hidden-md hidden-lg">Содержание</span></a>
+                            <div class="dropdown-menu">
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <a href="../index.html" title="Содержание" class="dropdown-toggle"><i class="fa fa-sign-out" aria-hidden="true"></i> Назад в React</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
+        </nav>
+        <div class="cart-placeholder"></div>
+
+        <div id="main" class="container">
+            <article class="text">
+                <div class="container">
+                    <h1 class="title">Обучение Git: курс обучения Git на русском</h1>
+
+
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h1 class="title-big">Что это?</h1>
+
+                            <p><b class="inline">Обучение Git</b> — это интерактивный тур, который познакомит вас с основами Git. Тур создан с пониманием того, что лучшим способом научиться чему-нибудь — сделать это своими руками.</p>
+                            <p>Кстати, если вы знаете английский и Ruby, вам может быть удобней пройти курс на <a href="http://gitimmersion.com/">Git Immersion</a>.</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <h1 class="title-big">Git?</h1>
+
+                            <p class=""><b class="inline">Git</b> — мощная и сложная распределенная система контроля версий. Понимание всех возможностей git открывает для разработчика новые горизонты в управлении исходным кодом. Самый верный способ обучиться владению Git — испытать его своими руками.</p>
+                        </div>
+                    </div>
+
+                    <h2>Для начала установите Git-клиент</h2>
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h3><i class="fa fa-linux"></i> Linux</h3>
+                            <code>yum install git</code><br />
+                            <code>apt-get install git</code><br />
+                            <code>zypper in git</code>
+                        </div>
+
+
+                        <div class="col-sm-4">
+                            <h3><i class="fa fa-apple"></i> Mac</h3>
+                            <a href="https://git-scm.com/download/mac">Git for Mac OS X</a><br />
+                            <code>brew install git</code><br />
+                        </div>
+
+                        <div class="col-sm-4">
+                            <h3><i class="fa fa-windows"></i> Windows</h3>
+                            <a href="https://git-scm.com/download/win">Git for windows</a>
+                        </div>
+
+                    </div>
+
+                    <div class="row go-block">
+                        <div class="col-xs-12 col-sm-6 col-md-4">
+                            <a class="btn btn-hg btn-primary go" href="ru/setup.htm"><i class="fa fa-flag"></i> Поехали!</a>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-8">
+                        </div>
+                    </div>
+
+                    <nav class="prev-next">
+                        <div class="next">
+                            <a href="ru/setup.htm" class="btn">1. Подготовка <span class="fa fa-arrow-right"></span></a>
+                        </div>
                     </nav>
+                </div>
+            </article>
+
+            <div class="site-index row" style="display: none;">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <ul>
+                            <li class="leaf"><a href="ru/setup.htm">1. Подготовка</a></li>
+                            <li class="leaf"><a href="ru/more_setup.htm">2. Финальные приготовления</a></li>
+                            <li class="leaf"><a href="ru/create_a_project.htm">3. Создание проекта</a></li>
+                            <li class="leaf"><a href="ru/checking_status.htm">4. Проверка состояния</a></li>
+                            <li class="leaf"><a href="ru/making_changes.htm">5. Внесение изменений</a></li>
+                            <li class="leaf"><a href="ru/staging_changes.htm">6. Индексация изменений</a></li>
+                            <li class="leaf"><a href="ru/staging_and_committing.htm">7. Индексация и коммит</a></li>
+                            <li class="leaf"><a href="ru/commiting_changes.htm">8. Коммит изменений</a></li>
+                            <li class="leaf"><a href="ru/changes_not_files.htm">9. Изменения, а не файлы</a></li>
+                            <li class="leaf"><a href="ru/history.htm">10. История</a></li>
+                            <li class="leaf"><a href="ru/aliases.htm">11. Алиасы</a></li>
+                            <li class="leaf"><a href="ru/getting_old_versions.htm">12. Получение старых версий</a></li>
+                            <li class="leaf"><a href="ru/tagging_versions.htm">13. Создание тегов версий</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-3">
+                        <ul>
+                            <li class="leaf"><a href="ru/undoing_local_changes.htm">14. Отмена локальных изменений (до индексации)</a></li>
+                            <li class="leaf"><a href="ru/undoing_staged_changes.htm">15. Отмена проиндексированных изменений (перед коммитом)</a></li>
+                            <li class="leaf"><a href="ru/undoing_committed_changes.htm">16. Отмена коммитов</a></li>
+                            <li class="leaf"><a href="ru/removing_commits_from_a_branch.htm">17. Удаление коммитов из ветки</a></li>
+                            <li class="leaf"><a href="ru/remove_the_oops_tag.htm">18. Удаление тега oops</a></li>
+                            <li class="leaf"><a href="ru/amending_commits.htm">19. Внесение изменений в коммиты</a></li>
+                            <li class="leaf"><a href="ru/moving_files.htm">20. Перемещение файлов</a></li>
+                            <li class="leaf"><a href="ru/more_structure.htm">21. Подробнее о структуре</a></li>
+                            <li class="leaf"><a href="ru/git_internals_git_directory.htm">22. Git внутри: Каталог .git</a></li>
+                            <li class="leaf"><a href="ru/git_internals_working_directly_with_git_objects.htm">23. Git внутри: Работа непосредственно с объектами git</a></li>
+                            <li class="leaf"><a href="ru/creating_a_branch.htm">24. Создание ветки</a></li>
+                            <li class="leaf"><a href="ru/navigating_branches.htm">25. Навигация по веткам</a></li>
+                            <li class="leaf"><a href="ru/changes_in_master.htm">26. Изменения в ветке master</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-3">
+                        <ul>
+                            <li class="leaf"><a href="ru/viewing_diverging_branches.htm">27. Просмотр отличающихся веток</a></li>
+                            <li class="leaf"><a href="ru/merging.htm">28. Слияние</a></li>
+                            <li class="leaf"><a href="ru/creating_a_conflict.htm">29. Создание конфликта</a></li>
+                            <li class="leaf"><a href="ru/resolving_conflicts.htm">30. Разрешение конфликтов</a></li>
+                            <li class="leaf"><a href="ru/rebasing_vs_merging.htm">31. Перебазирование как альтернатива слиянию</a></li>
+                            <li class="leaf"><a href="ru/resetting_the_greet_branch.htm">32. Сброс ветки style</a></li>
+                            <li class="leaf"><a href="ru/resetting_the_master_branch.htm">33. Сброс ветки master</a></li>
+                            <li class="leaf"><a href="ru/rebasing.htm">34. Перебазирование</a></li>
+                            <li class="leaf"><a href="ru/merging_back_to_master.htm">35. Слияние в ветку master</a></li>
+                            <li class="leaf"><a href="ru/mutliple_repositories.htm">36. Несколько репозиториев</a></li>
+                            <li class="leaf"><a href="ru/cloningrepositories.htm">37. Клонирование репозиториев</a></li>
+                            <li class="leaf"><a href="ru/review_the_cloned_repository.htm">38. Просмотр клонированного репозитория</a></li>
+                            <li class="leaf"><a href="ru/what_is_origin.htm">39. Что такое origin?</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-3">
+                        <ul>
+                            <li class="leaf"><a href="ru/remote_branches.htm">40. Удаленные ветки</a></li>
+                            <li class="leaf"><a href="ru/change_the_original_repository.htm">41. Изменение оригинального репозитория</a></li>
+                            <li class="leaf"><a href="ru/fetching_changes.htm">42. Извлечение изменений</a></li>
+                            <li class="leaf"><a href="ru/merging_pulled_changes.htm">43. Слияние извлеченных изменений</a></li>
+                            <li class="leaf"><a href="ru/pulling_changes.htm">44. Извлечение и слияние изменений</a></li>
+                            <li class="leaf"><a href="ru/adding_a_tracking_branch.htm">45. Добавление ветки наблюдения</a></li>
+                            <li class="leaf"><a href="ru/bare_repositories.htm">46. Чистые репозитории</a></li>
+                            <li class="leaf"><a href="ru/adding_a_remote_repository.htm">47. Добавление удаленного репозитория</a></li>
+                            <li class="leaf"><a href="ru/pushing_a_change.htm">48. Отправка изменений</a></li>
+                            <li class="leaf"><a href="ru/pulling_shared_changes.htm">49. Извлечение общих изменений</a></li>
+                            <li class="leaf"><a href="ru/hosting_your_git_repositories.htm">50. Размещение ваших git репозиториев</a></li>
+                            <li class="leaf"><a href="ru/sharing_repos.htm">51. Расшаривание репозиториев</a></li>
+                            <li class="leaf"><a href="ru/thank_you.htm">Спасибо!</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</article>
 
-<div class="site-index row" style="display: none;">
-    <div class="row">
-        <div class="col-sm-3">
-            <ul>
-                                                <li class="leaf"><a href="ru/setup.htm">1. Подготовка</a></li>
-                                                    <li class="leaf"><a href="ru/more_setup.htm">2. Финальные приготовления</a></li>
-                                                    <li class="leaf"><a href="ru/create_a_project.htm">3. Создание проекта</a></li>
-                                                    <li class="leaf"><a href="ru/checking_status.htm">4. Проверка состояния</a></li>
-                                                    <li class="leaf"><a href="ru/making_changes.htm">5. Внесение изменений</a></li>
-                                                    <li class="leaf"><a href="ru/staging_changes.htm">6. Индексация изменений</a></li>
-                                                    <li class="leaf"><a href="ru/staging_and_committing.htm">7. Индексация и коммит</a></li>
-                                                    <li class="leaf"><a href="ru/commiting_changes.htm">8. Коммит изменений</a></li>
-                                                    <li class="leaf"><a href="ru/changes_not_files.htm">9. Изменения, а не файлы</a></li>
-                                                    <li class="leaf"><a href="ru/history.htm">10. История</a></li>
-                                                    <li class="leaf"><a href="ru/aliases.htm">11. Алиасы</a></li>
-                                                    <li class="leaf"><a href="ru/getting_old_versions.htm">12. Получение старых версий</a></li>
-                                                    <li class="leaf"><a href="ru/tagging_versions.htm">13. Создание тегов версий</a></li>
-                                                    </ul>
-        </div>
-        <div class="col-sm-3">
-            <ul>
-                        <li class="leaf"><a href="ru/undoing_local_changes.htm">14. Отмена локальных изменений (до индексации)</a></li>
-                                                    <li class="leaf"><a href="ru/undoing_staged_changes.htm">15. Отмена проиндексированных изменений (перед коммитом)</a></li>
-                                                    <li class="leaf"><a href="ru/undoing_committed_changes.htm">16. Отмена коммитов</a></li>
-                                                    <li class="leaf"><a href="ru/removing_commits_from_a_branch.htm">17. Удаление коммитов из ветки</a></li>
-                                                    <li class="leaf"><a href="ru/remove_the_oops_tag.htm">18. Удаление тега oops</a></li>
-                                                    <li class="leaf"><a href="ru/amending_commits.htm">19. Внесение изменений в коммиты</a></li>
-                                                    <li class="leaf"><a href="ru/moving_files.htm">20. Перемещение файлов</a></li>
-                                                    <li class="leaf"><a href="ru/more_structure.htm">21. Подробнее о структуре</a></li>
-                                                    <li class="leaf"><a href="ru/git_internals_git_directory.htm">22. Git внутри: Каталог .git</a></li>
-                                                    <li class="leaf"><a href="ru/git_internals_working_directly_with_git_objects.htm">23. Git внутри: Работа непосредственно с объектами git</a></li>
-                                                    <li class="leaf"><a href="ru/creating_a_branch.htm">24. Создание ветки</a></li>
-                                                    <li class="leaf"><a href="ru/navigating_branches.htm">25. Навигация по веткам</a></li>
-                                                    <li class="leaf"><a href="ru/changes_in_master.htm">26. Изменения в ветке master</a></li>
-                                                    </ul>
-        </div>
-        <div class="col-sm-3">
-            <ul>
-                        <li class="leaf"><a href="ru/viewing_diverging_branches.htm">27. Просмотр отличающихся веток</a></li>
-                                                    <li class="leaf"><a href="ru/merging.htm">28. Слияние</a></li>
-                                                    <li class="leaf"><a href="ru/creating_a_conflict.htm">29. Создание конфликта</a></li>
-                                                    <li class="leaf"><a href="ru/resolving_conflicts.htm">30. Разрешение конфликтов</a></li>
-                                                    <li class="leaf"><a href="ru/rebasing_vs_merging.htm">31. Перебазирование как альтернатива слиянию</a></li>
-                                                    <li class="leaf"><a href="ru/resetting_the_greet_branch.htm">32. Сброс ветки style</a></li>
-                                                    <li class="leaf"><a href="ru/resetting_the_master_branch.htm">33. Сброс ветки master</a></li>
-                                                    <li class="leaf"><a href="ru/rebasing.htm">34. Перебазирование</a></li>
-                                                    <li class="leaf"><a href="ru/merging_back_to_master.htm">35. Слияние в ветку master</a></li>
-                                                    <li class="leaf"><a href="ru/mutliple_repositories.htm">36. Несколько репозиториев</a></li>
-                                                    <li class="leaf"><a href="ru/cloningrepositories.htm">37. Клонирование репозиториев</a></li>
-                                                    <li class="leaf"><a href="ru/review_the_cloned_repository.htm">38. Просмотр клонированного репозитория</a></li>
-                                                    <li class="leaf"><a href="ru/what_is_origin.htm">39. Что такое origin?</a></li>
-                                                    </ul>
-        </div>
-        <div class="col-sm-3">
-            <ul>
-                        <li class="leaf"><a href="ru/remote_branches.htm">40. Удаленные ветки</a></li>
-                                                    <li class="leaf"><a href="ru/change_the_original_repository.htm">41. Изменение оригинального репозитория</a></li>
-                                                    <li class="leaf"><a href="ru/fetching_changes.htm">42. Извлечение изменений</a></li>
-                                                    <li class="leaf"><a href="ru/merging_pulled_changes.htm">43. Слияние извлеченных изменений</a></li>
-                                                    <li class="leaf"><a href="ru/pulling_changes.htm">44. Извлечение и слияние изменений</a></li>
-                                                    <li class="leaf"><a href="ru/adding_a_tracking_branch.htm">45. Добавление ветки наблюдения</a></li>
-                                                    <li class="leaf"><a href="ru/bare_repositories.htm">46. Чистые репозитории</a></li>
-                                                    <li class="leaf"><a href="ru/adding_a_remote_repository.htm">47. Добавление удаленного репозитория</a></li>
-                                                    <li class="leaf"><a href="ru/pushing_a_change.htm">48. Отправка изменений</a></li>
-                                                    <li class="leaf"><a href="ru/pulling_shared_changes.htm">49. Извлечение общих изменений</a></li>
-                                                    <li class="leaf"><a href="ru/hosting_your_git_repositories.htm">50. Размещение ваших git репозиториев</a></li>
-                                                    <li class="leaf"><a href="ru/sharing_repos.htm">51. Расшаривание репозиториев</a></li>
-                                                    <li class="leaf"><a href="ru/thank_you.htm">Спасибо!</a></li>
-                                        </ul>
-        </div>
-    </div>
-</div>    </div>
-</div>
-
-
-<script>
-    window.socialLikesButtons = {
-        plusone: {counterUrl: null},
-        vkontakte: {counterUrl: null}
-    };
-</script>
-
-<script src="release/js/output.min.js"></script>
-
+    <script src="release/js/output.min.js"></script>
 
 </body>
+
 </html>
