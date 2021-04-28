@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Утилиты для тестирования</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
+    <link rel="stylesheet" href="../../../css/general.css">
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script src="../../../libraries/prism.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="../../../libraries/header.js"></script>
+</head>
+
+<body>
+
+    <section class="nav-bar">
+        <div class="nav-container">
+            <div class="brand">
+                <a href="index.html"><img src="../../../images/react-logo.png">Теория</a>
+            </div>
+            <nav>
+                <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+                <ul class="nav-list">
+                    <li>
+                        <a href="../../../index.html">Главная</a>
+                    </li>
+                    <li>
+                        <a href="../../../labs.html">Лабораторные работы</a>
+                    </li>
+                    <li>
+                        <a href="../../../theory.html">Теория</a>
+                    </li>
+                    <li>
+                        <a href="../../../info.html">Справочник</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <div class="general">
+
+        <!--ВСЕ ВАШЕ ТВОРЧЕСТВО В ДИВЕ CONTENT-->
+        <div class="content">
+            <p class="section">Утилиты для тестирования</p>
+
+            <p>Импортирование</p>
+
+            <pre class="line-numbers">
+    <code class="language-jsx">import ReactTestUtils from 'react-dom/test-utils'; // ES6
+var ReactTestUtils = require('react-dom/test-utils'); // ES5 с npm
+  </code>
+  </pre>
+            <p class="section">Обзор</p>
+            <p><mark>ReactTestUtils</mark> позволяет легко тестировать React-компоненты в&nbsp;любом тестовом фреймворке на&nbsp;ваш выбор. В&nbsp;Facebook мы&nbsp;используем <a href="https://facebook.github.io/jest/" target="_blank" rel="nofollow noopener noreferrer">Jest</a> для гладкого тестирования JavaScript-кода. Если хотите обучиться Jest, ознакомьтесь с&nbsp;<a href="https://jestjs.io/docs/en/tutorial-react" target="_blank" rel="nofollow noopener noreferrer">руководством по&nbsp;React</a>.</p>
+            <div class="warning">
+                <p>Примечание:</p>
+                <p>Мы&nbsp;рекомендуем использовать библиотеку <a href="https://testing-library.com/react" target="_blank" rel="nofollow noopener noreferrer">React Testing Library</a>, которая значительно облегчает написание тестов, имитируя поведение пользователей вашего приложения в&nbsp;браузере, и&nbsp;просто побуждает к&nbsp;хорошим практикам в&nbsp;тестировании.</p>
+                <p>В&nbsp;качестве альтернативы, Airbnb выпустил утилиту тестирования <a href="https://airbnb.io/enzyme/" target="_blank" rel="nofollow noopener noreferrer">Enzyme</a>, которая легко позволяет делать проверки, управлять, а&nbsp;также просматривать выходные данные React-компонентов.</p>
+            </div>
+            <ul>
+                <li><a href="#act">act()</a></li>
+                <li><a href="#mockcomponent">mockComponent()</a></li>
+                <li><a href="#iselement">isElement()</a></li>
+                <li><a href="#iselementoftype">isElementOfType()</a></li>
+                <li><a href="#isdomcomponent">isDOMComponent()</a></li>
+                <li><a href="#iscompositecomponent">isCompositeComponent()</a></li>
+                <li><a href="#iscompositecomponentwithtype">isCompositeComponentWithType()</a></li>
+                <li><a href="#findallinrenderedtree">findAllInRenderedTree()</a></li>
+                <li><a href="#scryrendereddomcomponentswithclass">scryRenderedDOMComponentsWithClass()</a></li>
+                <li><a href="#findrendereddomcomponentwithclass">findRenderedDOMComponentWithClass()</a></li>
+                <li><a href="#scryrendereddomcomponentswithtag">scryRenderedDOMComponentsWithTag()</a></li>
+                <li><a href="#findrendereddomcomponentwithtag">findRenderedDOMComponentWithTag()</a></li>
+                <li><a href="#scryrenderedcomponentswithtype">scryRenderedComponentsWithType()</a></li>
+                <li><a href="#findrenderedcomponentwithtype">findRenderedComponentWithType()</a></li>
+                <li><a href="#renderintodocument">renderIntoDocument()</a></li>
+                <li><a href="#simulate">Simulate</a></li>
+            </ul>
+            <p class="section">Справочник</p>
+            <p id="act" class="section-title-left"><a href="#act" aria-hidden="" class="anchor"></a>act()</p>
+            <p>Чтобы подготовить компонент для тестирования, оберните код с&nbsp;рендерингом и&nbsp;выполнением обновлений внутри функции <mark class="markJSX">act()</mark>. Это сделает код теста для компонентов React более близким к&nbsp;тому, как он&nbsp;рендерится в&nbsp;браузере.</p>
+            <div class="warning">
+                <p>Примечание:</p>
+                <p>Если вы&nbsp;используете пакет <mark class="markJSX">react-test-renderer</mark>, то&nbsp;он&nbsp;также предоставляет функцию <mark class="markJSX">act</mark>, которая работает аналогичным образом.</p>
+            </div>
+            <p>Допустим, у нас есть компонент <mark class="markJSX">Counter</mark>:</p>
+            <pre class="line-numbers">
+                <code class="language-jsx">
+                    class Counter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {count: 0};
+    this.handleClick = this.handleClick.bind(this);
+  }
+  componentDidMount() {
+    document.title = `Вы нажали на кнопку ${this.state.count} раз`;
+  }
+  componentDidUpdate() {
+    document.title = `Вы нажали на кнопку ${this.state.count} раз`;
+  }
+  handleClick() {
+    this.setState(state => ({
+      count: state.count + 1,
+    }));
+  }
+  render() {
+    return (
+      <div>
+        <p>Вы нажали на кнопку {this.state.count} раз</p>
+        <button onClick={this.handleClick}>
+          Нажми на меня
+        </button>
+      </div>
+    );
+  }
+}
+                </code>
+            </pre>
+            <p>Теперь напишем тест для этого примера:</p>
+
+
+            <pre class="line-numbers">
+            <code class="language-jsx">
+                import React from 'react';
+import ReactDOM from 'react-dom';
+import { act } from 'react-dom/test-utils';
+import Counter from './Counter';
+
+let container;
+
+beforeEach(() => {
+  container = document.createElement('div');
+  document.body.appendChild(container);
+});
+
+afterEach(() => {
+  document.body.removeChild(container);
+  container = null;
+});
+
+it('рендер и обновление счётчика', () => {
+  // Тестируем первый рендер и метод componentDidMount
+  act(() => {
+    ReactDOM.render(<Counter />, container);
+  });
+  const button = container.querySelector('button');
+  const label = container.querySelector('p');
+  expect(label.textContent).toBe('Вы нажали на кнопку 0 раз');
+  expect(document.title).toBe('Вы нажали на кнопку 0 раз');
+
+  // Тестируем второй рендер и метод componentDidUpdate
+  act(() => {
+    button.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+  });
+  expect(label.textContent).toBe('Вы нажали на кнопку 1 раз');
+  expect(document.title).toBe('Вы нажали на кнопку 1 раз');
+});
+            </code>
+        </pre>
+            <ul>
+                <li>Не&nbsp;забывайте, что отправка DOM-событий работает только если DOM-контейнер добавлен в&nbsp;<mark class="markJSX">document</mark>. Можно использовать вспомогательную библиотеку <a href="https://testing-library.com/react" target="_blank" rel="nofollow noopener noreferrer">React Testing Library</a>, чтобы уменьшить количество шаблонного кода.</li>
+                <li>В&nbsp;<a href="/docs/testing-recipes.html">«рецептах»</a> содержится больше примеров и&nbsp;деталей о&nbsp;том, как работает <mark class="markJSX">act()</mark>.</li>
+            </ul>
+            <p id="mockcomponent" class="section-title-left"><a href="#act" aria-hidden="" class="anchor"></a>mockComponent()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            mockComponent(
+  componentClass,
+  [mockTagName]
+)
+            </code>
+        </pre>
+            <p>Передайте фиктивный модуль компонента этому методу, чтобы дополнить его полезными методами, которые позволяют использовать его в&nbsp;качестве фиктивного компонента React. Вместо того чтобы рендерить как обычно, компонент становится простым элементом <mark class="markJSX">&lt;div&gt;</mark> (или другим тегом <mark class="markJSX">mockTagName</mark>, если указан), содержащий любые предоставленные дочерние элементы.</p>
+            <div class="warning">
+                <p>Примечание:</p>
+                <p>API-метод <mark class="markJSX">mockComponent()</mark> объявлен устаревшим. Поэтому вместо него рекомендуется использовать <mark><a href="https://facebook.github.io/jest/docs/en/tutorial-react-native.html#mock-native-modules-using-jestmock" target="_blank" rel="nofollow noopener noreferrer">jest.mock()</a></mark>.</p>
+            </div>
+
+            <p id="iselement" class="section-title-left"><a href="#act" aria-hidden="" class="anchor"></a>isElement()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            isElement(element)
+            </code>
+        </pre>
+            <p>Возвращает <code class="gatsby-code-text">true</code>, если <code class="gatsby-code-text">element</code> любой React-элемент.</p>
+
+            <p id="iselementoftype" class="section-title-left"><a href="#act" aria-hidden="" class="anchor"></a>isElementOfType()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            isElementOfType(
+  element,
+  componentClass
+)
+            </code>
+        </pre>
+            <p>Возвращает <code class="gatsby-code-text">true</code>, если <code class="gatsby-code-text">element</code> является элементом React, тип которого имеет тип React <code class="gatsby-code-text">componentClass</code>.</p>
+
+            <p id="isdomcomponent" class="section-title-left"><a href="#act" aria-hidden="" class="anchor"></a>isDOMComponent()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            isDOMComponent(instance)
+            </code>
+        </pre>
+            <p>Возвращает <code class="gatsby-code-text">true</code>, если <code class="gatsby-code-text">instance</code> является DOM-компонентом (таким как <code class="gatsby-code-text">&lt;div&gt;</code> или <code class="gatsby-code-text">&lt;span&gt;</code>).</p>
+
+            <p id="iscompositecomponent" class="section-title-left"><a href="#act" aria-hidden="" class="anchor"></a>isCompositeComponent()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            isCompositeComponent(instance)
+            </code>
+        </pre>
+            <p>Возвращает <code class="gatsby-code-text">true</code>, если <code class="gatsby-code-text">instance</code> является пользовательским компонентом, определённым как класс или функция.</p>
+
+            <p id="iscompositecomponentwithtype" class="section-title-left"><a href="#act" aria-hidden="" class="anchor"></a>isCompositeComponentWithType()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            isCompositeComponentWithType(
+  instance,
+  componentClass
+)
+            </code>
+        </pre>
+            <p>Возвращает <code class="gatsby-code-text">true</code>, если <code class="gatsby-code-text">instance</code> является компонентом, который имеет тип React <code class="gatsby-code-text">componentClass</code>.</p>
+
+            <p id="findallinrenderedtree" class="section-title-left"><a href="#act" aria-hidden="" class="anchor"></a>findAllInRenderedTree()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            findAllInRenderedTree(
+  tree,
+  test
+)
+            </code>
+        </pre>
+            <p>Находит все компоненты в&nbsp;дереве <code class="gatsby-code-text">tree</code>, для которых <code class="gatsby-code-text">test(component)</code> возвращает <code class="gatsby-code-text">true</code>. Сам по&nbsp;себе он&nbsp;не&nbsp;так полезен, но&nbsp;используется как примитив для других тестовых утилит.</p>
+            <p id="scryrendereddomcomponentswithclass" class="section-title-left"><a href="#act" aria-hidden="" class="anchor"></a>scryRenderedDOMComponentsWithClass()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            scryRenderedDOMComponentsWithClass(
+  tree,
+  className
+)
+            </code>
+        </pre>
+            <p>Находит все DOM-элементы компонентов в&nbsp;отображаемом дереве, которые являются DOM-компонентами с&nbsp;сопоставлением имён классов <code class="gatsby-code-text">className</code>.</p>
+            <p id="findrendereddomcomponentwithclass" class="section-title-left"><a href="#act" aria-hidden="" class="anchor"></a>findRenderedDOMComponentWithClass()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            findRenderedDOMComponentWithClass(
+  tree,
+  className
+)
+            </code>
+        </pre>
+            <p>Работает как <a href="#scryrendereddomcomponentswithclass"><code class="gatsby-code-text">scryRenderedDOMComponentsWithClass()</code></a>, но&nbsp;ожидает, что найдётся ровно один результат, который и&nbsp;будет возвращён. Если ничего не&nbsp;будет найдено или найдётся больше одного результата, генерирует исключение.</p>
+
+
+            <p id="scryrendereddomcomponentswithtag" class="section-title-left"><a href="#act" aria-hidden="" class="anchor"></a>scryRenderedDOMComponentsWithTag()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            scryRenderedDOMComponentsWithTag(
+  tree,
+  tagName
+)
+            </code>
+        </pre>
+            <p>Ищет все DOM-элементы компонентов в&nbsp;отображённом дереве, которые являются DOM-компонентами, и&nbsp;имя которых соответствует <code class="gatsby-code-text">tagName</code>.</p>
+
+
+            <p id="findrendereddomcomponentwithtag" class="section-title-left"><a href="#act" aria-hidden="" class="anchor"></a>findRenderedDOMComponentWithTag()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            findRenderedDOMComponentWithTag(
+  tree,
+  tagName
+)
+            </code>
+        </pre>
+            <p>Также как <a href="#scryrendereddomcomponentswithtag"><code class="gatsby-code-text">scryRenderedDOMComponentsWithTag()</code></a> но&nbsp;ожидает, что найдётся ровно один результат, который и&nbsp;будет возвращён. Если ничего не&nbsp;будет найдено или найдётся больше одного результата, генерирует исключение.</p>
+
+
+            <p id="scryrenderedcomponentswithtype" class="section-title-left"><a href="#act" aria-hidden="" class="anchor"></a>scryRenderedComponentsWithType()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            scryRenderedComponentsWithType(
+  tree,
+  componentClass
+)
+            </code>
+        </pre>
+            <p>Находит все экземпляры компонента, тип которых равен <code class="gatsby-code-text">componentClass</code>.</p>
+
+
+            <p id="findrenderedcomponentwithtype" class="section-title-left"><a href="#act" aria-hidden="" class="anchor"></a>findRenderedComponentWithType()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            findRenderedComponentWithType(
+  tree,
+  componentClass
+)
+            </code>
+        </pre>
+            <p>Работает так&nbsp;же как <a href="#scryrenderedcomponentswithtype"><code class="gatsby-code-text">scryRenderedComponentsWithType()</code></a>, но&nbsp;ожидает, что найдётся ровно один результат, который и&nbsp;будет возвращён. Если ничего не&nbsp;будет найдено или найдётся больше одного результата, генерирует исключение.</p>
+
+
+            <p id="renderintodocument" class="section-title-left"><a href="#act" aria-hidden="" class="anchor"></a>renderIntoDocument()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            renderIntoDocument(element)
+            </code>
+        </pre>
+            <p>Отображает React элемент в&nbsp;отдельно взятом DOM-узле документа. <strong>Этой функции нужен DOM.</strong> Это фактически эквивалентно:</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            const domContainer = document.createElement('div');
+ReactDOM.render(element, domContainer);
+            </code>
+        </pre>
+            <div class="warning">
+                <p>Примечание:</p>
+                <p><code class="gatsby-code-text">window</code>, <code class="gatsby-code-text">window.document</code> и&nbsp;<code class="gatsby-code-text">window.document.createElement</code> должны быть доступными <strong>перед</strong> тем как вы&nbsp;импортируете <code class="gatsby-code-text">React</code>. В&nbsp;противном случае React будет думать что не&nbsp;может получить доступ к&nbsp;DOM и&nbsp;такие методы как <code class="gatsby-code-text">setState</code> не&nbsp;будут работать.</p>
+            </div>
+            <p class="section">Другие утилиты</p>
+            <p id="simulate" class="section-title-left"><a href="#act" aria-hidden="" class="anchor"></a>Simulate</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            Simulate.{eventName}(
+  element,
+  [eventData]
+)
+            </code>
+        </pre>
+            <p>Симулировать отправку события сработавшего на&nbsp;DOM-узле с&nbsp;дополнительным объектом <code class="gatsby-code-text">eventData</code>.</p>
+            <p><code class="gatsby-code-text">Simulate</code> имеет метод для <a href="../synthetic-event/index.html">каждого события, которое React может понимать</a>.</p>
+            <p><strong>Кликнуть на&nbsp;элемент</strong></p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            // <button ref={(node) => this.button = node}>...</button>
+const node = this.button;
+ReactTestUtils.Simulate.click(node);
+            </code>
+        </pre>
+            <p><strong>Изменить значение в&nbsp;поле ввода, а&nbsp;затем эмулировать нажатие кнопки ENTER.</strong></p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            // <input ref={(node) => this.textInput = node} />
+const node = this.textInput;
+node.value = 'жираф';
+ReactTestUtils.Simulate.change(node);
+ReactTestUtils.Simulate.keyDown(node, {key: "Enter", keyCode: 13, which: 13});
+            </code>
+        </pre>
+            <div class="warning">
+                <p>Примечание:</p>
+                <p>Вам нужно будет предоставить все свойства события, которое вы&nbsp;используете в&nbsp;своём компоненте (например, keyCode, which и&nbsp;т.&nbsp;д.), поскольку React не&nbsp;создаёт ничего из&nbsp;этого.</p>
+            </div>
+
+
+
+
+
+
+
+
+
+
+        </div>
+        <div class="site-nav">
+            <div class="site-nav-scroll">
+                <p class="site-nav-name">
+                    Установка React
+                </p>
+                <ul class="site-nav-list">
+                    <li><a href="../../installation/try-react/index.html">Начало работы с React</a></li>
+                    <li><a href="../../installation/new-app/index.html">Внедряем React в новое приложение</a></li>
+                    <li><a href="../../installation/add-to-app/index.html">Внедряем React в уже существующее приложение</a></li>
+                    <li><a href="../../installation/cdn-links/index.html">CDN ссылки</a></li>
+                </ul>
+                <p class="site-nav-name">Основы</p>
+                <ul class="site-nav-list">
+                    <li><a href="../../quick-start/hello-world/index.html">Hello, world!</a></li>
+                    <li><a href="../../quick-start/introducing-jsx/index.html">Введение в JSX</a></li>
+                    <li><a href="../../quick-start/rendering-elements/index.html">Создание элементов</a></li>
+                    <li><a href="../../quick-start/components-and-props/index.html">Компоненты и их свойства</a></li>
+                    <li><a href="../../quick-start/state-and-lifecycle/index.html">Состояние и жизненный цикл</a></li>
+                    <li><a href="../../quick-start/handling-events/index.html">Обработка событий</a></li>
+                    <li><a href="../../quick-start/conditional-rendering/index.html">Выборочный рендеринг</a></li>
+                    <li><a href="../../quick-start/lists-and-keys/index.html">Списки и ключи</a></li>
+                    <li><a href="../../quick-start/forms/index.html">Формы</a></li>
+                    <li><a href="../../quick-start/lifting-state-up/index.html">Передача состояния наверх</a></li>
+                    <li><a href="../../quick-start/composition-vs-inheritance/index.html">Композиция вместо наследования</a></li>
+                    <li><a href="../../quick-start/thinking-in-react/index.html">Мышление в React</a></li>
+                </ul>
+                <p class="site-nav-name">Продвинутый React.js</p>
+                <ul class="site-nav-list">
+                    <li><a href="../../advanced/jsx-in-depth/index.html">JSX подробнее</a></li>
+                    <li><a href="../../advanced/typechecking-with-proptypes/index.html">Проверка типов с помощью PropTypes</a></li>
+                    <li><a href="../../advanced/static-typechecking/index.html">Статическая проверка типов</a></li>
+                    <li><a href="../../advanced/refs-and-dom/index.html">Ссылки Ref и DOM</a></li>
+                    <li><a href="../../advanced/uncontrolled-components/index.html">Неконтролируемые компоненты</a></li>
+                    <li><a href="../../advanced/optimizing-perfomance/index.html">Оптимизация производительности</a></li>
+                    <li><a href="../../advanced/react-without-jsx/index.html">React без JSX</a></li>
+                    <li><a href="../../advanced/reconciliation/index.html">Согласование</a></li>
+                    <li><a href="../../advanced/context/index.html">Контекст</a></li>
+                    <li><a href="../../advanced/fragments/index.html">Фрагменты</a></li>
+                    <li><a href="../../advanced/portals/index.html">Порталы</a></li>
+                    <li><a href="../../advanced/error-boundaries/index.html">Границы ошибок</a></li>
+                    <li><a href="../../advanced/web-components/index.html">Web-компоненты</a></li>
+                    <li><a href="../../advanced/higher-order-comp/index.html">Компоненты высшего уровня</a></li>
+                    <li><a href="../../advanced/forwarding-refs/index.html">Пересылки</a></li>
+                    <li><a href="../../advanced/render-props/index.html">Props'ы рендера</a></li>
+                    <li><a href="../../advanced/integrating-with-lib/index.html">Интеграция с другими библиотеками</a></li>
+                    <li><a href="../../advanced/strict-mode/index.html">Строгий режим</a></li>
+                </ul>
+
+                <p class="site-nav-name">Справочник</p>
+                <ul class="site-nav-list">
+                    <li><a href="../../reference/react-api/index.html">React</a></li>
+                    <li><a href="../../reference/react-component/index.html">React.Component</a></li>
+                    <li><a href="../../reference/react-dom/index.html">ReactDOM</a></li>
+                    <li><a href="../../reference/react-dom-server/index.html">ReactDOMServer</a></li>
+                    <li><a href="index.html">Элементы DOM</a></li>
+                    <li><a href="../../reference/synthetic-event/index.html">SyntheticEvent</a></li>
+                    <li><a href="#">Утилиты тестирования</a></li>
+                    <li><a href="#">Поверхностный рендеринг</a></li>
+                    <li><a href="#">Тестовый отрисовщик</a></li>
+                    <li><a href="#">Требования к среде JavaScript</a></li>
+                    <li><a href="#">Словарь</a></li>
+                </ul>
+
+                <p class="site-nav-name">Redux.js</p>
+                <ul class="site-nav-list">
+                    <li><a href="../../redux/about-redux/index.html">О Redux</a></li>
+                    <li><a href="../../redux/install/index.html">Установка</a></li>
+                    <li><a href="../../redux/introduction/index.html">Введение</a></li>
+                    <li><a href="../../redux/actions/index.html">Действия</a></li>
+                    <li><a href="../../redux/reducers/index.html">Редюсеры</a></li>
+                    <li><a href="../../redux/store/index.html">Хранилище</a></li>
+                    <li><a href="../../redux/data-flow/index.html">Поток данных</a></li>
+                    <li><a href="../../redux/usage-with-react/index.html">Использование с React</a></li>
+                    <li><a href="../../redux/async-actions/index.html">Асинхронные действия</a></li>
+                    <li><a href="../../redux/async-flow/index.html">Асинхронный поток</a></li>
+                    <li><a href="../../redux/middleware/index.html">Связующее ПО</a></li>
+                    <script type="text/babel" src="../../../libraries/navigator.js"></script>
+                    <script>
+                        $(document).ready(function() {
+                            $('.site-nav-list a[href="index.html"]').parent().toggleClass('site-nav-list-active');
+                        });
+                        $(function() {
+                            var height = $('.content').height();
+                            $('.site-nav-scroll').height(height);
+                        });
+                    </script>
+            </div>
+        </div>
+
+</body>
+
+</html>

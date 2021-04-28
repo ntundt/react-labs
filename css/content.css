@@ -110,6 +110,16 @@ mark {
     max-width: 100%;
     overflow-y: hidden;
 }
+/*Dop Mark*/
+.gatsby-code-text {
+    background: rgb(168, 233, 255);
+    max-width: 100%;
+    overflow-y: hidden;
+    border-radius: 5px;
+    font-family: monospace;
+    padding: 3px;
+    line-height: 1.5;
+}
 
 .button {
     bottom: 0;
