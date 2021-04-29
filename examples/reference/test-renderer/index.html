@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тестовый рендерер</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
+    <link rel="stylesheet" href="../../../css/general.css">
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script src="../../../libraries/prism.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="../../../libraries/header.js"></script>
+</head>
+
+<body>
+
+    <section class="nav-bar">
+        <div class="nav-container">
+            <div class="brand">
+                <a href="index.html"><img src="../../../images/react-logo.png">Теория</a>
+            </div>
+            <nav>
+                <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+                <ul class="nav-list">
+                    <li>
+                        <a href="../../../index.html">Главная</a>
+                    </li>
+                    <li>
+                        <a href="../../../labs.html">Лабораторные работы</a>
+                    </li>
+                    <li>
+                        <a href="../../../theory.html">Теория</a>
+                    </li>
+                    <li>
+                        <a href="../../../info.html">Справочник</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <div class="general">
+
+        <!--ВСЕ ВАШЕ ТВОРЧЕСТВО В ДИВЕ CONTENT-->
+        <div class="content">
+            <p class="section">Тестовый рендерер</p>
+
+            <p>Импортирование</p>
+
+            <pre class="line-numbers">
+    <code class="language-jsx">import TestRenderer from 'react-test-renderer'; // ES6
+const TestRenderer = require('react-test-renderer'); // ES5 с помощью npm
+  </code>
+  </pre>
+            <p class="section">Обзор</p>
+            <p>В этом пакете вы найдёте рендерер, который умеет рендерить React-компоненты в обычные JavaScript-объекты, не используя при этом DOM или мобильное окружение.</p>
+            <p>Пакет <code class="gatsby-code-text">react-test-renderer</code> облегчает получение снимка иерархии представления платформы (чем-то похожего на&nbsp;DOM-дерево), отрендеренного компонентом React DOM или React Native. При этом не&nbsp;используются ни&nbsp;браузер, ни&nbsp;<a href="https://github.com/tmpvar/jsdom" target="_blank" rel="nofollow noopener noreferrer">jsdom</a>.</p>
+            <p><strong>Пример:</strong></p>
+            <pre class="list-numbers"><code class="language-jsx">
+                import TestRenderer from 'react-test-renderer';
+
+function Link(props) {
+  return &#60;a href={props.page}>{props.children}&#60;/a>;
+}
+
+const testRenderer = TestRenderer.create(
+  &#60;Link page="https://www.facebook.com/">Facebook&#60;/Link>
+);
+
+console.log(testRenderer.toJSON());
+// { type: 'a',
+//   props: { href: 'https://www.facebook.com/' },
+//   children: [ 'Facebook' ] }
+            </code></pre>
+<p>Jest может автоматически сохранять в&nbsp;файл снимок копии дерева в&nbsp;виде JSON, а&nbsp;затем проверять в&nbsp;тестах, что в&nbsp;этом снимке ничего не&nbsp;изменилось с&nbsp;момента прошлого исполнения теста: <a href="https://jestjs.io/docs/ru/snapshot-testing" target="_blank" rel="nofollow noopener noreferrer">узнать подробнее</a>.</p>
+<p>Также есть возможность искать в&nbsp;дереве конкретные узлы и&nbsp;проверять утверждения относительно них:</p>
+<pre class="line-numbers"><code class="language-jsx">
+    import TestRenderer from 'react-test-renderer';
+
+function MyComponent() {
+  return (
+    &lt;div>
+      &lt;SubComponent foo="bar" />
+      &lt;p className="my">Hello&lt;/p>
+    &lt;/div>
+  )
+}
+
+function SubComponent() {
+  return (
+    &lt;p className="sub">Sub&lt;/p>
+  );
+}
+
+const testRenderer = TestRenderer.create(<MyComponent />);
+const testInstance = testRenderer.root;
+
+expect(testInstance.findByType(SubComponent).props.foo).toBe('bar');
+expect(testInstance.findByProps({className: "sub"}).children).toEqual(['Sub']);
+</code></pre>
+<p class="section-title-left">TestRenderer</p>
+<ul>
+<li><a href="#testrenderercreate">TestRenderer.create()</a></li>
+<li><a href="#testrendereract">TestRenderer.act()</a></li>
+</ul>
+<p class="section-title-left">Методы и поля экземпляра TestRenderer</p>
+<ul>
+<li><a href="#testrenderertojson">testRenderer.toJSON()</a></li>
+<li><a href="#testrenderertotree">testRenderer.toTree()</a></li>
+<li><a href="#testrendererupdate">testRenderer.update()</a></li>
+<li><a href="#testrendererunmount">testRenderer.unmount()</a></li>
+<li><a href="#testrenderergetinstance">testRenderer.getInstance()</a></li>
+<li><a href="#testrendererroot">testRenderer.root</a></li>
+</ul>
+<p class="section-title-left">TestInstance</p>
+<ul>
+<li><a href="#testinstancefind">testInstance.find()</a></li>
+<li><a href="#testinstancefindbytype">testInstance.findByType()</a></li>
+<li><a href="#testinstancefindbyprops">testInstance.findByProps()</a></li>
+<li><a href="#testinstancefindall">testInstance.findAll()</a></li>
+<li><a href="#testinstancefindallbytype">testInstance.findAllByType()</a></li>
+<li><a href="#testinstancefindallbyprops">testInstance.findAllByProps()</a></li>
+<li><a href="#testinstanceinstance">testInstance.instance</a></li>
+<li><a href="#testinstancetype">testInstance.type</a></li>
+<li><a href="#testinstanceprops">testInstance.props</a></li>
+<li><a href="#testinstanceparent">testInstance.parent</a></li>
+<li><a href="#testinstancechildren">testInstance.children</a></li>
+</ul>
+<p class="section">Справочник</p>
+<p id="testrenderercreate" class="section-title-left">TestRenderer.create()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            TestRenderer.create(element, options);
+            </code>
+        </pre>
+<p>Создаёт экземпляр <code class="gatsby-code-text">TestRenderer</code> для переданного React-элемента. И&nbsp;хотя реальный DOM не&nbsp;будет использоваться, дерево компонентов будет полностью отрендерено в&nbsp;памяти и&nbsp;его можно будет протестировать с&nbsp;помощью утверждений. Возвращает <a href="#testrenderer-instance">экземпляр TestRenderer</a></p>
+
+<p id="testrendereract" class="section-title-left">TestRenderer.act()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            TestRenderer.act(callback);
+            </code>
+        </pre>
+<p>Подобно <a href="../test-utils/index.html#act">вспомогательному методу act() из&nbsp;react-dom/test-utils</a>, <code class="gatsby-code-text">TestRenderer.act</code> подготавливает компонент для проверки утверждений. Используйте эту версию <code class="gatsby-code-text">act()</code> для оборачивания <code class="gatsby-code-text">TestRenderer.create</code> и&nbsp;<code class="gatsby-code-text">testRenderer.update</code>.</p>
+<pre class="line-numbers">
+            <code class="language-jsx">
+            import {create, act} from 'react-test-renderer';
+import App from './app.js'; // Тестируемый компонент
+
+// рендер компонента
+let root; 
+act(() => {
+  root = create(&lt;App value={1}/>)
+});
+
+// проверка утверждений
+expect(root.toJSON()).toMatchSnapshot();
+
+// обновление с некоторыми отличающимися пропсами
+act(() => {
+  root.update(&lt;App value={2}/>);
+})
+
+// проверка утверждений
+expect(root.toJSON()).toMatchSnapshot();
+            </code>
+        </pre>
+        
+        <p id="testrenderertojson" class="section-title-left">testRenderer.toJSON()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            testRenderer.toJSON()
+            </code>
+        </pre>
+<p>Возвращает объект, представляющий собой отрендеренное дерево. В&nbsp;дереве будут присутствовать только те&nbsp;узлы, которые специфичны для платформы (например, узлы <code class="gatsby-code-text">&lt;div&gt;</code> или <code class="gatsby-code-text">&lt;View&gt;</code>) и&nbsp;их&nbsp;пропсы. А&nbsp;вот компонентов, созданных разработчиками, в&nbsp;этом дереве не&nbsp;будет. Это очень удобно для тестирования с&nbsp;<a href="https://jestjs.io/docs/ru/snapshot-testing#%D1%82%D0%B5%D1%81%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D1%81-%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%D0%BC-%D1%81%D0%BD%D0%B8%D0%BC%D0%BA%D0%BE%D0%B2-%D0%B2-jest" target="_blank" rel="nofollow noopener noreferrer">помощью снимков</a>.</p>
+
+
+<p id="testrenderertotree" class="section-title-left">testRenderer.toTree()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            testRenderer.toTree()
+            </code>
+        </pre>
+<p>Возвращает объект, представляющий собой отрендеренное дерево. В&nbsp;отличие от&nbsp;<code class="gatsby-code-text">toJSON()</code> в&nbsp;отрендеренное дерево попадут и&nbsp;пользовательские компоненты. Скорее всего, этот метод вряд&nbsp;ли будет полезен, пока вы&nbsp;не&nbsp;захотите создать собственную библиотеку тестирования поверх <code class="gatsby-code-text">TestRenderer</code>.</p>
+
+<p id="testrendererupdate" class="section-title-left">testRenderer.update()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            testRenderer.update(element)
+            </code>
+        </pre>
+<p>Повторно рендерит находящееся в&nbsp;памяти дерево компонентов с&nbsp;учётом нового корневого элемента. По&nbsp;сути, это симуляция вызова React-обновления для корневого элемента. Если новый элемент имеет тот&nbsp;же тип и&nbsp;ключ, что и&nbsp;предыдущий, то&nbsp;дерево будет обновлено. Иначе, будет перемонтировано новое дерево.</p>
+
+
+<p id="testrendererunmount" class="section-title-left">testRenderer.unmount()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            testRenderer.unmount()
+            </code>
+        </pre>
+<p>Демонтирует дерево, находящееся в&nbsp;памяти. При этом запустятся необходимые события жизненного цикла.</p>
+
+
+<p id="testrenderergetinstance" class="section-title-left">testRenderer.getInstance()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            testRenderer.getInstance()
+            </code>
+        </pre>
+<p>Возвращает экземпляр соответствующий корневому элементу, если таковой существует. Этот метод не&nbsp;сработает, если верхним элементом будет функциональный компонент, потому что они не&nbsp;имеют экземпляров (в&nbsp;отличие от&nbsp;классовых компонентов).</p>
+
+
+<p id="testrendererroot" class="section-title-left">testRenderer.root</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            testRenderer.root
+            </code>
+        </pre>
+<p>Возвращает корневой тестовый экземпляр, который полезен для проверок конкретных узлов дерева. Полученный экземпляр можно использовать и&nbsp;для поиска других тестовых экземпляров, расположенных глубже в&nbsp;дереве.</p>
+
+<p id="testinstancefind" class="section-title-left">testInstance.find()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+testInstance.find(test)
+            </code>
+        </pre>
+<p>Находит единственный вложенный тестовый экземпляр для которого <code class="gatsby-code-text">test(testInstance)</code> возвращает <code class="gatsby-code-text">true</code>. Метод <code class="gatsby-code-text">test(testInstance)</code> должен вернуть <code class="gatsby-code-text">true</code> ровно для одного тестового экземпляра, в&nbsp;противном случае будет сгенерирована ошибка.</p>
+
+<p id="testinstancefindbytype" class="section-title-left">testInstance.findByProps()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            testInstance.findByType(type)
+            </code>
+        </pre>
+<p>Находит единственный вложенный тестовый экземпляр с&nbsp;указанным типом <code class="gatsby-code-text">type</code>. Метод <code class="gatsby-code-text">findByType</code> сгенерирует ошибку, если тестовых экземпляров с&nbsp;указанным <code class="gatsby-code-text">type</code> не&nbsp;найдено или найдено больше одного.</p>
+<p id="testinstancefindbyprops" class="section-title-left">testRenderer.unmount()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            testInstance.findByProps(props)
+            </code>
+        </pre>
+<p>Находит единственный вложенный тестовый экземпляр с&nbsp;указанными пропсами <code class="gatsby-code-text">props</code>. Метод <code class="gatsby-code-text">findByProps</code> сгенерирует ошибку, если тестовых экземпляров с&nbsp;указанными пропсами не&nbsp;найдено или найдено больше одного.</p>
+
+<p id="testinstancefindall" class="section-title-left">testInstance.findAll()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            testInstance.findAll(test)
+            </code>
+        </pre>
+<p>Находит все вложенные тестовые экземпляры, для которых <code class="gatsby-code-text">test(testInstance)</code> возвращает <code class="gatsby-code-text">true</code>.</p>
+
+<p id="testinstancefindallbytype" class="section-title-left">testInstance.findAllByType()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+testInstance.findAllByType(type)
+            </code>
+        </pre>
+<p>Находит все вложенные тестовые экземпляры с&nbsp;указанным типом <code class="gatsby-code-text">type</code>.</p>
+
+
+<p id="testinstancefindallbyprops" class="section-title-left">testInstance.findAllByProps()</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            testInstance.findAllByProps(props)
+            </code>
+        </pre>
+<p>Находит все вложенные тестовые экземпляры c указанными пропсами <code class="gatsby-code-text">props</code>.</p>
+
+
+<p id="testinstanceinstance" class="section-title-left">testInstance.instance</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+testInstance.instance
+            </code>
+        </pre>
+<p>Экземпляр компонента, соответствующий его тестовому экземпляру. Свойство доступно только для классовых компонентов, т.&nbsp;к. функциональные компоненты не&nbsp;имеют экземпляров. Этот экземпляр компонента будет соответствовать значению <code class="gatsby-code-text">this</code> внутри данного компонента.</p>
+
+<p id="testinstancetype" class="section-title-left">testInstance.type</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            testInstance.type
+            </code>
+        </pre>
+<p>Тип компонента, соответствующий его тестовому экземпляру. Например, компонент <code class="gatsby-code-text">&lt;Button /&gt;</code> имеет тип <code class="gatsby-code-text">Button</code>.</p>
+
+
+<p id="testinstanceprops" class="section-title-left">testInstance.props</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            testInstance.props
+            </code>
+        </pre>
+<p>Пропсы, соответствующие тестовому экземпляру. Например, у&nbsp;компонента <code class="gatsby-code-text">&lt;Button size="small" /&gt;</code> пропсами будут <code class="gatsby-code-text">{size: "small"}</code>.</p>
+
+
+<p id="testinstanceparent" class="section-title-left">testInstance.parent</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            testInstance.parent
+            </code>
+        </pre>
+<p>Родительский тестовый экземпляр текущего тестового экземпляра.</p>
+
+
+<p id="testinstancechildren" class="section-title-left">testInstance.children</p>
+            <pre class="line-numbers">
+            <code class="language-jsx">
+            testInstance.children
+            </code>
+        </pre>
+<p>Дочерние тестовые экземпляры текущего тестового экземпляра.</p>
+<p class="section">Используем тестовый рендерер</p>
+<p>Можно передать функцию <code class="gatsby-code-text">createNodeMock</code> в&nbsp;<code class="gatsby-code-text">TestRenderer.create</code> как параметр для создания собственных фиктивных рефов. Функция <code class="gatsby-code-text">createNodeMock</code> принимает элемент и&nbsp;возвращает фиктивный реф-объект.</p>
+<p>Это может быть полезно для тестирования компонентов, которые используют рефы.</p>
+<pre class="line-numbers"><code class="language-jsx">
+    import TestRenderer from 'react-test-renderer';
+
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.input = null;
+  }
+  componentDidMount() {
+    this.input.focus();
+  }
+  render() {
+    return &lt;input type="text" ref={el => this.input = el} />
+  }
+}
+
+let focused = false;
+TestRenderer.create(
+  &lt;MyComponent />,
+  {
+    createNodeMock: (element) => {
+      if (element.type === 'input') {
+        // возвращаем фиктивную функцию "focus"
+        return {
+          focus: () => {
+            focused = true;
+          }
+        };
+      }
+      return null;
+    }
+  }
+);
+expect(focused).toBe(true);
+</code></pre>
+
+        </div>
+        <div class="site-nav">
+            <div class="site-nav-scroll">
+                <p class="site-nav-name">
+                    Установка React
+                </p>
+                <ul class="site-nav-list">
+                    <li><a href="../../installation/try-react/index.html">Начало работы с React</a></li>
+                    <li><a href="../../installation/new-app/index.html">Внедряем React в новое приложение</a></li>
+                    <li><a href="../../installation/add-to-app/index.html">Внедряем React в уже существующее приложение</a></li>
+                    <li><a href="../../installation/cdn-links/index.html">CDN ссылки</a></li>
+                </ul>
+                <p class="site-nav-name">Основы</p>
+                <ul class="site-nav-list">
+                    <li><a href="../../quick-start/hello-world/index.html">Hello, world!</a></li>
+                    <li><a href="../../quick-start/introducing-jsx/index.html">Введение в JSX</a></li>
+                    <li><a href="../../quick-start/rendering-elements/index.html">Создание элементов</a></li>
+                    <li><a href="../../quick-start/components-and-props/index.html">Компоненты и их свойства</a></li>
+                    <li><a href="../../quick-start/state-and-lifecycle/index.html">Состояние и жизненный цикл</a></li>
+                    <li><a href="../../quick-start/handling-events/index.html">Обработка событий</a></li>
+                    <li><a href="../../quick-start/conditional-rendering/index.html">Выборочный рендеринг</a></li>
+                    <li><a href="../../quick-start/lists-and-keys/index.html">Списки и ключи</a></li>
+                    <li><a href="../../quick-start/forms/index.html">Формы</a></li>
+                    <li><a href="../../quick-start/lifting-state-up/index.html">Передача состояния наверх</a></li>
+                    <li><a href="../../quick-start/composition-vs-inheritance/index.html">Композиция вместо наследования</a></li>
+                    <li><a href="../../quick-start/thinking-in-react/index.html">Мышление в React</a></li>
+                </ul>
+                <p class="site-nav-name">Продвинутый React.js</p>
+                <ul class="site-nav-list">
+                    <li><a href="../../advanced/jsx-in-depth/index.html">JSX подробнее</a></li>
+                    <li><a href="../../advanced/typechecking-with-proptypes/index.html">Проверка типов с помощью PropTypes</a></li>
+                    <li><a href="../../advanced/static-typechecking/index.html">Статическая проверка типов</a></li>
+                    <li><a href="../../advanced/refs-and-dom/index.html">Ссылки Ref и DOM</a></li>
+                    <li><a href="../../advanced/uncontrolled-components/index.html">Неконтролируемые компоненты</a></li>
+                    <li><a href="../../advanced/optimizing-perfomance/index.html">Оптимизация производительности</a></li>
+                    <li><a href="../../advanced/react-without-jsx/index.html">React без JSX</a></li>
+                    <li><a href="../../advanced/reconciliation/index.html">Согласование</a></li>
+                    <li><a href="../../advanced/context/index.html">Контекст</a></li>
+                    <li><a href="../../advanced/fragments/index.html">Фрагменты</a></li>
+                    <li><a href="../../advanced/portals/index.html">Порталы</a></li>
+                    <li><a href="../../advanced/error-boundaries/index.html">Границы ошибок</a></li>
+                    <li><a href="../../advanced/web-components/index.html">Web-компоненты</a></li>
+                    <li><a href="../../advanced/higher-order-comp/index.html">Компоненты высшего уровня</a></li>
+                    <li><a href="../../advanced/forwarding-refs/index.html">Пересылки</a></li>
+                    <li><a href="../../advanced/render-props/index.html">Props'ы рендера</a></li>
+                    <li><a href="../../advanced/integrating-with-lib/index.html">Интеграция с другими библиотеками</a></li>
+                    <li><a href="../../advanced/strict-mode/index.html">Строгий режим</a></li>
+                </ul>
+
+                <p class="site-nav-name">Справочник</p>
+                <ul class="site-nav-list">
+                    <li><a href="../../reference/react-api/index.html">React</a></li>
+                    <li><a href="../../reference/react-component/index.html">React.Component</a></li>
+                    <li><a href="../../reference/react-dom/index.html">ReactDOM</a></li>
+                    <li><a href="../../reference/react-dom-server/index.html">ReactDOMServer</a></li>
+                    <li><a href="index.html">Элементы DOM</a></li>
+                    <li><a href="../../reference/synthetic-event/index.html">SyntheticEvent</a></li>
+                    <li><a href="#">Утилиты тестирования</a></li>
+                    <li><a href="#">Поверхностный рендеринг</a></li>
+                    <li><a href="#">Тестовый отрисовщик</a></li>
+                    <li><a href="#">Требования к среде JavaScript</a></li>
+                    <li><a href="#">Словарь</a></li>
+                </ul>
+
+                <p class="site-nav-name">Redux.js</p>
+                <ul class="site-nav-list">
+                    <li><a href="../../redux/about-redux/index.html">О Redux</a></li>
+                    <li><a href="../../redux/install/index.html">Установка</a></li>
+                    <li><a href="../../redux/introduction/index.html">Введение</a></li>
+                    <li><a href="../../redux/actions/index.html">Действия</a></li>
+                    <li><a href="../../redux/reducers/index.html">Редюсеры</a></li>
+                    <li><a href="../../redux/store/index.html">Хранилище</a></li>
+                    <li><a href="../../redux/data-flow/index.html">Поток данных</a></li>
+                    <li><a href="../../redux/usage-with-react/index.html">Использование с React</a></li>
+                    <li><a href="../../redux/async-actions/index.html">Асинхронные действия</a></li>
+                    <li><a href="../../redux/async-flow/index.html">Асинхронный поток</a></li>
+                    <li><a href="../../redux/middleware/index.html">Связующее ПО</a></li>
+                    <script type="text/babel" src="../../../libraries/navigator.js"></script>
+                    <script>
+                        $(document).ready(function() {
+                            $('.site-nav-list a[href="index.html"]').parent().toggleClass('site-nav-list-active');
+                        });
+                        $(function() {
+                            var height = $('.content').height();
+                            $('.site-nav-scroll').height(height);
+                        });
+                    </script>
+            </div>
+        </div>
+
+</body>
+
+</html>

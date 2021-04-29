@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Требования к среде JavaScript</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
+    <link rel="stylesheet" href="../../../css/general.css">
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script src="../../../libraries/prism.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="../../../libraries/header.js"></script>
+</head>
+
+<body>
+
+    <section class="nav-bar">
+        <div class="nav-container">
+            <div class="brand">
+                <a href="index.html"><img src="../../../images/react-logo.png">Теория</a>
+            </div>
+            <nav>
+                <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+                <ul class="nav-list">
+                    <li>
+                        <a href="../../../index.html">Главная</a>
+                    </li>
+                    <li>
+                        <a href="../../../labs.html">Лабораторные работы</a>
+                    </li>
+                    <li>
+                        <a href="../../../theory.html">Теория</a>
+                    </li>
+                    <li>
+                        <a href="../../../info.html">Справочник</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <div class="general">
+
+        <!--ВСЕ ВАШЕ ТВОРЧЕСТВО В ДИВЕ CONTENT-->
+        <div class="content">
+            <p class="section">Требования к среде JavaScript</p>
+<p>React 16 полагается на&nbsp;типы коллекций <a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Map" target="_blank" rel="nofollow noopener noreferrer">Map</a> и&nbsp;<a href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Set" target="_blank" rel="nofollow noopener noreferrer">Set</a>. Во&nbsp;многих старых устройствах и&nbsp;браузерах (например, IE &lt; 11) эти типы коллекций отсутствуют. В&nbsp;других&nbsp;же они имеют несоответствующую реализацию (скажем, IE 11). Если вы&nbsp;поддерживаете эти браузеры, то&nbsp;можете включить глобальный полифил в&nbsp;ваше приложение, такой как <a href="https://github.com/zloirock/core-js" target="_blank" rel="nofollow noopener noreferrer">core-js</a>.
+Окружение для React 16, использующее core-js для поддержки старых браузеров, может выглядеть следующим образом:</p>
+            
+            <pre class="list-numbers"><code class="language-jsx">
+                import 'core-js/es/map';
+import 'core-js/es/set';
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+ReactDOM.render(
+  &lt;h1>Привет, мир!&lt;/h1>,
+  document.getElementById('root')
+);
+            </code></pre>
+            <p>React также полагается на&nbsp;<code class="gatsby-code-text">requestAnimationFrame</code> (даже в&nbsp;тестовом окружении).
+Вы&nbsp;можете использовать пакет <a href="https://www.npmjs.com/package/raf" target="_blank" rel="nofollow noopener noreferrer">raf</a> для создания шима <code class="gatsby-code-text">requestAnimationFrame</code>:</p>
+            <pre class="list-numbers"><code class="language-jsx">
+                import 'raf/polyfill';
+            </code></pre>
+            
+            
+        </div>
+        <div class="site-nav">
+            <div class="site-nav-scroll">
+                <p class="site-nav-name">
+                    Установка React
+                </p>
+                <ul class="site-nav-list">
+                    <li><a href="../../installation/try-react/index.html">Начало работы с React</a></li>
+                    <li><a href="../../installation/new-app/index.html">Внедряем React в новое приложение</a></li>
+                    <li><a href="../../installation/add-to-app/index.html">Внедряем React в уже существующее приложение</a></li>
+                    <li><a href="../../installation/cdn-links/index.html">CDN ссылки</a></li>
+                </ul>
+                <p class="site-nav-name">Основы</p>
+                <ul class="site-nav-list">
+                    <li><a href="../../quick-start/hello-world/index.html">Hello, world!</a></li>
+                    <li><a href="../../quick-start/introducing-jsx/index.html">Введение в JSX</a></li>
+                    <li><a href="../../quick-start/rendering-elements/index.html">Создание элементов</a></li>
+                    <li><a href="../../quick-start/components-and-props/index.html">Компоненты и их свойства</a></li>
+                    <li><a href="../../quick-start/state-and-lifecycle/index.html">Состояние и жизненный цикл</a></li>
+                    <li><a href="../../quick-start/handling-events/index.html">Обработка событий</a></li>
+                    <li><a href="../../quick-start/conditional-rendering/index.html">Выборочный рендеринг</a></li>
+                    <li><a href="../../quick-start/lists-and-keys/index.html">Списки и ключи</a></li>
+                    <li><a href="../../quick-start/forms/index.html">Формы</a></li>
+                    <li><a href="../../quick-start/lifting-state-up/index.html">Передача состояния наверх</a></li>
+                    <li><a href="../../quick-start/composition-vs-inheritance/index.html">Композиция вместо наследования</a></li>
+                    <li><a href="../../quick-start/thinking-in-react/index.html">Мышление в React</a></li>
+                </ul>
+                <p class="site-nav-name">Продвинутый React.js</p>
+                <ul class="site-nav-list">
+                    <li><a href="../../advanced/jsx-in-depth/index.html">JSX подробнее</a></li>
+                    <li><a href="../../advanced/typechecking-with-proptypes/index.html">Проверка типов с помощью PropTypes</a></li>
+                    <li><a href="../../advanced/static-typechecking/index.html">Статическая проверка типов</a></li>
+                    <li><a href="../../advanced/refs-and-dom/index.html">Ссылки Ref и DOM</a></li>
+                    <li><a href="../../advanced/uncontrolled-components/index.html">Неконтролируемые компоненты</a></li>
+                    <li><a href="../../advanced/optimizing-perfomance/index.html">Оптимизация производительности</a></li>
+                    <li><a href="../../advanced/react-without-jsx/index.html">React без JSX</a></li>
+                    <li><a href="../../advanced/reconciliation/index.html">Согласование</a></li>
+                    <li><a href="../../advanced/context/index.html">Контекст</a></li>
+                    <li><a href="../../advanced/fragments/index.html">Фрагменты</a></li>
+                    <li><a href="../../advanced/portals/index.html">Порталы</a></li>
+                    <li><a href="../../advanced/error-boundaries/index.html">Границы ошибок</a></li>
+                    <li><a href="../../advanced/web-components/index.html">Web-компоненты</a></li>
+                    <li><a href="../../advanced/higher-order-comp/index.html">Компоненты высшего уровня</a></li>
+                    <li><a href="../../advanced/forwarding-refs/index.html">Пересылки</a></li>
+                    <li><a href="../../advanced/render-props/index.html">Props'ы рендера</a></li>
+                    <li><a href="../../advanced/integrating-with-lib/index.html">Интеграция с другими библиотеками</a></li>
+                    <li><a href="../../advanced/strict-mode/index.html">Строгий режим</a></li>
+                </ul>
+
+                <p class="site-nav-name">Справочник</p>
+                <ul class="site-nav-list">
+                    <li><a href="../../reference/react-api/index.html">React</a></li>
+                    <li><a href="../../reference/react-component/index.html">React.Component</a></li>
+                    <li><a href="../../reference/react-dom/index.html">ReactDOM</a></li>
+                    <li><a href="../../reference/react-dom-server/index.html">ReactDOMServer</a></li>
+                    <li><a href="index.html">Элементы DOM</a></li>
+                    <li><a href="../../reference/synthetic-event/index.html">SyntheticEvent</a></li>
+                    <li><a href="#">Утилиты тестирования</a></li>
+                    <li><a href="#">Поверхностный рендеринг</a></li>
+                    <li><a href="#">Тестовый отрисовщик</a></li>
+                    <li><a href="#">Требования к среде JavaScript</a></li>
+                    <li><a href="#">Словарь</a></li>
+                </ul>
+
+                <p class="site-nav-name">Redux.js</p>
+                <ul class="site-nav-list">
+                    <li><a href="../../redux/about-redux/index.html">О Redux</a></li>
+                    <li><a href="../../redux/install/index.html">Установка</a></li>
+                    <li><a href="../../redux/introduction/index.html">Введение</a></li>
+                    <li><a href="../../redux/actions/index.html">Действия</a></li>
+                    <li><a href="../../redux/reducers/index.html">Редюсеры</a></li>
+                    <li><a href="../../redux/store/index.html">Хранилище</a></li>
+                    <li><a href="../../redux/data-flow/index.html">Поток данных</a></li>
+                    <li><a href="../../redux/usage-with-react/index.html">Использование с React</a></li>
+                    <li><a href="../../redux/async-actions/index.html">Асинхронные действия</a></li>
+                    <li><a href="../../redux/async-flow/index.html">Асинхронный поток</a></li>
+                    <li><a href="../../redux/middleware/index.html">Связующее ПО</a></li>
+                    <script type="text/babel" src="../../../libraries/navigator.js"></script>
+                    <script>
+                        $(document).ready(function() {
+                            $('.site-nav-list a[href="index.html"]').parent().toggleClass('site-nav-list-active');
+                        });
+                        $(function() {
+                            var height = $('.content').height();
+                            $('.site-nav-scroll').height(height);
+                        });
+                    </script>
+            </div>
+        </div>
+
+</body>
+
+</html>

@@ -111,18 +111,18 @@ var ReactTestUtils = require('react-dom/test-utils'); // ES5 с npm
   }
   render() {
     return (
-      <div>
-        <p>Вы нажали на кнопку {this.state.count} раз</p>
-        <button onClick={this.handleClick}>
+      &lt;div>
+        &lt;p>Вы нажали на кнопку {this.state.count} раз&lt;/p>
+        &lt;button onClick={this.handleClick}>
           Нажми на меня
-        </button>
-      </div>
+        &lt;/button>
+      &lt;/div>
     );
   }
 }
                 </code>
             </pre>
-            <p>Теперь напишем тест для этого примера:</p>
+            <p>Теперь напишем тест для этого примера:&lt;/p>
 
 
             <pre class="line-numbers">
@@ -147,7 +147,7 @@ afterEach(() => {
 it('рендер и обновление счётчика', () => {
   // Тестируем первый рендер и метод componentDidMount
   act(() => {
-    ReactDOM.render(<Counter />, container);
+    ReactDOM.render(&lt;Counter />, container);
   });
   const button = container.querySelector('button');
   const label = container.querySelector('p');
@@ -340,7 +340,7 @@ ReactDOM.render(element, domContainer);
             <p><strong>Кликнуть на&nbsp;элемент</strong></p>
             <pre class="line-numbers">
             <code class="language-jsx">
-            // <button ref={(node) => this.button = node}>...</button>
+            // &lt;button ref={(node) => this.button = node}>...&lt;/button>
 const node = this.button;
 ReactTestUtils.Simulate.click(node);
             </code>
@@ -348,7 +348,7 @@ ReactTestUtils.Simulate.click(node);
             <p><strong>Изменить значение в&nbsp;поле ввода, а&nbsp;затем эмулировать нажатие кнопки ENTER.</strong></p>
             <pre class="line-numbers">
             <code class="language-jsx">
-            // <input ref={(node) => this.textInput = node} />
+            // &lt;input ref={(node) => this.textInput = node} />
 const node = this.textInput;
 node.value = 'жираф';
 ReactTestUtils.Simulate.change(node);
