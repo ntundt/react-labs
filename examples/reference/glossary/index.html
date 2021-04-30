@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Словарь терминов React</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.ico">
+    <link rel="stylesheet" href="../../../css/general.css">
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script src="../../../libraries/prism.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="../../../libraries/header.js"></script>
+</head>
+
+<body>
+
+    <section class="nav-bar">
+        <div class="nav-container">
+            <div class="brand">
+                <a href="index.html"><img src="../../../images/react-logo.png">Теория</a>
+            </div>
+            <nav>
+                <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+                <ul class="nav-list">
+                    <li>
+                        <a href="../../../index.html">Главная</a>
+                    </li>
+                    <li>
+                        <a href="../../../labs.html">Лабораторные работы</a>
+                    </li>
+                    <li>
+                        <a href="../../../theory.html">Теория</a>
+                    </li>
+                    <li>
+                        <a href="../../../info.html">Справочник</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <div class="general">
+
+        <!--ВСЕ ВАШЕ ТВОРЧЕСТВО В ДИВЕ CONTENT-->
+        <div class="content">
+        <p class="section">Словарь терминов React</p>
+        <p class="section-title-left">Одностраничное приложение</p>
+        <p>Одностраничное приложение&nbsp;— это приложение, которое состоит из&nbsp;единственной HTML-страницы и&nbsp;прочих ресурсов (таких как JavaScript и&nbsp;CSS), необходимых для успешной работы. Любое взаимодействие с&nbsp;главной или последующими ей&nbsp;страницами не&nbsp;требует контакта с&nbsp;сервером, что значит&nbsp;— страница не&nbsp;требует перезагрузки.</p>
+        <p>Хоть React и&nbsp;позволяет создавать одностраничные приложения, это совсем не&nbsp;обязательно. React можно использовать для совершенствования небольших частей уже существующих сайтов, чтобы придать дополнительную интерактивность. Код, написанный в&nbsp;React, может мирно сосуществовать с&nbsp;разметкой отрендеренной на&nbsp;сервере с&nbsp;помощью PHP, или с&nbsp;любыми другими фронтенд-библиотеками. По&nbsp;сути, именно так React и&nbsp;используется в&nbsp;Facebook.</p>
+        <p class="section-title-left">ES6, ES2015, ES2016 и т. д</p>
+        <p>Все эти акронимы относятся к&nbsp;самым последним версиям спецификации стандарта ECMAScript, реализацией которого является язык программирования JavaScript. Версия ES6 (также известная как ES2015) включает много дополнений к&nbsp;предыдущим версиям: стрелочные функции, классы, шаблонные строки, ключевые слова <code class="gatsby-code-text">let</code> и&nbsp;<code class="gatsby-code-text">const</code>. Более подробно о&nbsp;конкретных версиях вы&nbsp;можете узнать <a href="https://ru.wikipedia.org/wiki/ECMAScript" target="_blank" rel="nofollow noopener noreferrer">тут</a>.</p>
+        <p class="section-title-left">Компиляторы</p>
+        <p>Компилятор JavaScript принимает на&nbsp;вход JavaScript код, преобразует его и&nbsp;возвращает в&nbsp;изменённом формате. Самый известный случай использования&nbsp;— преобразование синтаксиса ES6 для поддержки в&nbsp;старых браузерах. При работе с&nbsp;React чаще всего используется <a href="https://babeljs.io/" target="_blank" rel="nofollow noopener noreferrer">Babel</a></p>
+        <p class="section-title-left">Бандлеры</p>
+        <p>Бандлеры берут отдельные модули JavaScript и&nbsp;CSS и&nbsp;соединяют их&nbsp;в&nbsp;меньшее количество файлов, которые оптимизированы под браузеры. В&nbsp;работе с&nbsp;React чаще всего используются <a href="https://webpack.js.org/" target="_blank" rel="nofollow noopener noreferrer">Webpack</a> и&nbsp;<a href="http://browserify.org/" target="_blank" rel="nofollow noopener noreferrer">Browserify</a>.</p>
+        <p class="section-title-left">Менеджер пакетов</p>
+        <p>Менеджер пакетов&nbsp;— это инструмент, позволяющий управлять зависимостями в&nbsp;вашем проекте. <a href="https://www.npmjs.com/" target="_blank" rel="nofollow noopener noreferrer">npm</a> и&nbsp;<a href="https://yarnpkg.com/" target="_blank" rel="nofollow noopener noreferrer">Yarn</a>&nbsp;— менеджеры пакетов наиболее используемые в&nbsp;приложениях React. Оба являются клиентами реестра пакетов npm.</p>
+        <p class="section-title-left">CDN</p>
+        <p>Сеть доставки содержимого (англ. Content Delivery Network, CDN)&nbsp;— это сетевая инфраструктура, распространяющая кешированный, статический контент через сеть серверов по&nbsp;всему миру.</p>
+        <p class="section-title-left">JSX</p>
+        <p>JSX&nbsp;— расширение синтаксиса JavaScript. Этот синтаксис выглядит как язык шаблонов, но&nbsp;наделён всеми языковыми возможностями JavaScript. В&nbsp;результате компиляции JSX и&nbsp;вызова <code class="gatsby-code-text">React.createElement()</code> возникают простые объекты&nbsp;— «React-элементы». Чтобы ознакомиться с&nbsp;введением в&nbsp;JSX, <a href="../../quick-start/introducing-jsx/index.html">обратитесь к&nbsp;соответствующему разделу документации</a>, а&nbsp;более подробную информацию про JSX вы&nbsp;можете найти <a href="../../advanced/jsx-in-depth/index.html">здесь</a>.</p>
+        <p>React DOM использует стиль именования camelCase для свойств вместо обычных имён HTML-атрибутов. Например, в&nbsp;JSX атрибут <code class="gatsby-code-text">tabindex</code> станет <code class="gatsby-code-text">tabIndex</code>. В&nbsp;то&nbsp;время как атрибут <code class="gatsby-code-text">class</code> записывается как <code class="gatsby-code-text">className</code>, поскольку слово <code class="gatsby-code-text">class</code> уже зарезервировано в&nbsp;JavaScript:</p>
+        <pre class="line-numbers"><code class="language-jsx">
+            const name = 'Алиса';
+ReactDOM.render(
+  &lt;h1 className="hello">Меня зовут {name}!&lt;/h1>,
+  document.getElementById('root')
+);
+        </code></pre>
+        <p class="section-title-left"><a href="../../quick-start/rendering-elements/index.html">Элементы</a></p>
+        <p>React-элементы&nbsp;— это составляющие блоки React-приложений. Их&nbsp;можно перепутать с&nbsp;более известной концепцией «компонентов», но&nbsp;в&nbsp;отличие от&nbsp;компонента, элемент описывает то, что вы&nbsp;хотите увидеть на&nbsp;экране. React-элементы иммутабельны.</p>
+        <pre class="line-numbers"><code class="language-jsx">
+            const element = &lt;h1>Привет, мир&lt;/h1>;
+        </code></pre>
+        <p>Обычно, элементы не&nbsp;используются напрямую, а&nbsp;возвращаются компонентами.</p>
+        <p class="section-title-left"><a href="../../quick-start/components-and-props/index.html">Компоненты</a></p>
+        <p>React-компоненты&nbsp;— это маленькие, повторно используемые части кода, которые возвращают React-элементы для отображения на&nbsp;странице.
+Самый простой React-компонент&nbsp;— это простая функция JavaScript, которая возвращает элементы React:</p>
+       <pre class="line-numbers"><code class="language-jsx">
+           function Welcome(props) {
+  return &lt;h1>Привет, {props.name}&lt;/h1>;
+}
+       </code></pre>
+       <p>Компоненты могут быть классами ES6:</p>
+       <pre class="line-numbers"><code class="language-jsx">
+           class Welcome extends React.Component {
+  render() {
+    return &lt;h1>Привет, {this.props.name}&lt;/h1>;
+  }
+}
+       </code></pre>
+       <p>Компоненты можно разбить на&nbsp;отдельные части в&nbsp;зависимости от&nbsp;выполняемой функции и&nbsp;использовать внутри других компонентов. Компоненты могут возвращать другие компоненты, массивы, строки и&nbsp;числа. Если какая-то часть интерфейса повторяется многократно (<code class="gatsby-code-text">Button</code>, <code class="gatsby-code-text">Panel</code>, <code class="gatsby-code-text">Avatar</code>) или сама по&nbsp;себе достаточно сложная (<code class="gatsby-code-text">App</code>, <code class="gatsby-code-text">FeedStory</code>, <code class="gatsby-code-text">Comment</code>), имеет смысл вынести её&nbsp;в&nbsp;независимый компонент. Имена компонентов всегда должны начинаться с&nbsp;заглавной буквы (<code class="gatsby-code-text">&lt;Wrapper/&gt;</code>, а&nbsp;<strong>не</strong> <code class="gatsby-code-text">&lt;wrapper/&gt;</code>). За&nbsp;более детальной информацией о&nbsp;рендеринге компонентов <a href="../../quick-start/components-and-props/index.html">обратитесь к&nbsp;соответствующему разделу документации</a>.</p>
+        <p class="section-title-left"><a href="../../quick-start/components-and-props/index.html">props</a></p>
+        <p><code class="gatsby-code-text">props</code> (пропсы)&nbsp;— это входные данные React-компонентов, передаваемые от&nbsp;родительского компонента дочернему компоненту.</p>
+        <p>Помните, <code class="gatsby-code-text">props</code> предназначены только для чтения. Ни&nbsp;в&nbsp;каком случае их&nbsp;не&nbsp;следует изменять:</p>
+        <pre class="line-numbers"><code class="language-jsx">
+           // Неправильно!
+props.number = 42;
+       </code></pre> 
+       <p>Если вам нужно поменять значение в&nbsp;ответ на&nbsp;пользовательский ввод или ответ сервера, используйте <code class="gatsby-code-text">state</code> (состояние).</p>
+        <p class="section-title-left">props.children</p>
+        <p>В&nbsp;любом компоненте доступны <code class="gatsby-code-text">props.children</code>. Это контент между открывающим и&nbsp;закрывающим тегом компонента. Например:</p>
+        <pre class="line-numbers"><code class="language-jsx">
+           &lt;Welcome>Привет, мир!&lt;/Welcome>
+       </code></pre>
+        <p>Строка <code class="gatsby-code-text">Привет, мир!</code> доступна в&nbsp;<code class="gatsby-code-text">props.children</code> в&nbsp;компоненте <code class="gatsby-code-text">Welcome</code>:</p>
+        <pre class="line-numbers"><code class="language-jsx">
+           function Welcome(props) {
+  return &lt;p>{props.children}&lt;/p>;
+}
+       </code></pre>
+        <p>Для классовых компонентов используйте <code class="gatsby-code-text">this.props.children</code>:</p>
+        <pre class="line-numbers"><code class="language-jsx">
+           class Welcome extends React.Component {
+  render() {
+    return &lt;p>{this.props.children}&lt;/p>;
+  }
+}
+       </code></pre>
+        <p class="section-title-left"><a href="../../quick-start/state-and-lifecycle/index.html">state</a></p>
+        <p>Компонент нуждается в&nbsp;<code class="gatsby-code-text">state</code>, когда данные в&nbsp;нём со&nbsp;временем изменяются. Например, компоненту <code class="gatsby-code-text">Checkbox</code> может понадобиться состояние <code class="gatsby-code-text">isChecked</code>, а&nbsp;компоненту <code class="gatsby-code-text">NewsFeed</code> необходимо отслеживать посты при помощи состояния <code class="gatsby-code-text">fetchedPosts</code>.</p>
+        <p>Самая большая разница между <code class="gatsby-code-text">state</code> и&nbsp;<code class="gatsby-code-text">props</code> состоит в&nbsp;том, что <code class="gatsby-code-text">props</code> передаются от&nbsp;родителя потомку, а&nbsp;<code class="gatsby-code-text">state</code> управляется самим компонентом. Компонент не&nbsp;может изменять <code class="gatsby-code-text">props</code>, но&nbsp;может изменять <code class="gatsby-code-text">state</code>.</p>
+        <p>Для каждой отдельной части изменяемых данных должен существовать только один компонент, который «управляет» изменением состояния. Не&nbsp;пытайтесь синхронизировать состояния двух разных компонентов. Вместо этого <a href="../../quick-start/lifting-state-up/index.html">поднимите оба этих состояния</a> до&nbsp;ближайшего компонента-родителя и&nbsp;передайте через пропсы необходимым дочерним компонентам. </p>
+        
+        <p class="section-title-left"><a href="../../quick-start/state-and-lifecycle/index.html">Методы жизненного цикла</a></p>
+        <p>Методы жизненного цикла&nbsp;— это настраиваемые функции, которые выполняются на&nbsp;различных этапах жизни компонента. Существуют специальные методы для первоначального рендеринга компонента в&nbsp;DOM (<a href="../../reference/react-component/index.html">монтирование</a>), его обновления, размонтирования и&nbsp;удаления.</p>
+        
+            <p class="section-title-left"><a href="../../quick-start/forms/index.html">Управляемые</a> и <a href="../../advanced/uncontrolled-components/index.html">неуправляемые компоненты</a></p>
+        <p>В&nbsp;React существует два различных подхода для управления формами.</p>
+        <p>Элемент формы input, управляемый React&nbsp;— это <em>управляемый компонент</em>. Когда пользователь вводит данные в&nbsp;управляемый компонент, обработчик события изменений приходит в&nbsp;действие, и&nbsp;ваш код определяет допустим&nbsp;ли ввод (повторно рендерясь с&nbsp;обновлённым значением). Если повторный рендеринг не&nbsp;происходит, элемент формы остаётся без изменений.</p>
+        <p><em>Неуправляемый компонент</em> работает как обычный элемент формы вне React. Когда пользователь вводит данные в&nbsp;поле формы (поле ввода, выпадающий список и&nbsp;т.&nbsp;д.), обновлённая информация отображается без помощи React. Однако, это также значит, что некоторые значения не&nbsp;могут быть применены.</p>
+        <p>В&nbsp;большинстве случаев вам следует использовать управляемые компоненты.</p>
+        
+        <p class="section-title-left"><a href="../../quick-start/lists-and-keys/index.html">Ключи</a></p>
+        <p>«Ключ»&nbsp;— это специальный строковый атрибут, который нужно указывать при создании списка элементов. Ключи помогают React определять, какие элементы были изменены, добавлены или удалены. Их&nbsp;необходимо указывать, чтобы React мог сопоставлять элементы массива с&nbsp;течением времени.</p>
+        <p>Ключи внутри массива должны быть уникальными только среди своих соседних элементов. Им&nbsp;не&nbsp;нужно быть уникальными во&nbsp;всём приложении или даже в&nbsp;общем компоненте.</p>
+        <p>Не&nbsp;используйте что-либо наподобие <code class="gatsby-code-text">Math.random()</code> как ключи. Необходимо создавать для ключей «стабильные идентификаторы» при повторных рендерингах, чтобы React мог определить когда элементы добавлены, удалены или переупорядочены. В&nbsp;идеале, ключи должны соответствовать уникальному и&nbsp;постоянному идентификатору поступающему из&nbsp;ваших данных, например <code class="gatsby-code-text">post.id</code>.</p>
+        
+        <p class="section-title-left"><a href="../../advanced/refs-and-dom/index.html">Рефы</a></p>
+        <p>React поддерживает особый атрибут, который можно прикрепить к&nbsp;любому компоненту. Атрибут <code class="gatsby-code-text">ref</code> может быть объектом, созданным при помощи <a href="../../reference/react-api/index.html">функции <code class="gatsby-code-text">React.createRef()</code></a> или колбэком, либо&nbsp;же строкой (устаревший API). Когда в&nbsp;роли атрибута <code class="gatsby-code-text">ref</code> выступает колбэк, функция получает DOM-элемент, лежащий в&nbsp;основе компонента, или экземпляр класса (в&nbsp;зависимости от&nbsp;типа элемента) в&nbsp;качестве аргумента. Это позволяет вам иметь прямой доступ к&nbsp;элементу DOM или экземпляру компонента.</p>
+        <p>Используйте рефы в&nbsp;исключительных случаях. Если вы&nbsp;часто обращаетесь к&nbsp;рефам за&nbsp;помощью, ознакомьтесь с&nbsp;<a href="../../quick-start/lifting-state-up/index.html">нисходящим потоком данных</a>.</p>
+        
+        <p class="section-title-left"><a href="../../quick-start/handling-events/index.html">События</a></p>
+        <p>Обработка событий в&nbsp;React-элементах имеет некоторые синтаксические особенности:</p>
+        <ul>
+<li>Обработчики событий в&nbsp;React именуются в&nbsp;стиле camelCase вместо нижнего регистра.</li>
+<li>С&nbsp;JSX вы&nbsp;передаёте функцию как обработчик события вместо строки.</li>
+</ul>
+       
+        <p class="section-title-left"><a href="../../advanced/reconciliation/index.html">Согласование</a></p>
+        <p>Когда пропсы или состояние компонента изменяются, React сравнивает только что возвращённый и&nbsp;предыдущий отрендеренные элементы, и&nbsp;решает нужно&nbsp;ли обновлять DOM. Этот процесс называется «согласование» (reconciliation).</p>
+        
+            
+        </div>
+        <div class="site-nav">
+            <div class="site-nav-scroll">
+                <p class="site-nav-name">
+                    Установка React
+                </p>
+                <ul class="site-nav-list">
+                    <li><a href="../../installation/try-react/index.html">Начало работы с React</a></li>
+                    <li><a href="../../installation/new-app/index.html">Внедряем React в новое приложение</a></li>
+                    <li><a href="../../installation/add-to-app/index.html">Внедряем React в уже существующее приложение</a></li>
+                    <li><a href="../../installation/cdn-links/index.html">CDN ссылки</a></li>
+                </ul>
+                <p class="site-nav-name">Основы</p>
+                <ul class="site-nav-list">
+                    <li><a href="../../quick-start/hello-world/index.html">Hello, world!</a></li>
+                    <li><a href="../../quick-start/introducing-jsx/index.html">Введение в JSX</a></li>
+                    <li><a href="../../quick-start/rendering-elements/index.html">Создание элементов</a></li>
+                    <li><a href="../../quick-start/components-and-props/index.html">Компоненты и их свойства</a></li>
+                    <li><a href="../../quick-start/state-and-lifecycle/index.html">Состояние и жизненный цикл</a></li>
+                    <li><a href="../../quick-start/handling-events/index.html">Обработка событий</a></li>
+                    <li><a href="../../quick-start/conditional-rendering/index.html">Выборочный рендеринг</a></li>
+                    <li><a href="../../quick-start/lists-and-keys/index.html">Списки и ключи</a></li>
+                    <li><a href="../../quick-start/forms/index.html">Формы</a></li>
+                    <li><a href="../../quick-start/lifting-state-up/index.html">Передача состояния наверх</a></li>
+                    <li><a href="../../quick-start/composition-vs-inheritance/index.html">Композиция вместо наследования</a></li>
+                    <li><a href="../../quick-start/thinking-in-react/index.html">Мышление в React</a></li>
+                </ul>
+                <p class="site-nav-name">Продвинутый React.js</p>
+                <ul class="site-nav-list">
+                    <li><a href="../../advanced/jsx-in-depth/index.html">JSX подробнее</a></li>
+                    <li><a href="../../advanced/typechecking-with-proptypes/index.html">Проверка типов с помощью PropTypes</a></li>
+                    <li><a href="../../advanced/static-typechecking/index.html">Статическая проверка типов</a></li>
+                    <li><a href="../../advanced/refs-and-dom/index.html">Ссылки Ref и DOM</a></li>
+                    <li><a href="../../advanced/uncontrolled-components/index.html">Неконтролируемые компоненты</a></li>
+                    <li><a href="../../advanced/optimizing-perfomance/index.html">Оптимизация производительности</a></li>
+                    <li><a href="../../advanced/react-without-jsx/index.html">React без JSX</a></li>
+                    <li><a href="../../advanced/reconciliation/index.html">Согласование</a></li>
+                    <li><a href="../../advanced/context/index.html">Контекст</a></li>
+                    <li><a href="../../advanced/fragments/index.html">Фрагменты</a></li>
+                    <li><a href="../../advanced/portals/index.html">Порталы</a></li>
+                    <li><a href="../../advanced/error-boundaries/index.html">Границы ошибок</a></li>
+                    <li><a href="../../advanced/web-components/index.html">Web-компоненты</a></li>
+                    <li><a href="../../advanced/higher-order-comp/index.html">Компоненты высшего уровня</a></li>
+                    <li><a href="../../advanced/forwarding-refs/index.html">Пересылки</a></li>
+                    <li><a href="../../advanced/render-props/index.html">Props'ы рендера</a></li>
+                    <li><a href="../../advanced/integrating-with-lib/index.html">Интеграция с другими библиотеками</a></li>
+                    <li><a href="../../advanced/strict-mode/index.html">Строгий режим</a></li>
+                </ul>
+
+                <p class="site-nav-name">Справочник</p>
+                <ul class="site-nav-list">
+                    <li><a href="../../reference/react-api/index.html">React</a></li>
+                    <li><a href="../../reference/react-component/index.html">React.Component</a></li>
+                    <li><a href="../../reference/react-dom/index.html">ReactDOM</a></li>
+                    <li><a href="../../reference/react-dom-server/index.html">ReactDOMServer</a></li>
+                    <li><a href="index.html">Элементы DOM</a></li>
+                    <li><a href="../../reference/synthetic-event/index.html">SyntheticEvent</a></li>
+                    <li><a href="#">Утилиты тестирования</a></li>
+                    <li><a href="#">Поверхностный рендеринг</a></li>
+                    <li><a href="#">Тестовый отрисовщик</a></li>
+                    <li><a href="#">Требования к среде JavaScript</a></li>
+                    <li><a href="#">Словарь</a></li>
+                </ul>
+
+                <p class="site-nav-name">Redux.js</p>
+                <ul class="site-nav-list">
+                    <li><a href="../../redux/about-redux/index.html">О Redux</a></li>
+                    <li><a href="../../redux/install/index.html">Установка</a></li>
+                    <li><a href="../../redux/introduction/index.html">Введение</a></li>
+                    <li><a href="../../redux/actions/index.html">Действия</a></li>
+                    <li><a href="../../redux/reducers/index.html">Редюсеры</a></li>
+                    <li><a href="../../redux/store/index.html">Хранилище</a></li>
+                    <li><a href="../../redux/data-flow/index.html">Поток данных</a></li>
+                    <li><a href="../../redux/usage-with-react/index.html">Использование с React</a></li>
+                    <li><a href="../../redux/async-actions/index.html">Асинхронные действия</a></li>
+                    <li><a href="../../redux/async-flow/index.html">Асинхронный поток</a></li>
+                    <li><a href="../../redux/middleware/index.html">Связующее ПО</a></li>
+                    <script type="text/babel" src="../../../libraries/navigator.js"></script>
+                    <script>
+                        $(document).ready(function() {
+                            $('.site-nav-list a[href="index.html"]').parent().toggleClass('site-nav-list-active');
+                        });
+                        $(function() {
+                            var height = $('.content').height();
+                            $('.site-nav-scroll').height(height);
+                        });
+                    </script>
+            </div>
+        </div>
+
+</body>
+
+</html>
