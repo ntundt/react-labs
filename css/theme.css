@@ -242,6 +242,7 @@
 /*Стили списков лабораторных работ*/
 
 .lr-list {
+    line-height: 1.2em;
     counter-reset: li;
     list-style: none;
     /*text-shadow: 0 1px 0 rgba(255, 255, 255, .5);*/
@@ -290,4 +291,8 @@
 .lr-list a:hover:after {
     left: -.5em;
     border-left-color: #9097A2;
+}
+
+.lr-list {
+    padding-left: 20px;
 }
