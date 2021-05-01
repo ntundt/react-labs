@@ -81,11 +81,27 @@
             $(document).ready(function() {
                 $('.site-nav-list a[href="index.html"]').parent().toggleClass('site-nav-list-active');
             });
+            function handleResize() {
+                if ($(document.body).width() < 799) {
+                    $('.site-nav-scroll')
+                    .css('height', $('.site-nav-list').height() + 40)
+                    .css('overflow-y', 'hidden');
+                } else {
+                    $('.site-nav-scroll').css('height', '');
+                    $('.site-nav-scroll').height($('.content').height());
+                    if ($('.site-nav-list').outerHeight() > $('.site-nav-scroll').innerHeight()) {
+                        $('.site-nav-scroll').css('overflow-y', 'scroll');
+                    } else {
+                        $('.site-nav-scroll').css('overflow-y', 'hidden');
+                    }
+                }
+            }
             $(function() {
-                var height = $('.content').height();
-                $('.site-nav-scroll').height(height);
+                document.body.onresize = handleResize;
+                handleResize();
             });
         </script>
+    </div>
     </div>
 </div>
 
