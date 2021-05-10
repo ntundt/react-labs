@@ -2,21 +2,22 @@
 <html lang="en">
 
 <head>
+
     <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ЛАБОРАТОРНЫЕ РАБОТЫ &#124; REACT.JS</title>
-    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
-    <link rel="stylesheet" href="../../css/general.css">
-    <!--React.js-->
-    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ЛАБОРАТОРНЫЕ РАБОТЫ &#124; REACT.JS</title>
+        <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
+        <link rel="stylesheet" href="../../css/general.css">
+        <!--React.js-->
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
         <script src="../../libraries/prism.js"></script>
-    <!--jQuery-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="../../libraries/header.js"></script>
-</head>
+        <!--jQuery-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="../../libraries/header.js"></script>
+    </head>
 </head>
 
 <body>
@@ -48,62 +49,75 @@
 
     <div class="general">
 
-    <div class="content">
-    <p class="section">Лабораторная работа №7</p>
+        <div class="content">
+            <p class="section">Лабораторная работа №7</p>
+            <p class="lr-theme">Темы: <a target="_blank" href="../../examples/advanced/higher-order-comp/index.html">Компоненты более высокого порядка</a></p>
+            <p class="section">Задание 1</p>
+            <p>Для выполнения данной лабораторной работы вам понадобятся компоненты <mark>Calendar</mark> и <mark>Notes</mark> разработанные в предыдущих лабораторных работах.</p>
+            <p>На основании компонентов <mark>Calendar</mark> и <mark>Notes</mark> разработайте компонент <mark>Scheduler</mark> "Планировщик задач".</p>
+            <p>Планировщик должен работать следующим образом: при клике на определенный день, он меняет цвет фона (показывает выделение), при повторном клике на выделенный день — ниже календаря появляется компонент заметок <mark>Notes</mark> с функциональным меню для выбора действий. Необходимо реализовать следующие действия:</p>
+            <ul>
+                <li>Добавление записей;</li>
+                <li>Изменение существующих записей;</li>
+                <li>Удаление существующих записей;</li>
+                <li>Удаление всех записей.</li>
+            </ul>
+            <p>После добавления записи цвет фона изменяется для отображения выделения. При удалении всех записей день изменяет цвет фона на стандартный.</p>
+            <p><strong>Функцией высшего порядка (управляющей/главной) должен является Календарь.</strong></p>
+        </div>
+        <div class="site-nav">
+            <div class="site-nav-scroll">
+                <ul class="site-nav-list">
+                    <p class="site-nav-name">Раздел 1. Установка и введение в React</p>
+                    <li><a href="../lab01/index.html">Лабораторная работа №1</a></li>
+                    <li><a href="../lab02/index.html">Лабораторная работа №2</a></li>
+                    <li><a href="../lab03/index.html">Лабораторная работа №3</a></li>
+                    <li><a href="../lab04/index.html">Лабораторная работа №4</a></li>
+                    <li><a href="../lab05/index.html">Лабораторная работа №5</a></li>
+                    <p class="site-nav-name">Раздел 2. Основы React</p>
+                    <li><a href="../lab06/index.html">Лабораторная работа №6</a></li>
+                    <li><a href="index.html">Лабораторная работа №7</a></li>
+                    <li><a href="../lab08/index.html">Лабораторная работа №8</a></li>
+                    <li><a href="../lab09/index.html">Лабораторная работа №9</a></li>
+                    <li><a href="../lab10/index.html">Лабораторная работа №10</a></li>
+                    <p class="site-nav-name">Раздел 3. Redux.js</p>
+                    <li><a href="../lab11/index.html">Лабораторная работа №11</a></li>
+                    <li><a href="../lab12/index.html">Лабораторная работа №12</a></li>
+                    <li><a href="../lab13/index.html">Лабораторная работа №13</a></li>
+                    <li><a href="../lab14/index.html">Лабораторная работа №14</a></li>
+                    <li><a href="../lab15/index.html">Лабораторная работа №15</a></li>
+                    <li><a href="../lab16/index.html">Лабораторная работа №16</a></li>
+                    <li><a href="../lab17/index.html">Лабораторная работа №17</a></li>
+                </ul>
+                <script type="text/babel" src="../../libraries/navigator.js"></script>
+                <script>
+                    $(document).ready(function() {
+                        $('.site-nav-list a[href="index.html"]').parent().toggleClass('site-nav-list-active');
+                    });
 
-    </div>
-    <div class="site-nav">
-    <div class="site-nav-scroll">
-        <ul class="site-nav-list">
-            <p class="site-nav-name">Раздел 1. Установка и введение в React</p>
-            <li><a href="../lab01/index.html">Лабораторная работа №1</a></li>
-            <li><a href="../lab02/index.html">Лабораторная работа №2</a></li>
-            <li><a href="../lab03/index.html">Лабораторная работа №3</a></li>
-            <li><a href="../lab04/index.html">Лабораторная работа №4</a></li>
-            <li><a href="../lab05/index.html">Лабораторная работа №5</a></li>
-            <p class="site-nav-name">Раздел 2. Основы React</p>
-            <li><a href="../lab06/index.html">Лабораторная работа №6</a></li>
-            <li><a href="index.html">Лабораторная работа №7</a></li>
-            <li><a href="../lab08/index.html">Лабораторная работа №8</a></li>
-            <li><a href="../lab09/index.html">Лабораторная работа №9</a></li>
-            <li><a href="../lab10/index.html">Лабораторная работа №10</a></li>
-            <p class="site-nav-name">Раздел 3. Redux.js</p>
-            <li><a href="../lab11/index.html">Лабораторная работа №11</a></li>
-            <li><a href="../lab12/index.html">Лабораторная работа №12</a></li>
-            <li><a href="../lab13/index.html">Лабораторная работа №13</a></li>
-            <li><a href="../lab14/index.html">Лабораторная работа №14</a></li>
-            <li><a href="../lab15/index.html">Лабораторная работа №15</a></li>
-            <li><a href="../lab16/index.html">Лабораторная работа №16</a></li>
-            <li><a href="../lab17/index.html">Лабораторная работа №17</a></li>
-        </ul>
-        <script type="text/babel" src="../../libraries/navigator.js"></script>
-        <script>
-            $(document).ready(function() {
-                $('.site-nav-list a[href="index.html"]').parent().toggleClass('site-nav-list-active');
-            });
-            function handleResize() {
-                if ($(document.body).width() < 799) {
-                    $('.site-nav-scroll')
-                    .css('height', $('.site-nav-list').height() + 40)
-                    .css('overflow-y', 'hidden');
-                } else {
-                    $('.site-nav-scroll').css('height', '');
-                    $('.site-nav-scroll').height($('.content').height());
-                    if ($('.site-nav-list').outerHeight() > $('.site-nav-scroll').innerHeight()) {
-                        $('.site-nav-scroll').css('overflow-y', 'scroll');
-                    } else {
-                        $('.site-nav-scroll').css('overflow-y', 'hidden');
+                    function handleResize() {
+                        if ($(document.body).width() < 799) {
+                            $('.site-nav-scroll')
+                                .css('height', $('.site-nav-list').height() + 40)
+                                .css('overflow-y', 'hidden');
+                        } else {
+                            $('.site-nav-scroll').css('height', '');
+                            $('.site-nav-scroll').height($('.content').height());
+                            if ($('.site-nav-list').outerHeight() > $('.site-nav-scroll').innerHeight()) {
+                                $('.site-nav-scroll').css('overflow-y', 'scroll');
+                            } else {
+                                $('.site-nav-scroll').css('overflow-y', 'hidden');
+                            }
+                        }
                     }
-                }
-            }
-            $(function() {
-                document.body.onresize = handleResize;
-                handleResize();
-            });
-        </script>
+                    $(function() {
+                        document.body.onresize = handleResize;
+                        handleResize();
+                    });
+                </script>
+            </div>
+        </div>
     </div>
-    </div>
-</div>
 </body>
 
 </html>
