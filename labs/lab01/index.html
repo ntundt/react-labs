@@ -48,38 +48,39 @@
 
     <div class="content">
     <p class="section">Лабораторная работа №1</p>
-       <p class="lr-theme">Темы: <a target="_blank" href="../../examples/quick-start/hello-world/index.html">Hello, world!</a>, <a target="_blank" href="../../examples/quick-start/introducing-jsx/index.html">Введение в JSX</a>, <a target="_blank" href="../../examples/quick-start/rendering-elements/index.html">Создание элементов</a></p>
+        <p class="lr-theme">Темы: <a target="_blank" href="../../examples/quick-start/hello-world/index.html">Hello, world!</a>, <a target="_blank" href="../../examples/quick-start/introducing-jsx/index.html">Введение в JSX</a>, <a target="_blank" href="../../examples/quick-start/rendering-elements/index.html">Создание элементов</a></p>
+        
+        <p>В первых лабораторных работах для разработки можно использовать любой текстовый редактор. В дальнейшем вам будет необходимо перейти на <a href="../../info/create_react_app/index.html" target="_blank">шаблон create-react-app</a>. Рассмотрите возможность сделать это сейчас для получения лучшего опыта.</p>
+
         <p class="section">Задание 1</p>
         
-        <p>Выберите и, при необходимости, установите рабочее окружение для разработки с React. В первых лабораторных работах для этого можно использовать любой текстовый редактор. В дальнейшем вам понадобится Node.JS.</p>
+        <p>Выберите и, при необходимости, установите рабочее окружение для разработки с React.</p>
         
         <p>Для быстрого старта можно использовать следующий шаблон:</p>
 
-<pre class="line-numbers">
-<code class="language-jsx">&lt;!DOCTYPE html>
-&lt;html>
-&lt;head>
-    &lt;meta charset="UTF-8" />
-    &lt;title>Hello World&lt;/title>
-    &lt;script src="https://unpkg.com/react@17/umd/react.production.min.js">&lt;/script>
-    &lt;script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js">&lt;/script>
-    &lt;script src="https://unpkg.com/@babel/standalone/babel.min.js">&lt;/script>
-&lt;/head>
-&lt;body>
-    &lt;div id="root">&lt;/div>
-    &lt;script type="text/babel">
-        ReactDOM.render(
-            &lt;h1>Hello, world!&lt;/h1>,
-            document.getElementById('root')
-        );
-    &lt;/script>
-&lt;/body>
-&lt;/html>
-</code></pre>
+        <pre class="line-numbers"><code class="language-jsx">
+        &lt;!DOCTYPE html>
+        &lt;html>
+        &lt;head>
+            &lt;meta charset="UTF-8" />
+            &lt;title>Hello World&lt;/title>
+            &lt;script src="https://unpkg.com/react@17/umd/react.production.min.js">&lt;/script>
+            &lt;script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js">&lt;/script>
+            &lt;script src="https://unpkg.com/@babel/standalone/babel.min.js">&lt;/script>
+        &lt;/head>
+        &lt;body>
+            &lt;div id="root">&lt;/div>
+            &lt;script type="text/babel">
+                ReactDOM.render(
+                    &lt;h1>Hello, world!&lt;/h1>,
+                    document.getElementById('root')
+                );
+            &lt;/script>
+        &lt;/body>
+        &lt;/html>
+        </code></pre>
 
         <p>Скопируйте его и убедитесь, что при открытии страницы в браузере появляется надпись "Hello, world!"</p>
-
-        <p>Создайте отдельный файл для скрипта. Перенесите в него весь код из исходного файла. Продемонстрируйте подключение к HTML скрипта, содержащего JSX-код.</p>
 
         <p>Измените код в файле так, чтобы при открытии страницы отображалась сегодняшняя дата.</p>
 
@@ -87,36 +88,33 @@
 
         <p>В ответ на запрос сервер фондовой биржи вернул следующий объект, содержащий названия акций, их текущую цену и изменение цены:</p>
 
-        <pre class="line-numbers"><code class="language-jsx">[
-    {
-        stock_name: "EFX",
-        company_name: "Equifax Inc",
-        price: 163.55,
-        currency: "USD",
-        change: "+9.03"
-    },
-    {
-        stock_name: "IRM",
-        company_name: "Iron Mountain Inc",
-        price: 33.21,
-        currency: "USD",
-        change: "+1.42"
-    },
-    {
-        stock_name: "NTAP",
-        company_name: "NetApp Inc",
-        price: 54.81,
-        currency: "USD",
-        change: "-6.01"
-    },
-    {
-        stock_name: "CTL",
-        company_name: "Centurylink Inc",
-        price: 13.79,
-        currency: "USD",
-        change: "-1.37"
-    }
-]</code></pre>
+        <pre class="line-numbers"><code class="language-jsx">
+            [{
+                stock_name: "EFX",
+                company_name: "Equifax Inc",
+                price: 163.55,
+                currency: "USD",
+                change: "+9.03"
+            }, {
+                stock_name: "IRM",
+                company_name: "Iron Mountain Inc",
+                price: 33.21,
+                currency: "USD",
+                change: "+1.42"
+            }, {
+                stock_name: "NTAP",
+                company_name: "NetApp Inc",
+                price: 54.81,
+                currency: "USD",
+                change: "-6.01"
+            }, {
+                stock_name: "CTL",
+                company_name: "Centurylink Inc",
+                price: 13.79,
+                currency: "USD",
+                change: "-1.37"
+            }]
+        </code></pre>
 
         <p>Динамически сгенерируйте и выведите на его основании таблицу с условным форматированием: положительное изменение цены акций должно быть окрашено в зелёный цвет, а отрицательное — в красный. Используйте циклы.</p>
         
