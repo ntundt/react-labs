@@ -49,8 +49,75 @@
     <div class="general">
 
     <div class="content">
-    <p class="section">Лабораторная работа №11</p>
+        <p class="section">Лабораторная работа №11</p>
+        <p class="lr-theme">Темы: <a target="_blank" href="../../examples/advanced/jsx-in-depth/index.html">Границы ошибок</a>, <a target="_blank" href="../../examples/advanced/uncontrolled-components/index.html">Неконтролируемые компоненты</a></p>
+        <p class="section">Задание 1</p>
+        <p>Разработайте компонент <mark>Hierarchy</mark> для просмотра иерархической информации. Примером иерархической информации, которую компонент должен быть способен вывести, является дерево файлов. Дерево файлов задаётся объектом вида:</p>
 
+        <pre class="line-numbers"><code class="language-js">
+            const hierarchy = [{
+                id: 1,
+                name: "folder1",
+                icon: "/icons/folder.png",
+                children: [{
+                    id: 2,
+                    name: "folder2",
+                    icon: "/icons/folder.png",
+                    onClick: function(id) {
+                        console.log(id);
+                    },
+                    children: [{
+                        id: "1",
+                        name: "image.png",
+                        icon: "/icons/image.png",
+                        onClick: function(id) {
+                            console.log(id);
+                        }
+                    }]
+                }]
+            }, {
+                id: 3,
+                name: "folder3",
+                icon: "/icons/folder.png",
+                children: [{
+                    id: 4,
+                    name: "folder4",
+                    icon: "/icons/folder.png",
+                    children: [{
+                        id: 5,
+                        name: "text.txt",
+                        icon: "/icons/text.png",
+                        onClick: function(id) {
+                            console.log(id);
+                        }
+                    }]
+                }]
+            }];
+        </code></pre>
+
+        <p>Рассмотрим объект узла дерева:</p>
+
+        <pre class="line-numbers"><code class="language-js">
+            {
+                id: "Node_id",
+                name: "Node",
+                icon: "/icons/folder.png",
+                children: [ … ],
+                onClick: function(id) { … }
+            }
+        </code></pre>
+
+        <ul>
+            <li><mark>id</mark> — идентификатор узла (строка или число).</li>
+            <li><mark>name</mark> задаёт имя узла, которое непосредственно и отображается.</li>
+            <li><mark>icon</mark> задаёт адрес иконки, которая отображается рядом с именем узла.</li>
+            <li><mark>children</mark> — массив из объектов дочерних узлов дерева. По умолчанию дочерние узлы скрыты и появляются только после нажатия по родительскому узлу. После повторного нажатия по родительскому узлу дочерние элементы скрываются. Если поле задано (даже если массив дочерних элементов пустой), рядом с именем узла отображается иконка стрелки.</li>
+            <li><mark>onClick</mark> — функция, которая вызывается, когда пользователь кликает на узел. Параметр <mark>id</mark> — идентификатор узла, по которому пользователь кликнул. Если функция не задана, то никаких дополнительных действий не требуется.</li>
+        </ul>
+
+        <p>Если объект узла некорректен (id не является уникальным, onClick не является функцией и т.п.), выведите вместо узла соответствующее сообщение, используя границу ошибок.</p>
+
+        <!-- TODO: добавить скриншот результата -->
     </div>
     <div class="site-nav">
     <div class="site-nav-scroll">
