@@ -24,6 +24,8 @@ body {
     padding: 0 50px;
     padding-bottom: 80px;
     overflow-x: hidden;
+    width: -webkit-fill-available;
+    width: -moz-available;
 }
 
 .content .section {
