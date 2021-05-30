@@ -51,6 +51,14 @@ body {
     font-weight: 600;
 }
 
+.content .stl {
+    font-size: 26px;
+    margin: 0;
+    text-align: left;
+    padding: 10px 20px;
+    font-weight: 600;
+}
+
 .content p {
     text-align: left;
     margin: 0;

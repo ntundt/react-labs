@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>СПРАВОЧНИК &#124; REACT.JS</title>
+    <link rel="stylesheet" href="../../css/general.css">
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="../../libraries/header.js"></script>
+    <script src="../../libraries/prism.js"></script>
+</head>
+
+<body>
+
+    <section class="nav-bar">
+        <div class="nav-container">
+            <div class="brand">
+                <a href="index.html"><img src="../../images/react-logo.png">Справочник</a>
+            </div>
+            <nav>
+                <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+                <ul class="nav-list">
+                    <li>
+                        <a href="../../index.html">Главная</a>
+                    </li>
+                    <li>
+                        <a href="../../labs.html">Лабораторные работы</a>
+                    </li>
+                    <li>
+                        <a href="../../theory.html">Теория</a>
+                    </li>
+                    <li>
+                        <a href="../../info.html">Справочник</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+    <div class="general">
+
+        <div class="content">
+            <p class="section">Что такое React Router и для чего он нужен?</p>
+            <p class="section-title-left">Что такое React Router&#63;</p>
+            <p><a href="https://reacttraining.com/react-router/" target="_blank">React Router</a> — это переработанный вариант популярного React дополнения. Зависимые от платформы конфигурации роутов из прошлой версии были удалены и теперь всё является простыми компонентами.</p>
+            <p>Эта статья покрывает всё что вам нужно для создания веб-сайтов с React Router.</p>
+            <p class="section-title-left">Установка</p>
+            <p>React Router v4 был разбит на 3 пакета:</p>
+            <ul>
+                <li>react-router</li>
+                <li>router-dom</li>
+                <li>react-router-native</li>
+            </ul>
+            <p>react-router предоставляет базовые функции и компоненты для работы в двух окружениях(Браузере и react-native)</p>
+            <p>В ходе выполнения лабораторных мы будем создавать сайт который будет отображаться в браузере, поэтому нам следует использовать react-router-dom. react-router-dom экспортирует из react-router все функции поэтому нам нужно установить только react-router-dom.</p>
+            <pre class="language-html"><code class="language-html">
+            npm install --save react-router-dom
+        </code></pre>
+            <p class="section-title-left">Router</p>
+            <p>При старте проекта вам нужно определить какой тип роутера использовать. Для браузерных проектов есть <mark>BrowserRouter</mark> и <mark>HashRouter</mark> компоненты. <span class="gatsby-code-text">BrowserRouter</span> — следует использовать когда вы обрабатываете на сервере динамические запросы, а <mark>HashRouter</mark> используйте когда у вас статический веб сайт.</p>
+            <p>Обычно предпочтительнее использовать <mark>BrowserRouter</mark>, но если ваш сайт расположен на статическом сервере(от перев. как github pages), то использовать HashRouter это хорошее решение проблемы.</p>
+            <p>Наш проект предполагает использование бекенда поэтому мы будем использовать BrowserRouter.</p>
+            <p class="section-title-left">Объект «История — History»</p>
+            <p>Каждый Router создает объект history который хранит путь к текущему location<span id="ann1">[1]</span> и перерисовывает интерфейс сайта когда происходят какие то изменения пути.</p>
+            <p>Остальные функции предоставляемые в React Router полагаются на доступность объекта history через context, поэтому они должны рендериться внутри компонента Router.</p>
+            <p><b>Заметка:</b> Компоненты React Router не имеющие в качестве предка компонент Router не будут работать, так как не будет доступен context.</p>
+            <p class="section-title-left">Рендеринг Router</p>
+            <p>Компонент Router ожидает только один элемент в качестве дочернего. Что бы работать в рамках этого условия, удобно создать компонент
+                <App /> который рендерить всё ваше приложение(это так же важно для серверного рендеринга).
+            </p>
+            <pre class="language-js"><code>
+import { BrowserRouter } from 'react-router-dom';
+
+ReactDOM.render((
+    &lt;BrowserRouter>
+        &lt;App />
+    &lt;/BrowserRouter>
+), document.getElementById('root'))
+            </code></pre>
+            <p class="section-title-left">App компонент</p>
+            <p>Наше приложение начинается с <mark>&lt;App/></mark> компонента который мы разделим на две части. <mark>&lt;Header/></mark> который будет содержать навигационные ссылки и <mark>&lt;Main/></mark> который будет содержать контент роутов.</p>
+            <pre class="language-js"><code>
+// Этот компонент будет отрендерен с помощью нашего &lt;Router>
+const App = () => (
+  &lt;div>
+    &lt;Header />
+    &lt;Main />
+  &lt;/div>
+)
+            </code></pre>
+            <p class="stl">Routes</p>
+            <p>&lt;Route/> компонент это главный строительный блок React Router'а. В том случае если вам нужно рендерить элемент в зависимости от pathname URL'ов, то следует использовать компонент &lt;Route/></p>
+            <p class="stl">Path — путь</p>
+            <p>&lt;Route /> принимает path в виде prop который описывает определенный путь и сопоставляется с location.pathname. </p>
+            <pre class="language-js"><code>
+                &lt;Route path='/roster'/>
+            </code></pre>
+            <p>В примере выше &lt;Route/> сопоставляет location.pathname который начинается с /roster<span id="ann2">[2]</span>. Когда текущий location.pathname сопоставляется положительно с prop path то компонент будет отрендерен, а если мы не можем их сопоставить, то Route ничего не рендерит<span id="ann3">[3]</span>.</p>
+            <pre class="language-js"><code>
+                <Route path='/roster'/>
+// Когда location.pathname это '/', prop path не совпадает
+// Когда location.pathname это '/roster' или '/roster/2', prop path совпадает
+// Если установлен exact prop. Совпадает только строгое сравнение '/roster', но не
+// '/roster/2'
+&lt;Route exact path='/roster'/>
+            </code></pre>
+            <p><b>Заметка:</b> Когда речь идет о пути React Router думает только о пути без домена. Это значит, что в адресе:</p>
+            <pre class="language-html"><code>http://www.example.com/my-projects/one?extra=false</code></pre>
+            <p>React Router будет видеть только /my-projects/one
+            </p>
+            <p class="stl">Сопоставление пути</p>
+            <p>npm пакет <mark>path-to-regexp</mark> компилирует prop path в регулярное выражение и сопоставляет его против location.pathname. Строки path имеют более сложные опции форматирования чем объясняются здесь. Вы можете почитать документацию.</p>
+            <p>Когда пути сопоставляются создается объект <mark>match</mark> который содержит свойства:</p>
+            <ul>
+                <li><b>url</b> — сопоставляемая часть текущего location.pathname</li>
+                <li><b>path</b> — путь в компоненте Route</li>
+                <li><b>isExact</b> — path в Route === location.pathname</li>
+                <li><b>params</b> — объект содержит значения из path которые возвращает модуль path-to-regexp</li>
+            </ul>
+            <p><b>Заметка:</b> path в Route должен быть абсолютным<span id="ann4">[4]</span>.</p>
+            <p class="stl">Создание своих роутов</p>
+            <p>Компонент Route может быть в любом месте в роутере, но иногда нужно определять, что рендерить в одно и тоже место. В таком случае следует использовать компонент группирования Route'ов — &lt;Switch/>. &lt;Switch/> итеративно проходит по дочерним компонентам и рендерит только первый который подходит под location.pathname.</p>
+            <p>У нашего веб-сайта пути которые мы хотим сопоставлять такие:</p>
+            <ul>
+                <li>/ — Главная страница</li>
+                <li>/roster — Страница команд</li>
+                <li>/roster/:number — Страница профиля игрока по номеру</li>
+                <li>/schedule — Расписание игр команды</li>
+            </ul>
+            <p>По порядку сопоставления путей в нашем приложении, все что нам нужно сделать это создать компонент Route с prop path который мы хотим сопоставить.</p>
+            <pre class="language-js"><code>
+                &lt;Switch>
+  &lt;Route exact path='/' component={Home}/>
+  {/* Оба /roster и /roster/:number начинаются с /roster */}
+  &lt;Route path='/roster' component={Roster}/>
+  &lt;Route path='/schedule' component={Schedule}/>
+&lt;/Switch>
+            </code></pre>
+            <p class="stl">Что делает рендер компонента Route?</p>
+            <p>У Route есть 3 props'a которые описывают каким образом выполнить рендер сопоставляя prop path с location.pathname и только один из prop должен быть представлен в Route:</p>
+            <ul>
+                <li><b>component</b> — React компонент. Когда роут удовлетворяется сопоставление в path, то он возвращает переданный component (используя функцию React.createElement).</li>
+                <li><b>render</b> — функция которая должна вернуть элемент React. Будет вызвана когда удовлетворится сопоставление в path. Render довольно похож на component, но используется для inline рендеринга и подстановки необходимых для элемента props<span id="ann5">[5]</span>.</li>
+                <li><b>children</b> — в отличие от предыдущих двух props children будет всегда отображаться независимо от того сопоставляется ли path или нет.</li>
+            </ul>
+            <pre class="language-js"><code>
+                &lt;Route path='/page' component={Page} />
+const extraProps = { color: 'red' }
+&lt;Route path='/page' render={(props) => (
+  &lt;Page {...props} data={extraProps}/>
+)}/>
+&lt;Route path='/page' children={(props) => (
+  props.match
+    ? &lt;Page {...props}/>
+    : &lt;EmptyPage {...props}/>
+)}/>
+            </code></pre>
+            <p>В типичных ситуациях следует использовать component или render. Children prop может быть использован, но лучше ничего не делать если path не совпадает с location.pathname.</p>
+            <p>Элементу отрендеренному Route будет передано несколько props. match — объект сопоставления path с location.pathname, location объект<span id="ann6">[6]</span> и history объект(созданный самим роутом)<span id="ann7">[7]</span>.</p>
+            <p class="stl">Main</p>
+            <p>Сейчас мы опишем основную структуру роутера. Нам просто нужно отобразить наши маршруты. Для нашего приложения мы будем использовать компонент <mark>&lt;Switch/></mark> и компонент <mark>&lt;Route/></mark> внутри нашего компонента <mark>&lt;Main/></mark> который поместит сгенерированный HTML удовлетворяющий сопоставлению path внутри.</p>
+            <p><mark>&lt;Main/></mark> DOM узла(node)</p>
+            <pre class="language-js"><code>
+                import { Switch, Route } from 'react-router-dom'
+const Main = () => (
+  &lt;main>
+    &lt;Switch>
+      &lt;Route exact path='/' component={Home}/>
+      &lt;Route path='/roster' component={Roster}/>
+      &lt;Route path='/schedule' component={Schedule}/>
+    &lt;/Switch>
+  &lt;/main>
+)
+            </code></pre>
+            <p><b>Заметка:</b> Route для главной страницы содержит prop exact, благодаря которому пути сравниваются строго.</p>
+            <p class="stl">Унаследованные роуты</p>
+            <p>Профиль игрока /roster/:number не включен в &lt;Switch/>. Вместо этого он будет рендериться компонентом &lt;Roster/> который рендериться всякий раз когда путь начинается с /roster.</p>
+            <p>В компоненте Roster мы создадим компоненты для двух путей:</p>
+            <ul>
+                <li>/roster — с prop exact</li>
+                <li>/roster/:number — этот route использует параметр пути, который будет отловлен после /roster</li>
+            </ul>
+            <pre class="language-js"><code>
+                const Roster = () => (
+  &lt;Switch>
+    &lt;Route exact path='/roster' component={FullRoster}/>
+    &lt;Route path='/roster/:number' component={Player}/>
+  &lt;/Switch>
+)
+            </code></pre>
+            <p>Может быть полезным группирование роутов которые имеют общие компоненты, что позволяет упростить родительские маршруты и позволяет отображать контент который относиться к нескольким роутам.</p>
+            <p>К примеру &lt;Roster/> может быть отрендерен с заголовком который будет отображаться во всех роутах которые начинаются с /roster.</p>
+            <pre class="language-js"><code>
+                const Roster = () => (
+  &lt;div>
+    &lt;h2>This is a roster page!&lt;/h2>
+    &lt;Switch>
+      &lt;Route exact path='/roster' component={FullRoster}/>
+      &lt;Route path='/roster/:number' component={Player}/>
+    &lt;/Switch>
+  &lt;/div>
+)
+            </code></pre>
+            <p class="stl">Параметры в path</p>
+            <p>Иногда нам требуется использовать переменные для получения какой либо информации. К примеру, роут профиля игрока, где нам требуется получить номер игрока. Мы сделали это добавив параметр в prop path.</p>
+            <p>:number часть строки в /roster/:number означает, что часть path после /roster/ будет получена в виде переменной и сохранится в match.params.number. К примеру путь /roster/6 сгенерирует следующий объект с параметрами:</p>
+            <pre class="language-js"><code>
+                { number: '6' // Любое переданное значение интерпретируется как строка}
+            </code></pre>
+            <p>Компонент
+                <Player /> будет использовать props.match.params для получения нужной информации которую следует отрендерить.
+            </p>
+            <pre class="language-js"><code>
+                // API возращает информацию об игроке в виде объекта
+import PlayerAPI from './PlayerAPI'
+const Player = (props) => {
+  const player = PlayerAPI.get(
+    parseInt(props.match.params.number, 10)
+  )
+  if (!player) {
+    return &lt;div>Sorry, but the player was not found&lt;/div>
+  }
+  return (
+    &lt;div>
+      &lt;h1>{player.name} (#{player.number})&lt;/h1>
+      &lt;h2>{player.position}&lt;/h2>
+    &lt;/div>
+)
+            </code></pre>
+            <p><b>Заметка:</b> Вы можете больше изучить о параметрах в путях в пакете path-to-regexp</p>
+            <p>Наряду с компонентом &lt;Player/> наш веб-сайт использует и другие как &lt;FullRoster/>, &lt;Schedule/> и &lt;Home/>.</p>
+            <pre class="language-js"><code>
+                const FullRoster = () => (
+  &lt;div>
+    &lt;ul>
+      {
+        PlayerAPI.all().map(p => (
+          &lt;li key={p.number}>
+            &lt;Link to={`/roster/${p.number}`}>{p.name}&lt;/Link>
+          &lt;/li>
+        ))
+      }
+    &lt;/ul>
+  &lt;/div>
+)
+const Schedule = () => (
+  &lt;div>
+    &lt;ul>
+      &lt;li>6/5 @ Спартак&lt;/li>
+      &lt;li>6/8 vs Зенит&lt;/li>
+      &lt;li>6/14 @ Рубин&lt;/li>
+    &lt;/ul>
+  &lt;/div>
+)
+const Home = () => (
+  &lt;div>
+    &lt;h1>Добро пожаловать на наш сайт!&lt;/h1>
+  &lt;/div>
+)
+            </code></pre>
+            <p>Последний штрих, наш сайт нуждается в навигации между страницами. Если мы создадим обычные ссылки то страница будет перезагружаться. React Router решает эту проблему компонентом &lt;Link/> который предотвращает перезагрузку. Когда мы кликаем на &lt;Link/> он обновляет URL и React Router рендерит нужный компонент без обновления страницы.</p>
+            <pre class="language-js"><code>
+    import { Link } from 'react-router-dom'
+const Header = () => (
+  &lt;header>
+    &lt;nav>
+      &lt;ul>
+        &lt;li>&lt;Link to='/'>Home&lt;/Link>&lt;/li>
+        &lt;li>&lt;Link to='/roster'>Roster&lt;/Link>&lt;/li>
+        &lt;li>&lt;Link to='/schedule'>Schedule&lt;/Link>&lt;/li>
+      &lt;/ul>
+    &lt;/nav>
+  &lt;/header>
+)
+</code></pre>
+            <p>&lt;Link/> использует prop to для описания URL куда следует перейти. Prop to может быть строкой или location объектом (который состоит из pathname, search, hash, state свойств). Если это строка то она конвертируется в location объект.</p>
+            <pre class="language-js"><code>
+    &lt;Link to={{ pathname: '/roster/7' }}>Player #7&lt;/Link>
+</code></pre>
+            <p><b>Заметка:</b> Пути в компонентах &lt;Link/> должны быть абсолютными<span id="ann4">[4]</span>.
+            </p>
+            <p class="stl">Исходный код</p>
+            <p>Весь код нашего веб сайта доступен <a href="https://codepen.io/pshrmn/pen/YZXZqM" target="_blank">на codepen</a>.</p>
+            <div class="warning">
+        <p><b>ВНИМАНИЕ!</b></p>
+         <p>Не рекомендуем копировать готовый исходный код до прочтения статьи! После изучения данного материала вы с лёгкостью сможете написать код самостоятельно, а так же приобретёте необходимые навыки для выполнения лабораторных работ.</p>
+    </div>
+            <p class="stl">Route готов!</p>
+            <p>Надеемся теперь вы готовы продолжить выполнение лабораторных работ и погрузиться в изучение деталей маршрутизации веб приложений.</p>
+            <p>Мы использовали самые основные компоненты которые вам понадобятся при создании собственных веб приложений (&lt;BrowserRouter.>, &lt;Route.>, and &lt;Link.>), но есть еще несколько компонентов и props которые здесь не рассмотрены. К счастью у React Router есть прекрасная документация где вы можете найти более подробное объяснение компонентов и props. Так же в документации предоставляются работающие примеры с исходным кодом.</p>
+            <p class="stl">Пояснения</p>
+            <ul style="list-style-type: none;">
+                <li><a href="#ann1">[1]</a> — Объект location описывает разные части URL'a</li>
+                <pre class="language-js"><code>
+                    // стандартный location 
+{ pathname: '/', search: '', hash: '', key: 'abc123' state: {} }
+                </code></pre>
+                <li><a href="#ann2">[2]</a> — Вы можете использовать компонент &lt;Route/> без path. Это полезно для передачи методов и переменных которые храняться в context.</li>
+                <li>
+                    <a href="#ann3">[3]</a> — Если вы используете prop children то route будет отрендерен даже если path и location.pathname не совпадают.</li>
+                <li><a href="#ann4">[4]</a> — Сейчас ведется работа над относительными путями в &lt;Route/> и &lt;Link/>. Относительные
+                    <Link /> более сложные чем могут показаться, они должны быть разрешены используя свой родительский объект match, а не текущий URL.
+                </li>
+                <li><a href="#ann5">[5]</a> — Это stateless компонент. Внутри есть большая разница между render и component. Component использует React.createElement для создания компонента, в то время как render используется как функция. Если бы вы определили inline функцию и передали через нее props то это было бы намного медленнее чем с использованием функции render.</li>
+                <pre class="language-js"><code>
+                    &lt;Route path='/one' component={One}/>
+// React.createElement(props.component)
+&lt;Route path='/two' render={() => &lt;Two />}/>
+// props.render()
+                </code></pre>
+                <li><a href="#ann6">[6]</a> — Компоненты <Route/> и <Switch/> могут оба использовать prop location. Это позволяет сопоставлять их с path, который фактически отличается от текущего URL'а.</li>
+                <li><a href="#ann7">[7]</a> — Так же передают staticContext, но он полезен только при рендере на сервере.</li>
+            </ul>
+        </div>
+
+</body>
+
+—
+
+</html>
