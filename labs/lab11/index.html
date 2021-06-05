@@ -16,6 +16,14 @@
     <!--jQuery-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="../../libraries/header.js"></script>
+    <style>
+        .icon {
+            width: 20px;
+            height: 20px;
+            display: inline !important;
+            vertical-align: middle;
+        }
+    </style>
 </head>
 </head>
 
@@ -59,18 +67,18 @@
             const hierarchy = [{
                 id: 1,
                 name: "folder1",
-                icon: "/icons/folder.png",
-                children: [{
+                icon: "/icons/folder.svg",
+                childs: [{
                     id: 2,
                     name: "folder2",
-                    icon: "/icons/folder.png",
+                    icon: "/icons/folder.svg",
                     onClick: function(id) {
                         console.log(id);
                     },
-                    children: [{
+                    childs: [{
                         id: "1",
                         name: "image.png",
-                        icon: "/icons/image.png",
+                        icon: "/icons/image.svg",
                         onClick: function(id) {
                             console.log(id);
                         }
@@ -79,15 +87,15 @@
             }, {
                 id: 3,
                 name: "folder3",
-                icon: "/icons/folder.png",
-                children: [{
+                icon: "/icons/folder.svg",
+                childs: [{
                     id: 4,
                     name: "folder4",
-                    icon: "/icons/folder.png",
-                    children: [{
+                    icon: "/icons/folder.svg",
+                    childs: [{
                         id: 5,
                         name: "text.txt",
-                        icon: "/icons/text.png",
+                        icon: "/icons/text.svg",
                         onClick: function(id) {
                             console.log(id);
                         }
@@ -103,7 +111,7 @@
                 id: "Node_id",
                 name: "Node",
                 icon: "/icons/folder.png",
-                children: [ … ],
+                childs: [ … ],
                 onClick: function(id) { … }
             }
         </code></pre>
@@ -111,12 +119,15 @@
         <ul>
             <li><mark>id</mark> — идентификатор узла (строка или число).</li>
             <li><mark>name</mark> задаёт имя узла, которое непосредственно и отображается.</li>
-            <li><mark>icon</mark> задаёт адрес иконки, которая отображается рядом с именем узла.</li>
-            <li><mark>children</mark> — массив из объектов дочерних узлов дерева. По умолчанию дочерние узлы скрыты и появляются только после нажатия по родительскому узлу. После повторного нажатия по родительскому узлу дочерние элементы скрываются. Если поле задано (даже если массив дочерних элементов пустой), рядом с именем узла отображается иконка стрелки.</li>
+            <li><mark>icon</mark> задаёт адрес иконки, которая отображается рядом с именем узла (<img class="icon" src="img/folder.svg" alt="иконка">, <img class="icon" src="img/image.svg" alt="иконка">, <img class="icon" src="img/text.svg" alt="иконка">).</li>
+            <li><mark>childs</mark> — массив из объектов дочерних узлов дерева. По умолчанию дочерние узлы скрыты и появляются только после нажатия по родительскому узлу. После повторного нажатия по родительскому узлу дочерние элементы скрываются. Если поле задано (даже если массив дочерних элементов пустой), рядом с именем узла отображается иконка стрелки <img class="icon" src="img/arrow.svg" alt="иконка">.</li>
             <li><mark>onClick</mark> — функция, которая вызывается, когда пользователь кликает на узел. Параметр <mark>id</mark> — идентификатор узла, по которому пользователь кликнул. Если функция не задана, то никаких дополнительных действий не требуется.</li>
         </ul>
 
         <p>Если объект узла некорректен (id не является уникальным, onClick не является функцией и т.п.), выведите вместо узла соответствующее сообщение, используя границу ошибок.</p>
+        
+        <p>Пример реализации:</p>
+        <img src="img/screenshot.png" alt="Пример реализации">
 
         <!-- TODO: добавить скриншот результата -->
     </div>
