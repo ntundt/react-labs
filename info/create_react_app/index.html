@@ -99,7 +99,43 @@
         </ul>
         <div class="note note-warning">Эти инструменты предварительно настроены для работы определенным образом. Если ваш проект требует дополнительной настройки, вы можете «извлечь» и настроить его, но тогда вам нужно будет поддерживать эту конфигурацию.</div>
     </div>
+    <div class="site-nav">
+            <div class="site-nav-scroll">
+                <ul class="site-nav-list">
+                    <p class="site-nav-name">Справочник</p>
+                    <li><a href="../cmd_install/index.html">Установка Командной строки</a></li>
+                    <li><a href="../node_js_install/index.html">Установка Node.js</a></li>
+                    <li><a href="index.html">Создание React приложения (NPX, NPM, YARN)</a></li>
+                    <li><a href="../react_router/index.html">Что такое React Router и для чего он нужен?</a></li>
+                </ul>
+                <script type="text/babel" src="../../libraries/navigator.js"></script>
+                <script>
+                    $(document).ready(function() {
+                        $('.site-nav-list a[href="index.html"]').parent().toggleClass('site-nav-list-active');
+                    });
 
+                    function handleResize() {
+                        if ($(document.body).width() < 799) {
+                            $('.site-nav-scroll')
+                                .css('height', $('.site-nav-list').height() + 40)
+                                .css('overflow-y', 'hidden');
+                        } else {
+                            $('.site-nav-scroll').css('height', '');
+                            $('.site-nav-scroll').height($('.content').height());
+                            if ($('.site-nav-list').outerHeight() > $('.site-nav-scroll').innerHeight()) {
+                                $('.site-nav-scroll').css('overflow-y', 'scroll');
+                            } else {
+                                $('.site-nav-scroll').css('overflow-y', 'hidden');
+                            }
+                        }
+                    }
+                    $(function() {
+                        document.body.onresize = handleResize;
+                        handleResize();
+                    });
+                </script>
+            </div>
+        </div>
 </body>
 
 </html>
